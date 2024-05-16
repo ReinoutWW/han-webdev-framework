@@ -1,0 +1,41 @@
+
+* {
+    box-sizing: border-box;
+}
+
+.container {
+    display: flex;
+}
+
+.container > div {
+    flex: 1 0 auto;
+}
+
+.container > div:not(:last-child) {
+    margin-right: 2rem;
+    flex: 0 1 auto;
+}
+
+img {
+    width: 250px;
+}
+
+body {
+    display: grid;
+    grid-gap: 1em;
+    grid-template-rows: auto 1fr auto;
+    grid-template-columns: 12em 1fr; 
+    height: 100vh;
+}
+
+body, section, nav, header {
+    border: 1px solid red;
+}
+
+header {
+    grid-column: span 2;
+}
+
+footer {
+    grid-row: span 2;
+}
