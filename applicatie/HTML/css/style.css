@@ -1,0 +1,78 @@
+
+@font-face {
+    font-family: 'Poppins';
+    src: url('/fonts/Poppins/Poppins-Regular.ttf');
+}
+
+* {
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins';
+}
+
+.container {
+    display: flex;
+}
+
+.container > div {
+    flex: 1 0 auto;
+}
+
+.container > div:not(:last-child) {
+    margin-right: 2rem;
+    flex: 0 1 auto;
+}
+
+img {
+    width: 250px;
+}
+
+body {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    grid-template-columns: 12em 1fr; 
+    height: 100vh;
+}
+
+header {
+    padding: 1rem;
+    background-color: rgb(252, 252, 252);
+    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
+    z-index: 1;
+}
+
+nav {
+    padding: 1rem;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
+}
+
+nav a {
+    display: block;
+    width: 100%;
+    margin-bottom: 0.3rem;
+    padding: 0.5rem;
+    border-radius: 5px;
+}
+
+nav a:hover {
+    background-color: rgb(242, 242, 242);
+    color: rgb(0, 0, 0);
+}
+
+header {
+    grid-column: span 2;
+    display: flex;
+}
+
+footer {
+    grid-row: span 2;
+}
+
+.container {
+    padding: 1rem;
+    margin: 2rem;
+    border-radius: 0.3rem;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
+}
