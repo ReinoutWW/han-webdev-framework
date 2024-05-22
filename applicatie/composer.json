@@ -1,0 +1,20 @@
+{
+    "name": "rg/rg-framework",
+    "description": "",
+    "minimum-stability": "stable",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "RG"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "App\\": "src",
+            "RWFramework\\Framework\\": "framework/"
+        }
+    },  
+    "require-dev": {
+        "symfony/var-dumper": "^6.4"
+    }
+}
