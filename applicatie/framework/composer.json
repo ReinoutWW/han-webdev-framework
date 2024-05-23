@@ -1,0 +1,22 @@
+{
+    "name": "rg/rg-framework",
+    "description": "",
+    "minimum-stability": "stable",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "RG"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "RWFramework\\Framework\\": "src/"
+        }
+    },  
+    "require-dev": {
+        "symfony/var-dumper": "^6.4"
+    },
+    "require": {
+        "nikic/fast-route": "^1.3"
+    }
+}
