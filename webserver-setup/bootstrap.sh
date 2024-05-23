@@ -71,5 +71,5 @@ echo
 echo ' webserver starting'
 echo '-------------------------------------------------------'
 
-php -S 0.0.0.0:80 -t /applicatie/
+php -S 0.0.0.0:80 -t /applicatie/public/
 

@@ -9,6 +9,7 @@ class ComposerStaticInit9c8534e265b52ba9307eb786b40cb2ce
     public static $files = array (
         '6e3fae29631ef280660b3cdad06f25a8' => __DIR__ . '/..' . '/symfony/deprecation-contracts/function.php',
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
+        '253c157292f75eb38082b5acb06f3f01' => __DIR__ . '/..' . '/nikic/fast-route/src/functions.php',
         '667aeda72477189d0494fecd327c3641' => __DIR__ . '/..' . '/symfony/var-dumper/Resources/functions/dump.php',
     );
 
@@ -21,6 +22,10 @@ class ComposerStaticInit9c8534e265b52ba9307eb786b40cb2ce
         'R' => 
         array (
             'RWFramework\\Framework\\' => 22,
+        ),
+        'F' => 
+        array (
+            'FastRoute\\' => 10,
         ),
         'A' => 
         array (
@@ -40,6 +45,10 @@ class ComposerStaticInit9c8534e265b52ba9307eb786b40cb2ce
         'RWFramework\\Framework\\' => 
         array (
             0 => __DIR__ . '/../..' . '/framework',
+        ),
+        'FastRoute\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/nikic/fast-route/src',
         ),
         'App\\' => 
         array (

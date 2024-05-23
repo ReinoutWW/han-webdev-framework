@@ -45,6 +45,13 @@ RUN docker-php-ext-enable xdebug
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-WORKDIR /applicatie/
+# Set working directory
+WORKDIR /applicatie
+
+# Copy the application files into the container
+COPY ./applicatie /applicatie
+
+# Run Composer install and dump-autoload
+RUN composer install && composer dump-autoload || { cat /applicatie/composer.json; ls -la /applicatie/; exit 1; }
 
 COPY "./webserver-setup/docker-php-ext-xdebug.ini" "/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini"
