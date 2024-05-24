@@ -63,7 +63,7 @@
         'rg/rg-framework' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '4281b107822f0d20f0fc94f35b39a7bd72690f67',
+            'reference' => '75d5ec6252438cda2fd654c874e5228b64ed8142',
             'type' => 'library',
             'install_path' => __DIR__ . '/../rg/rg-framework',
             'aliases' => array(),
@@ -78,7 +78,7 @@
             'aliases' => array(
                 0 => '3.5.x-dev',
             ),
-            'dev_requirement' => true,
+            'dev_requirement' => false,
         ),
         'symfony/dotenv' => array(
             'pretty_version' => '6.4.x-dev',
@@ -89,6 +89,15 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+        'symfony/polyfill-ctype' => array(
+            'pretty_version' => '1.x-dev',
+            'version' => '1.9999999.9999999.9999999-dev',
+            'reference' => 'c9e59dec962d38cf2e0e4c61c4a1a1312f4dd7fe',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../symfony/polyfill-ctype',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'symfony/polyfill-mbstring' => array(
             'pretty_version' => '1.x-dev',
             'version' => '1.9999999.9999999.9999999-dev',
@@ -96,7 +105,16 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../symfony/polyfill-mbstring',
             'aliases' => array(),
-            'dev_requirement' => true,
+            'dev_requirement' => false,
+        ),
+        'symfony/polyfill-php80' => array(
+            'pretty_version' => '1.x-dev',
+            'version' => '1.9999999.9999999.9999999-dev',
+            'reference' => '7d191eb4022901cd3d91a816ec5464ca3a08a8aa',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../symfony/polyfill-php80',
+            'aliases' => array(),
+            'dev_requirement' => false,
         ),
         'symfony/var-dumper' => array(
             'pretty_version' => '6.4.x-dev',
@@ -106,6 +124,15 @@
             'install_path' => __DIR__ . '/../symfony/var-dumper',
             'aliases' => array(),
             'dev_requirement' => true,
+        ),
+        'twig/twig' => array(
+            'pretty_version' => '3.x-dev',
+            'version' => '3.9999999.9999999.9999999-dev',
+            'reference' => '67f29781ffafa520b0bbfbd8384674b42db04572',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../twig/twig',
+            'aliases' => array(),
+            'dev_requirement' => false,
         ),
     ),
 );

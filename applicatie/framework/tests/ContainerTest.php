@@ -4,9 +4,14 @@ namespace RWFramework\Framework\Tests;
 
 require 'vendor/autoload.php';
 
+use App\Controllers\HomeController;
+use League\Container\Argument\Literal\StringArgument;
+use League\Container\ReflectionContainer;
 use PHPUnit\Framework\TestCase;
 use RWFramework\Framework\Container\Container;
 use RWFramework\Framework\Container\ContainerException;
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
 
 // Test class
 // Also good for test-driven development
@@ -61,5 +66,22 @@ class ContainerTest extends TestCase {
 
         $this->assertInstanceOf(DependancyClass::class, $dependancyService);
         $this->assertInstanceOf(AnotherSubDependancy::class, $dependancyService->getSubDependency());
+  }
+
+  /** @test */
+  public function can_twig_be_retreived_from_container(): void {
+        $container = new \League\Container\Container();
+
+        $container->delegate(new ReflectionContainer(true));
+
+        $templatesPath = __DIR__ . '/templates';
+        
+        $container->addShared('filesystem-loader', FilesystemLoader::class)
+        ->addArgument(new StringArgument($templatesPath));
+    
+        $container->addShared(Environment::class)
+            ->addArgument('filesystem-loader');
+
+        $this->assertInstanceOf(Environment::class, $container->get(Environment::class));
   }
 }

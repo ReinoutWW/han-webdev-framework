@@ -42,3 +42,10 @@ In the Kernal class, the field $appEnv will be set to a configuration. The avail
 - 'prod' for production and exception hiding
 
 The configuration can be set in the framework/.env file, for example: APP_ENV=dev.
+
+## Templating engine
+This framework is not a MVC framework. However, there is one key component we can learn from the MVC architecture. It is the seperation of concerns in the business logic / presentation code. Ofcourse, this is something we want here too.
+
+To avoid messy PHP tags in the front-end, we'll be using a templating engine. One of the benefits is that we won't have to add messy PHP tags like this: `<?php echo $name ?>`, and instead we use `{{ $name }}`. One other benefit is a security aspect, and it will escape content to protect against cross-site scripting. 
+
+To build our own templating engine would be impossible with the time available, so we will use the Twig template engine. Other frameworks like Laravel and Symfony use other 3rd party templating engines to run the framework.
