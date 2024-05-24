@@ -2,12 +2,13 @@
 
 namespace App\Controllers;
 
+use RWFramework\Framework\Controller\AbstractController;
 use RWFramework\Framework\Http\Response;
 
-class PostsController {
+class PostsController extends AbstractController {
     public function show(int $id): Response {
-        $content = '<h1>Welcome to the homepage </h1>' . $id;
-
-        return new Response($content);
+        return $this->render("posts.html.twig", [
+            'postId' => $id
+        ]);
     }
 }

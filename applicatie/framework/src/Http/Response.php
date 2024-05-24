@@ -23,4 +23,8 @@ class Response {
     public function send(): void {
         echo $this->content;
     }
+
+    public function setContent(?string $content): void {
+        $this->content = $content;
+    }
 }

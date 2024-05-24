@@ -7,7 +7,6 @@
 
 use RWFramework\Framework\Http\Kernal;
 use RWFramework\Framework\Http\Request;
-use RWFramework\Framework\Routing\Router;
 
 // __DIR__ will take the root of the project
 define('BASE_PATH', dirname(__DIR__)); 
