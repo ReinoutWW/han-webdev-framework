@@ -14,7 +14,7 @@
         <a href="/">nav 1</a>
         <a href="/">nav 2</a>
         <a href="/">nav 3</a>
-        <a href="/">nav 4 wafawf awf awf awf awf awf wa faw faw faf</a>
+        <a href="/">nav 4</a>
     </nav>
     <main>
        <div class="container">
@@ -25,6 +25,7 @@
                     <li>2</li>
                     <li>3</li>
                 </ul>
+                <?php echo $title; ?>
             </section>
        </div>
     </main>

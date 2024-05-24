@@ -1,7 +1,7 @@
 <?php
 
-use App\Controller\HomeController;
-use App\Controller\PostsController;
+use App\Controllers\HomeController;
+use App\Controllers\PostsController;
 use RWFramework\Framework\Http\Response;
 
 return [

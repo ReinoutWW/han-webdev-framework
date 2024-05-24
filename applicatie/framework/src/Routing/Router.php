@@ -4,6 +4,7 @@ namespace RWFramework\Framework\Routing;
 
 use FastRoute\RouteCollector;
 use FastRoute\Dispatcher;
+use Psr\Container\ContainerInterface;
 use RWFramework\Framework\Http\HttpException;
 use RWFramework\Framework\Http\HttpRequestMethodException;
 use RWFramework\Framework\Http\Request;
@@ -13,8 +14,9 @@ use function FastRoute\simpleDispatcher;
 // The router is responsible for dispatching a request to the correct controller and method
 // It will be used in the frontdoor controller to dispatch the request
 class Router implements RouterInterface {
-    
-    public function dispatch(Request $request): array
+    private array $routes;
+
+    public function dispatch(Request $request, ContainerInterface $container): array
     {
         $routeInfo = $this->extractRouteInfo($request);
      
@@ -26,20 +28,24 @@ class Router implements RouterInterface {
 
         // If the handler is an array, create an instance of the controller
         if(is_array($handler)) {
-            [$controller, $method] = $handler;
-            $handler = [new $controller, $method];
+            [$controllerId, $method] = $handler;
+            $controller = $container->get($controllerId);
+            $handler = [$controller, $method];
         }
 
         return [$handler, $vars];
+    }
+
+    public function setRoutes(array $routes): void
+    {
+        $this->routes = $routes;
     }
 
     private function extractRouteInfo(Request $request): array {
         // Create a dispatcher (Dispatcher = verzender)
         // simpleDispatcher is also responsible for telling if it's a match with the routes
         $dispatcher = simpleDispatcher(function(RouteCollector $routeCollector) {
-            $routes = include BASE_PATH . '/routes/web.php';
-            
-            foreach($routes as $route) {
+            foreach($this->routes as $route) {
                 $routeCollector->addRoute(...$route); // '...' Splat operator. Will take the array and spread it out as arguments
             }
         });

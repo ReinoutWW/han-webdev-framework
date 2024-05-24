@@ -19,6 +19,15 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+        'league/container' => array(
+            'pretty_version' => '4.x-dev',
+            'version' => '4.9999999.9999999.9999999-dev',
+            'reference' => '888b087cce8a0af46ba91f642eb480577729e92a',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../league/container',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'nikic/fast-route' => array(
             'pretty_version' => 'v1.x-dev',
             'version' => '1.9999999.9999999.9999999-dev',
@@ -28,10 +37,33 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+        'orno/di' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => '~2.0',
+            ),
+        ),
+        'psr/container' => array(
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'reference' => '707984727bd5b2b670e59559d3ed2500240cf875',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../psr/container',
+            'aliases' => array(
+                0 => '2.0.x-dev',
+            ),
+            'dev_requirement' => false,
+        ),
+        'psr/container-implementation' => array(
+            'dev_requirement' => false,
+            'provided' => array(
+                0 => '^1.0',
+            ),
+        ),
         'rg/rg-framework' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '8775e83f48290d68176ffc7554abb19ec12916fd',
+            'reference' => '4281b107822f0d20f0fc94f35b39a7bd72690f67',
             'type' => 'library',
             'install_path' => __DIR__ . '/../rg/rg-framework',
             'aliases' => array(),
@@ -47,6 +79,15 @@
                 0 => '3.5.x-dev',
             ),
             'dev_requirement' => true,
+        ),
+        'symfony/dotenv' => array(
+            'pretty_version' => '6.4.x-dev',
+            'version' => '6.4.9999999.9999999-dev',
+            'reference' => '00e5fccebe3eeec023adc744ac73501c2e3dfae9',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../symfony/dotenv',
+            'aliases' => array(),
+            'dev_requirement' => false,
         ),
         'symfony/polyfill-mbstring' => array(
             'pretty_version' => '1.x-dev',

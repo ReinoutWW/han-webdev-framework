@@ -12,15 +12,18 @@ use RWFramework\Framework\Routing\Router;
 // __DIR__ will take the root of the project
 define('BASE_PATH', dirname(__DIR__)); 
 
-require_once dirname(__DIR__) . '/vendor/autoload.php';
+require_once BASE_PATH . '/vendor/autoload.php';
+
+$container = require BASE_PATH . '/config/services.php';
 
 // Request received
 $request = Request::createFromGlobals();
 
-$router = new Router();
-
-// // Perform some logic
-$kernal = new Kernal($router);
+// The containers knows how to create a Kernal
+// The expected argument is a RouterInterface
+// And that is connected to a concrete class called Router
+// Then the circle is complete, and the Kernal is created
+$kernal = $container->get(Kernal::class);
 
 // // Send response (string of content)
 $response = $kernal->handle($request);

@@ -7,7 +7,6 @@ The RWFramework will provide the fundamentals for a working API or Web applicati
 - Request handlers
 - Controllers support
 
-
 ## Contribution
 
 ### Adding packages guidelines
@@ -29,3 +28,17 @@ You will find a boilerplate in the source.
         - index.php : The base script that will handle requests
     - routes : Includes the configured routes
     - src : The controllers
+
+## Containers and reflections
+Instances of objects van be obtained via the $container. Once registered in the config/services.php, the $container will deliver instances of the classes. When the class is not yet added to the $container, it will try to resolve the classes itself using reflections and recursion. Every objects' constructor will be scanned, and the dependencies will be instantiated. 
+
+Once completed, the object will be returned.
+
+## Environments and error handling
+For error handling, the framework will have different environments available. In production, you might not want all errors to be visible with all the beautofill local paths and variables. But for debugging, this information is crusial. 
+
+In the Kernal class, the field $appEnv will be set to a configuration. The available options are:
+- 'dev' or 'test' for full exceptions
+- 'prod' for production and exception hiding
+
+The configuration can be set in the framework/.env file, for example: APP_ENV=dev.

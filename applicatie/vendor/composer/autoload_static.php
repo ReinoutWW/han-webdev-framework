@@ -18,10 +18,19 @@ class ComposerStaticInit169c6c3e74e7621e4f914f47580a5839
         array (
             'Symfony\\Polyfill\\Mbstring\\' => 26,
             'Symfony\\Component\\VarDumper\\' => 28,
+            'Symfony\\Component\\Dotenv\\' => 25,
         ),
         'R' => 
         array (
             'RWFramework\\Framework\\' => 22,
+        ),
+        'P' => 
+        array (
+            'Psr\\Container\\' => 14,
+        ),
+        'L' => 
+        array (
+            'League\\Container\\' => 17,
         ),
         'F' => 
         array (
@@ -42,9 +51,21 @@ class ComposerStaticInit169c6c3e74e7621e4f914f47580a5839
         array (
             0 => __DIR__ . '/..' . '/symfony/var-dumper',
         ),
+        'Symfony\\Component\\Dotenv\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/dotenv',
+        ),
         'RWFramework\\Framework\\' => 
         array (
             0 => __DIR__ . '/..' . '/rg/rg-framework/src',
+        ),
+        'Psr\\Container\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/container/src',
+        ),
+        'League\\Container\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/league/container/src',
         ),
         'FastRoute\\' => 
         array (
