@@ -46,6 +46,11 @@ The configuration can be set in the framework/.env file, for example: APP_ENV=de
 ## Templating engine
 This framework is not a MVC framework. However, there is one key component we can learn from the MVC architecture. It is the seperation of concerns in the business logic / presentation code. Ofcourse, this is something we want here too.
 
-To avoid messy PHP tags in the front-end, we'll be using a templating engine. One of the benefits is that we won't have to add messy PHP tags like this: `<?php echo $name ?>`, and instead we use `{{ $name }}`. One other benefit is a security aspect, and it will escape content to protect against cross-site scripting. 
+To avoid messy PHP tags in the front-end, we'll be using a templating engine. One of the benefits is that we won't have to add messy PHP tags like this: `<?php echo $name ?>`, and instead we use `{{ $name }}`. One other benefit is a security aspect, and it will escape content to protect against cross-site scripting attacks. 
 
 To build our own templating engine would be impossible with the time available, so we will use the Twig template engine. Other frameworks like Laravel and Symfony use other 3rd party templating engines to run the framework.
+
+## Database abstraction layer
+One of the requirements for this project is the SQL-injection safety, and one other personal learning goal I have for this project is using a database abstraction layer. This means that the code is written independant of the relational database.
+
+We will be using Doctrine DBAL, which is one of those database abstraction layers. It's designed to be fast and efficient, and we will use prepared statements to prevent SQL injection attacks. 
