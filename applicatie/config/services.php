@@ -1,5 +1,6 @@
 <?php
 
+use Applicatie\Framework\Src\Console\Command\AbstractMigration;
 use Doctrine\DBAL\Connection;
 use League\Container\Argument\Literal\ArrayArgument;
 use League\Container\Argument\Literal\StringArgument;
@@ -78,8 +79,13 @@ $container->addShared(Connection::class, function() use ($container): Connection
     return $container->get(ConnectionFactory::class)->create();
 });
 
-$container->add('database:migrations:migrate', MigrateDatabase::class)
-    ->addArguments([Connection::class]);
+// Add abstract controller
+$container->add(AbstractMigration::class);
+
+// Inflect the abstract controller to set the connection and the migrations path
+$container->inflector(AbstractMigration::class)
+    ->invokeMethod('setConnection', [Connection::class])
+    ->invokeMethod('setMigrationsPath', [new StringArgument(BASE_PATH . '/migrations')]);
 
 $container->add(Application::class)
     ->addArgument($container);
