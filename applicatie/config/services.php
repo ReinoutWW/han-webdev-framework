@@ -1,11 +1,14 @@
 <?php
 
+use Doctrine\DBAL\Connection;
 use League\Container\Argument\Literal\ArrayArgument;
 use League\Container\Argument\Literal\StringArgument;
 use League\Container\Container;
 use League\Container\ReflectionContainer;
+use RWFramework\Framework\Console\Application;
+use RWFramework\Framework\Console\Command\MigrateDatabase;
 use RWFramework\Framework\Controller\AbstractController;
-use RWFramework\Framework\Http\Kernal;
+use RWFramework\Framework\Dbal\ConnectionFactory;
 use RWFramework\Framework\Routing\Router;
 use RWFramework\Framework\Routing\RouterInterface;
 use Symfony\Component\Dotenv\Dotenv;
@@ -26,6 +29,9 @@ $appEnv = $_SERVER['APP_ENV'];
 $templatesPath = BASE_PATH . '/templates';
 
 $container->add('APP_ENV', new StringArgument($appEnv));
+$databaseUrl = 'sqlite:///'. BASE_PATH . '/var/db.sqlite';
+
+$container->add('base-commands-namespace', new StringArgument('RWFramework\\Framework\\Console\\Command\\'));
 
 # Services
 
@@ -40,9 +46,12 @@ $container->add(
 $container->extend(RouterInterface::class)
     ->addMethodCall('setRoutes', [new ArrayArgument($routes)]);
 
-$container->add(Kernal::class)
+$container->add(\RWFramework\Framework\Http\Kernal::class)
     ->addArgument(RouterInterface::class)
     ->addArgument($container);
+
+$container->add(\RWFramework\Framework\Console\Kernal::class)
+    ->addArguments([$container, Application::class]);
 
 // addShared is like a addSingleton in C#?. It will use the same object for every request
 // StringArgument is necessary because otherwise the container will try to instanciate the string
@@ -61,5 +70,18 @@ $container->add(AbstractController::class);
 // https://container.thephpleague.com/3.x/inflectors/
 $container->inflector(AbstractController::class)
     ->invokeMethod('setContainer', [$container]);
+
+$container->add(ConnectionFactory::class)
+    ->addArgument(new StringArgument($databaseUrl));
+
+$container->addShared(Connection::class, function() use ($container): Connection {
+    return $container->get(ConnectionFactory::class)->create();
+});
+
+$container->add('database:migrations:migrate', MigrateDatabase::class)
+    ->addArguments([Connection::class]);
+
+$container->add(Application::class)
+    ->addArgument($container);
 
 return $container;

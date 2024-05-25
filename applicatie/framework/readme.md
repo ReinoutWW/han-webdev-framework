@@ -54,3 +54,12 @@ To build our own templating engine would be impossible with the time available, 
 One of the requirements for this project is the SQL-injection safety, and one other personal learning goal I have for this project is using a database abstraction layer. This means that the code is written independant of the relational database.
 
 We will be using Doctrine DBAL, which is one of those database abstraction layers. It's designed to be fast and efficient, and we will use prepared statements to prevent SQL injection attacks. 
+
+### Custom console commands
+Like other mainstream frameworks, we want a solution for handling specific framework tasks. Other frameworks have custom set of commands available. This makes it possible to, for example, run database migrations. 
+
+We will make our own console command line program, which will simply be a php file expecting incomming commands. It will make use of our 'heart', called the services.php. This contains the container (nice sentence), and will make our live easy collecting instances of objects.
+
+Location:
+/bin/console
+

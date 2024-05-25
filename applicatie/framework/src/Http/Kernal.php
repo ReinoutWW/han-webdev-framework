@@ -3,6 +3,7 @@
 
 namespace RWFramework\Framework\Http;
 
+use Doctrine\DBAL\Connection;
 use Psr\Container\ContainerInterface;
 use RWFramework\Framework\Routing\RouterInterface;
 
