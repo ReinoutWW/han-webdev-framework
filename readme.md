@@ -66,4 +66,4 @@ Location:
 #### Commands
 Help:
 - docker compose exec web_server php bin/console database:migrations:migrate 
-- docker compose exec web_server php bin/console database:migrations:rollback 
+- docker compose exec web_server php bin/console database:migrations:rollback (In progress - not finished yet..)
