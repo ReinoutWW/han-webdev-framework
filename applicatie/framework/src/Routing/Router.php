@@ -5,6 +5,7 @@ namespace RWFramework\Framework\Routing;
 use FastRoute\RouteCollector;
 use FastRoute\Dispatcher;
 use Psr\Container\ContainerInterface;
+use RWFramework\Framework\Controller\AbstractController;
 use RWFramework\Framework\Http\HttpException;
 use RWFramework\Framework\Http\HttpRequestMethodException;
 use RWFramework\Framework\Http\Request;
@@ -30,6 +31,13 @@ class Router implements RouterInterface {
         if(is_array($handler)) {
             [$controllerId, $method] = $handler;
             $controller = $container->get($controllerId);
+
+            // Make sure all controllers will have the request available. 
+            // It could be added to the container as well, but then we will create a tight coupling between every instance that epends on the container. (Because container = available request)
+            if(is_subclass_of($controller, AbstractController::class)) {
+                $controller->setRequest($request);
+            }
+
             $handler = [$controller, $method];
         }
 
