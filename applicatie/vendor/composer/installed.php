@@ -121,7 +121,7 @@
         'rg/rg-framework' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '888b54bee99843d0f34f386b0d92c64189e19e2f',
+            'reference' => '59c99df6ad812ab723b7289b4f85a98a271f640c',
             'type' => 'library',
             'install_path' => __DIR__ . '/../rg/rg-framework',
             'aliases' => array(),
