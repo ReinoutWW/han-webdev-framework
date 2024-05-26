@@ -650,7 +650,7 @@
             "dist": {
                 "type": "path",
                 "url": "framework",
-                "reference": "888b54bee99843d0f34f386b0d92c64189e19e2f"
+                "reference": "59c99df6ad812ab723b7289b4f85a98a271f640c"
             },
             "require": {
                 "doctrine/dbal": "^3.6",
