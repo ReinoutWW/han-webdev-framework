@@ -63,3 +63,7 @@ We will make our own console command line program, which will simply be a php fi
 Location:
 /bin/console
 
+#### Commands
+Help:
+- docker compose exec web_server php bin/console database:migrations:migrate 
+- docker compose exec web_server php bin/console database:migrations:rollback 
