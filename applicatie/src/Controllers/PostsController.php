@@ -3,10 +3,15 @@
 namespace App\Controllers;
 
 use App\Entity\Post;
+use App\Repository\PostMapper;
 use RWFramework\Framework\Controller\AbstractController;
 use RWFramework\Framework\Http\Response;
 
 class PostsController extends AbstractController {
+    public function __construct(private PostMapper $postMapper) {
+
+    }
+
     public function show(int $id): Response {
         return $this->render("posts.html.twig", [
             'postId' => $id
@@ -27,6 +32,8 @@ class PostsController extends AbstractController {
 
         // Using a named constructor
         $post = Post::create($title, $body);
+
+        $this->postMapper->save($post);
         
         dd($post);
     }
