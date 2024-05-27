@@ -27,4 +27,12 @@ class Response {
     public function setContent(?string $content): void {
         $this->content = $content;
     }
+
+    public function getStatus(): int {
+        return $this->status;
+    }
+
+    public function getHeader(string $name): mixed {
+        return $this->headers[$name] ?? null;
+    }
 }

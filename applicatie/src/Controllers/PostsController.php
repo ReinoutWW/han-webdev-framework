@@ -6,6 +6,7 @@ use App\Entity\Post;
 use App\Repository\PostMapper;
 use App\Repository\PostRepository;
 use RWFramework\Framework\Controller\AbstractController;
+use RWFramework\Framework\Http\RedirectResponse;
 use RWFramework\Framework\Http\Response;
 
 class PostsController extends AbstractController {
@@ -32,7 +33,7 @@ class PostsController extends AbstractController {
      * This uses the "score" naming convention. We will store the data in the database
      * But first, we encapsulate the data in a class. This is a DTO (Data Transfer Object)
      */
-    public function store(): Void {
+    public function store(): Response {
         $title = $this->request->postParams["title"];
         $body = $this->request->postParams["body"];
 
@@ -40,7 +41,7 @@ class PostsController extends AbstractController {
         $post = Post::create($title, $body);
 
         $this->postMapper->save($post);
-        
-        dd($post);
+
+        return new RedirectResponse('/posts');
     }
 }
