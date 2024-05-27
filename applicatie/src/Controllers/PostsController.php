@@ -4,17 +4,23 @@ namespace App\Controllers;
 
 use App\Entity\Post;
 use App\Repository\PostMapper;
+use App\Repository\PostRepository;
 use RWFramework\Framework\Controller\AbstractController;
 use RWFramework\Framework\Http\Response;
 
 class PostsController extends AbstractController {
-    public function __construct(private PostMapper $postMapper) {
+    public function __construct(
+        private PostMapper $postMapper,
+        private PostRepository $postRepository
+        ) {
 
     }
 
     public function show(int $id): Response {
+        $post = $this->postRepository->findOrFail($id);
+        
         return $this->render("posts.html.twig", [
-            'postId' => $id
+            'post' => $post
         ]);
     }
 

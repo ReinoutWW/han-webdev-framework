@@ -2,6 +2,13 @@
 /* 1. Layout */
 /* 2. Submit form example */
 
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    --text-color-default: rgb(49, 49, 49);
+}
 
 /* 1. Layout */
 @font-face {
@@ -82,7 +89,6 @@ footer {
     box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
 }
 
-
 /* 2. Submit form example */
 form {
     display: grid;
@@ -115,4 +121,23 @@ form label {
 
 .btn-primary:hover {
     background-color: rgb(0, 0, 255);
+}
+
+/* 3. Components */
+
+/* 3.1 Table */
+.rw-table {
+    padding: 0;
+    margin: 0;
+}
+
+.rw-table thead {
+    background-color: rgb(241, 241, 241);
+    color: var(--text-color-default);
+}
+
+.rw-table thead th,
+.rw-table tbody td {
+    padding: 0.25rem 1rem;
+    text-align: left;
 }

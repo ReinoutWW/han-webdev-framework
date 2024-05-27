@@ -1,13 +1,29 @@
 {% extends 'base.html.twig' %}
 
 {% block main %}
-<section>
-    <h2>Main content here</h2>
-    <ul>
-        <li>1</li>
-        <li>2</li>
-        <li>3</li>
-    </ul>
-    {{ postId }}
-</section>
+<div>
+    <h1>Post</h1>
+    <table class="rw-table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Body</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ post.id }}</td>
+                <td>{{ post.title }}</td>
+                <td>{{ post.body }}</td>
+                <td>
+                    <a href="http://localhost:8080/posts/{{ post.id }}">Show</a> |
+                    <a href="http://localhost:8080/posts/{{ post.id }}/edit">Edit</a> |
+                    <a href="http://localhost:8080/posts/{{ post.id }}" data-method="delete">Destroy</a> |
+                    <a href="http://localhost:8080/posts">Create new</a>
+                </td>
+        </tbody>
+    </table>
+</div>
 {% endblock %}
