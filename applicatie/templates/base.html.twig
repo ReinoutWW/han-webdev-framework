@@ -19,11 +19,23 @@
         <a href="/">nav 4</a>
     </nav>
     <main>
-       <div class="container">
-            {% block main %}
+        {# Flash messages #}
+        {% if session().hasFlash('success') %}
+            <div class="container-invisible">
+                <div class='rw-notification-success' role="alert">
+                    <ul>
+                        {% for message in session().getFlash('success') %}
+                            <li>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        {% endif %}
+        <div class="container">
+         {% block main %}
              {# Main content will be rendered here #}
-            {% endblock %}
-       </div>
+         {% endblock %}
+        </div>
     </main>
     <footer>
         This is the footer

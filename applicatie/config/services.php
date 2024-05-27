@@ -12,6 +12,9 @@ use RWFramework\Framework\Controller\AbstractController;
 use RWFramework\Framework\Dbal\ConnectionFactory;
 use RWFramework\Framework\Routing\Router;
 use RWFramework\Framework\Routing\RouterInterface;
+use RWFramework\Framework\Session\Session;
+use RWFramework\Framework\Session\SessionInterface;
+use RWFramework\Framework\Template\TwigFactory;
 use Symfony\Component\Dotenv\Dotenv;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
@@ -54,14 +57,22 @@ $container->add(\RWFramework\Framework\Http\Kernal::class)
 $container->add(\RWFramework\Framework\Console\Kernal::class)
     ->addArguments([$container, Application::class]);
 
+$container->addShared(
+    SessionInterface::class, 
+    Session::class
+);
+
 // addShared is like a addSingleton in C#?. It will use the same object for every request
 // StringArgument is necessary because otherwise the container will try to instanciate the string
+$container->add('template-renderer', TwigFactory::class)
+    ->addArguments([
+        SessionInterface::class,
+        new StringArgument($templatesPath)
+    ]);
 
-$container->addShared('filesystem-loader', FilesystemLoader::class)
-    ->addArgument(new StringArgument($templatesPath));
-
-$container->addShared('twig', Environment::class)
-    ->addArgument('filesystem-loader');
+$container->addShared('twig', function() use ($container) {
+    return $container->get('template-renderer')->create();
+});
 
 $container->add(AbstractController::class);
 

@@ -8,11 +8,13 @@ use App\Repository\PostRepository;
 use RWFramework\Framework\Controller\AbstractController;
 use RWFramework\Framework\Http\RedirectResponse;
 use RWFramework\Framework\Http\Response;
+use RWFramework\Framework\Session\SessionInterface;
 
 class PostsController extends AbstractController {
     public function __construct(
         private PostMapper $postMapper,
-        private PostRepository $postRepository
+        private PostRepository $postRepository,
+        private SessionInterface $session
         ) {
 
     }
@@ -41,6 +43,8 @@ class PostsController extends AbstractController {
         $post = Post::create($title, $body);
 
         $this->postMapper->save($post);
+
+        $this->session->setFlash('success', sprintf('Post "%s" created successfully!', $post->getTitle()));
 
         return new RedirectResponse('/posts');
     }
