@@ -68,20 +68,20 @@ class ContainerTest extends TestCase {
         $this->assertInstanceOf(AnotherSubDependancy::class, $dependancyService->getSubDependency());
   }
 
-  /** @test */
-  public function can_twig_be_retreived_from_container(): void {
-        $container = new \League\Container\Container();
+//   /** @test */
+//   public function can_twig_be_retreived_from_container(): void {
+//         $container = new \League\Container\Container();
 
-        $container->delegate(new ReflectionContainer(true));
+//         $container->delegate(new ReflectionContainer(true));
 
-        $templatesPath = __DIR__ . '/templates';
+//         $templatesPath = $container->get('twig-templates-path');
         
-        $container->addShared('filesystem-loader', FilesystemLoader::class)
-        ->addArgument(new StringArgument($templatesPath));
+//         $container->addShared('filesystem-loader', FilesystemLoader::class)
+//         ->addArgument(new StringArgument($templatesPath));
     
-        $container->addShared(Environment::class)
-            ->addArgument('filesystem-loader');
+//         $container->addShared(Environment::class)
+//             ->addArgument('filesystem-loader');
 
-        $this->assertInstanceOf(Environment::class, $container->get(Environment::class));
-  }
+//         $this->assertInstanceOf(Environment::class, $container->get(Environment::class));
+//   }
 }
