@@ -10,6 +10,8 @@ use RWFramework\Framework\Console\Application;
 use RWFramework\Framework\Console\Command\MigrateDatabase;
 use RWFramework\Framework\Controller\AbstractController;
 use RWFramework\Framework\Dbal\ConnectionFactory;
+use RWFramework\Framework\Http\Middleware\RequestHandlerInterface;
+use RWFramework\Framework\Http\Middleware\RouterDispatch;
 use RWFramework\Framework\Routing\Router;
 use RWFramework\Framework\Routing\RouterInterface;
 use RWFramework\Framework\Session\Session;
@@ -51,8 +53,16 @@ $container->extend(RouterInterface::class)
     ->addMethodCall('setRoutes', [new ArrayArgument($routes)]);
 
 $container->add(\RWFramework\Framework\Http\Kernal::class)
-    ->addArgument(RouterInterface::class)
-    ->addArgument($container);
+    ->addArguments([
+        RouterInterface::class, 
+        $container, 
+        RequestHandlerInterface::class
+]);
+
+$container->add(
+    RequestHandlerInterface::class, 
+    \RWFramework\Framework\Http\Middleware\RequestHandler::class
+)->addArgument($container);
 
 $container->add(\RWFramework\Framework\Console\Kernal::class)
     ->addArguments([$container, Application::class]);
@@ -61,6 +71,12 @@ $container->addShared(
     SessionInterface::class, 
     Session::class
 );
+
+$container->add(RouterDispatch::class)
+    ->addArguments([
+        RouterInterface::class,
+        $container
+    ]);
 
 // addShared is like a addSingleton in C#?. It will use the same object for every request
 // StringArgument is necessary because otherwise the container will try to instanciate the string

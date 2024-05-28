@@ -3,8 +3,8 @@
 
 namespace RWFramework\Framework\Http;
 
-use Doctrine\DBAL\Connection;
 use Psr\Container\ContainerInterface;
+use RWFramework\Framework\Http\Middleware\RequestHandlerInterface;
 use RWFramework\Framework\Routing\RouterInterface;
 
 class Kernal {
@@ -12,7 +12,8 @@ class Kernal {
 
     public function __construct(
         private RouterInterface $router,
-        private ContainerInterface $container
+        private ContainerInterface $container,
+        private RequestHandlerInterface $requestHandler
     ) { // PHP 8 will automatically create the property and assign the value
         $this->appEnv = $container->get('APP_ENV');
     }
@@ -20,10 +21,7 @@ class Kernal {
     public function handle(Request $request): Response 
     {
         try {
-            [$routeHandler, $vars] = $this->router->dispatch($request, $this->container);
-            
-            // Call_user_func_array will call the function and pass the vars as arguments (No extra parse will be needed)
-            $response = call_user_func_array($routeHandler, $vars); // Looks like an invoke in C#
+            $response = $this->requestHandler->handle($request);
         }
         catch(\Exception $exception) {
             $response = $this->createExceptionResponse($exception);
@@ -46,5 +44,9 @@ class Kernal {
         }
 
         return new Response('Server error', Response::HTTP_INTERNAL_SERVER_ERROR);
+    }
+
+    public function terminate(Request $request, Response $response): void {
+        $request->getSession()?->clearFlash(); // The question mark is a null check, just like in C#
     }
 }

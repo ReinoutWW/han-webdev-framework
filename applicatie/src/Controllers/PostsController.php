@@ -13,8 +13,7 @@ use RWFramework\Framework\Session\SessionInterface;
 class PostsController extends AbstractController {
     public function __construct(
         private PostMapper $postMapper,
-        private PostRepository $postRepository,
-        private SessionInterface $session
+        private PostRepository $postRepository
         ) {
 
     }
@@ -44,7 +43,7 @@ class PostsController extends AbstractController {
 
         $this->postMapper->save($post);
 
-        $this->session->setFlash('success', sprintf('Post "%s" created successfully!', $post->getTitle()));
+        $this->request->getSession()->setFlash('success', sprintf('Post "%s" created successfully!', $post->getTitle()));
 
         return new RedirectResponse('/posts');
     }

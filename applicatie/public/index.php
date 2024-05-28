@@ -24,7 +24,12 @@ $request = Request::createFromGlobals();
 // Then the circle is complete, and the Kernal is created
 $kernal = $container->get(Kernal::class);
 
-// // Send response (string of content)
+// Create response (string of content) using the Kernal, which will run the request handler, which will run the middleware, which will run the router :D
 $response = $kernal->handle($request);
 
+// Send the response to the client
 $response->send();
+
+// To prevent memory leaks / data that isn't usefull anymore, we need to 'terminate' the request (sounds like a dispose in C# :) )
+// In this example we use it to clear the flash messages from the session
+$kernal->terminate($request, $response);

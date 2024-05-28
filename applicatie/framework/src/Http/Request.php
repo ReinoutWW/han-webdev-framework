@@ -1,7 +1,11 @@
 <?php 
 namespace RWFramework\Framework\Http;
 
+use RWFramework\Framework\Session\SessionInterface;
+
 class Request {
+    private SessionInterface $session;
+
     public function __construct(
         // $_GET, $_POST, $_COOKIE, $_FILES, $_SERVER,
         public readonly array $getParams, 
@@ -27,5 +31,13 @@ class Request {
 
     public function getMethod(): string {
         return $this->server['REQUEST_METHOD'];
+    }
+
+    public function setSession(SessionInterface $session): void {
+        $this->session = $session;
+    }
+
+    public function getSession(): SessionInterface {
+        return $this->session;
     }
 }
