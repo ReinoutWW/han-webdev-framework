@@ -11,7 +11,7 @@
 
     {# Flash messages #}
     {% if session().hasNotification() %}
-    <div class="container-invisible">
+    <div class="container-invisible contrainer-size-small">
         {% for notificationType in session().getNotificationTypes %}
             {% if session().hasFlash(notificationType) %}
                 <div class='rw-notification-{{notificationType}}' role="alert">

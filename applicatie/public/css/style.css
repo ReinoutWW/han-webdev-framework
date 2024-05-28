@@ -105,6 +105,10 @@ footer {
     width: 100vw;
 }
 
+.contrainer-size-small {
+    width: clamp(20vw, 100%, 40vw);
+}
+
 form {
     min-width: 300px;
 }
@@ -168,7 +172,6 @@ div[class*=rw-notification-] {
     border-radius: 0.3rem;
     margin: 1rem 0;
     color: var(--text-color-default);
-    width: clamp(20vw, 100%, 40vw);
 }
 
 div[class*=rw-notification-] ul {

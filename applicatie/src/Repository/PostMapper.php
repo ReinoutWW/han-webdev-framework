@@ -5,10 +5,13 @@ namespace App\Repository;
 use App\Entity\Post;
 use Doctrine\DBAL\Connection;
 
+/**
+ * Data mapper pattern
+ */
 class PostMapper {
-    public function __construct(private Connection $connection) {
-        
-    }
+    public function __construct(
+        private Connection $connection
+    ) {}
 
     public function save(Post $post): void
     {

@@ -2,15 +2,30 @@
 
 namespace App\Form\User;
 
+use App\Entity\User;
+use App\Repository\UserMapper;
+
 class RegistrationForm
 {
     private array $errors = [];
     private string $username;
     private string $password;
 
+    public function __construct(
+        private UserMapper $userMapper
+    ) {}
+
     public function setFields(string $username, string $password): void {
         $this->username = $username;
         $this->password = $password;
+    }
+
+    public function save(): User {
+        $user = User::create($this->username, $this->password);
+
+        $this->userMapper->save($user);
+
+        return $user;
     }
 
     public function hasValidationErrors(): bool {
