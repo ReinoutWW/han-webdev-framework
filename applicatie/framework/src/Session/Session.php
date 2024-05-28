@@ -5,7 +5,7 @@ namespace RWFramework\Framework\Session;
 class Session implements SessionInterface {
     private const FLASH_KEY = 'flash';
 
-    public function __construct()
+    public function start(): void
     {
         // Like explained in college, we need to start the session in the constructor
         // This way, we can track the session throughout the application
