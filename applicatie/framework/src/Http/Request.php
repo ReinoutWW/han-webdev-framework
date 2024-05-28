@@ -40,4 +40,8 @@ class Request {
     public function getSession(): SessionInterface {
         return $this->session;
     }
+
+    public function input(string $key): mixed {
+        return $this->postParams[$key];
+    }
 }

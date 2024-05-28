@@ -8,6 +8,23 @@
             {# Main content will be rendered here #}
         {% endblock %}
     </div>
+
+    {# Flash messages #}
+    {% if session().hasNotification() %}
+    <div class="container-invisible">
+        {% for notificationType in session().getNotificationTypes %}
+            {% if session().hasFlash(notificationType) %}
+                <div class='rw-notification-{{notificationType}}' role="alert">
+                    <ul>
+                        {% for message in session().getFlash(notificationType) %}
+                            <li>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+    {% endif %}
 </div>
 
 {% endblock %}

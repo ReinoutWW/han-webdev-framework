@@ -12,16 +12,20 @@
     </nav>
     <main>
         {# Flash messages #}
-        {% if session().hasFlash('success') %}
-            <div class="container-invisible">
-                <div class='rw-notification-success' role="alert">
-                    <ul>
-                        {% for message in session().getFlash('success') %}
-                            <li>{{ message }}</li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            </div>
+        {% if session().hasNotification() %}
+        <div class="container-invisible">
+            {% for notificationType in session().getNotificationTypes %}
+                {% if session().hasFlash(notificationType) %}
+                    <div class='rw-notification-{{notificationType}}' role="alert">
+                        <ul>
+                            {% for message in session().getFlash(notificationType) %}
+                                <li>{{ message }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
         {% endif %}
         <div class="container">
          {% block main %}

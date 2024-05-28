@@ -1,0 +1,44 @@
+<?php
+
+namespace App\Form\User;
+
+class RegistrationForm
+{
+    private array $errors = [];
+    private string $username;
+    private string $password;
+
+    public function setFields(string $username, string $password): void {
+        $this->username = $username;
+        $this->password = $password;
+    }
+
+    public function hasValidationErrors(): bool {
+        return count($this->getValidationErrors()) > 0;
+    }
+
+    public function getValidationErrors(): array {
+        // For performance reasons, only run validation if there are no errors yet
+        if(!empty($this->errors)) {
+            return $this->errors;
+        }
+
+        // Username validation 
+        // Characters, lengt, char type
+        if (strlen($this->username) < 5 || strlen($this->username) > 20) {
+            $this->errors[] = 'Username must be between 5 and 20 characters';
+        }
+
+        // username char type
+        if (!preg_match('/^\w+$/', $this->username)) {
+            $this->errors[] = 'Username can only consist of word characters without spaces';
+        }
+
+        // password length
+        if (strlen($this->password) < 8) {
+            $this->errors[] = 'Password must be at least 8 characters';
+        }
+
+        return $this->errors;
+    }
+}

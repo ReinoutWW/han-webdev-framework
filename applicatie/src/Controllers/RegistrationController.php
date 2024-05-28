@@ -2,8 +2,11 @@
 
 namespace App\Controllers;
 
+use App\Form\User\RegistrationForm;
 use RWFramework\Framework\Controller\AbstractController;
+use RWFramework\Framework\Http\RedirectResponse;
 use RWFramework\Framework\Http\Response;
+use RWFramework\Framework\Session\Session;
 
 class RegistrationController extends AbstractController
 {
@@ -12,8 +15,21 @@ class RegistrationController extends AbstractController
         return $this->render('register.html.twig');
     }
 
-    public function register(): Response
+    public function register(): RedirectResponse
     {
-        dd($this->request);
+        $form = new RegistrationForm();
+
+        $form->setFields(
+            $this->request->input('username'),
+            $this->request->input('password')
+        );
+
+        if($form->hasValidationErrors()) {
+            foreach($form->getValidationErrors() as $error) {
+                $this->request->getSession()->setFlash('error', $error);
+            }
+        }
+
+        return new RedirectResponse('/register');
     }
 }

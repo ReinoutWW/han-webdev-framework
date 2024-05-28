@@ -4,12 +4,18 @@ namespace RWFramework\Framework\Session;
 
 class Session implements SessionInterface {
     private const FLASH_KEY = 'flash';
+    public const NOTIFICATION_ERROR = 'error';
+    public const NOTIFICATION_SUCCESS = 'success';
+    public const NOTIFICATION_INFO = 'info';
+    public const NOTIFICATION_WARNING = 'warning';
 
     public function start(): void
     {
         // Like explained in college, we need to start the session in the constructor
         // This way, we can track the session throughout the application
-        session_start();
+        if(session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
     }
 
     public function set(string $key, $value): void
@@ -71,5 +77,21 @@ class Session implements SessionInterface {
     public function clearFlash(): void
     {
         unset($_SESSION[self::FLASH_KEY]);
+    }
+
+    public function hasNotification(): bool {
+        return $this->hasFlash(self::NOTIFICATION_ERROR) || 
+            $this->hasFlash(self::NOTIFICATION_SUCCESS) || 
+            $this->hasFlash(self::NOTIFICATION_INFO) || 
+            $this->hasFlash(self::NOTIFICATION_WARNING);
+    }
+
+    public function getNotificationTypes(): array {
+        return [
+            self::NOTIFICATION_ERROR,
+            self::NOTIFICATION_SUCCESS,
+            self::NOTIFICATION_INFO,
+            self::NOTIFICATION_WARNING
+        ];
     }
 }
