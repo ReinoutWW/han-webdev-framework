@@ -1,14 +1,6 @@
-{# This is the applications' main template. To prevent code duplication, always extend this html twig. #}
+{% extends 'Base/base.html.twig' %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link href="../css/style.css" rel="stylesheet" type="text/css"/>
-</head>
-<body>
+{% block body %}
     <header>
         <h1>Here's the header</h1>
     </header>
@@ -40,5 +32,4 @@
     <footer>
         This is the footer
     </footer>
-</body>
-</html>
+{% endblock %}
