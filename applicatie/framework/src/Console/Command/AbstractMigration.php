@@ -42,6 +42,11 @@ abstract class AbstractMigration {
 
             $schema = new Schema();
 
+            if($migrationToApply == []) {
+                echo 'All migrations are up to date. ' . PHP_EOL;
+                return 0;
+            }
+
             // Create SQL for any migrations which have not been run ..i.e. which are not in the database
             foreach($migrationToApply as $migration) {
                 // Require the object
@@ -62,6 +67,9 @@ abstract class AbstractMigration {
             }
 
             $this->connection->commit();
+
+            // Let the user know the migration was successful
+            echo 'Migrations executed successfully' . PHP_EOL;
 
             return 0;   
 
