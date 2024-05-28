@@ -8,7 +8,6 @@ use App\Repository\PostRepository;
 use RWFramework\Framework\Controller\AbstractController;
 use RWFramework\Framework\Http\RedirectResponse;
 use RWFramework\Framework\Http\Response;
-use RWFramework\Framework\Session\SessionInterface;
 
 class PostsController extends AbstractController {
     public function __construct(

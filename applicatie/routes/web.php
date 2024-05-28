@@ -11,5 +11,7 @@ return [
     ['POST', '/posts', [PostsController::class, 'store']],
     ['GET', '/hello/{name:.+}', function(string $name) { // Inline callback function
         return new Response("Hello $name");
-    }]
+    }],
+    ['GET', '/register', [\App\Controllers\RegistrationController::class, 'index']],
+    ['POST', '/register', [\App\Controllers\RegistrationController::class, 'register']],
 ];

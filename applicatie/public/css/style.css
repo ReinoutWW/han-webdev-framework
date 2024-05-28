@@ -2,10 +2,6 @@
 /* 1. Layout */
 /* 2. Submit form example */
 
-* {
-    box-sizing: border-box;
-}
-
 :root {
     --text-color-default: rgb(49, 49, 49);
 }
@@ -20,6 +16,11 @@
     margin: 0;
     box-sizing: border-box;
     font-family: 'Poppins';
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--text-color-default);
+    margin-bottom: 1rem;
 }
 
 .container {
@@ -94,6 +95,18 @@ footer {
     background-color: unset;
     box-shadow: unset;
     padding: 0;
+}
+
+.centre-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(70vh);
+    width: 100vw;
+}
+
+form {
+    min-width: 300px;
 }
 
 /* 2. Submit form example */
