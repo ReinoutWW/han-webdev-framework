@@ -21,8 +21,8 @@ class RequestHandler implements RequestHandlerInterface {
      * The middleware stack will be processed in order. (array_shift = FIFO)
      */
     private array $middleware = [
+        ExtractRouteInfo::class, // Extract the route info from the request
         StartSession::class, // Start the session
-        Authenticate::class, // Check if the user is authenticated
         RouterDispatch::class // Should be the final item! (This will dispatch the route and call the handler)
     ];
     
@@ -42,5 +42,13 @@ class RequestHandler implements RequestHandlerInterface {
         $response = $middleware->process($request, $this);
 
         return $response;
+    }
+
+    /**
+     * Inject middleware into the middleware stack.
+     * This can be used to add middleware to the stack from another place.
+     */
+    public function injectMiddleware(array $middleware): void {
+        array_splice($this->middleware, 0, 0, $middleware);
     }
 }

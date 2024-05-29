@@ -5,6 +5,8 @@ use RWFramework\Framework\Session\SessionInterface;
 
 class Request {
     private SessionInterface $session;
+    private mixed $routeHandler;
+    private array $routeHandlerArgs;
 
     public function __construct(
         // $_GET, $_POST, $_COOKIE, $_FILES, $_SERVER,
@@ -28,7 +30,6 @@ class Request {
     public function getPathInfo(): string {
         return strtok($this->server['REQUEST_URI'], '?');
     }
-
     public function getMethod(): string {
         return $this->server['REQUEST_METHOD'];
     }
@@ -43,5 +44,25 @@ class Request {
 
     public function input(string $key): mixed {
         return $this->postParams[$key];
+    }
+
+    public function getRouteHandler(): mixed
+    {
+        return $this->routeHandler;
+    }
+
+    public function setRouteHandler(mixed $routeHandler): void
+    {
+        $this->routeHandler = $routeHandler;
+    }
+
+    public function getRouteHandlerArgs(): array
+    {
+        return $this->routeHandlerArgs;
+    }
+
+    public function setRouteHandlerArgs(array $routeHandlerArgs): void
+    {
+        $this->routeHandlerArgs = $routeHandlerArgs;
     }
 }

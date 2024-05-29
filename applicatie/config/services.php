@@ -11,6 +11,8 @@ use RWFramework\Framework\Authentication\SessionAuthentication;
 use RWFramework\Framework\Console\Application;
 use RWFramework\Framework\Controller\AbstractController;
 use RWFramework\Framework\Dbal\ConnectionFactory;
+use RWFramework\Framework\Http\Middleware\Dummay;
+use RWFramework\Framework\Http\Middleware\extractRouteInfo;
 use RWFramework\Framework\Http\Middleware\RequestHandlerInterface;
 use RWFramework\Framework\Http\Middleware\RouterDispatch;
 use RWFramework\Framework\Routing\Router;
@@ -45,11 +47,6 @@ $container->add(
     RouterInterface::class, 
     Router::class
 );
-
-// Once instanciated, make sure to call the setRoutes method
-// This will configure the routes for the router
-$container->extend(RouterInterface::class)
-    ->addMethodCall('setRoutes', [new ArrayArgument($routes)]);
 
 $container->add(\RWFramework\Framework\Http\Kernal::class)
     ->addArguments([
@@ -121,5 +118,8 @@ $container->add(SessionAuthentication::class)
         UserRepository::class,
         SessionInterface::class
     ]);
+
+$container->add(\RWFramework\Framework\Http\Middleware\ExtractRouteInfo::class)
+    ->addArgument(new ArrayArgument($routes));
 
 return $container;
