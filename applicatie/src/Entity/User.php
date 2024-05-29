@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Entity;
+use RWFramework\Framework\Authentication\AuthUserInterface;
 
-class User {
+class User implements AuthUserInterface {
     public function __construct(
         private ?int $id,
         private string $username,
@@ -25,6 +26,11 @@ class User {
 
     public function setId(int $id): void {
         $this->id = $id;
+    }
+
+    public function getAuthId(): int
+    {
+        return $this->id;
     }
 
     public function getUsername(): string {

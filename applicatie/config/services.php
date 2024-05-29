@@ -1,13 +1,14 @@
 <?php
 
+use App\Repository\UserRepository;
 use Applicatie\Framework\Src\Console\Command\AbstractMigration;
 use Doctrine\DBAL\Connection;
 use League\Container\Argument\Literal\ArrayArgument;
 use League\Container\Argument\Literal\StringArgument;
 use League\Container\Container;
 use League\Container\ReflectionContainer;
+use RWFramework\Framework\Authentication\SessionAuthentication;
 use RWFramework\Framework\Console\Application;
-use RWFramework\Framework\Console\Command\MigrateDatabase;
 use RWFramework\Framework\Controller\AbstractController;
 use RWFramework\Framework\Dbal\ConnectionFactory;
 use RWFramework\Framework\Http\Middleware\RequestHandlerInterface;
@@ -18,8 +19,6 @@ use RWFramework\Framework\Session\Session;
 use RWFramework\Framework\Session\SessionInterface;
 use RWFramework\Framework\Template\TwigFactory;
 use Symfony\Component\Dotenv\Dotenv;
-use Twig\Environment;
-use Twig\Loader\FilesystemLoader;
 
 $env = new Dotenv();
 $env->load(BASE_PATH . '/.env');
@@ -116,5 +115,11 @@ $container->inflector(AbstractMigration::class)
 
 $container->add(Application::class)
     ->addArgument($container);
+
+$container->add(SessionAuthentication::class)
+    ->addArguments([
+        UserRepository::class,
+        SessionInterface::class
+    ]);
 
 return $container;

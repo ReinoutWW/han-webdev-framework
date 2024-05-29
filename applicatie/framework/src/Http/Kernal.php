@@ -4,6 +4,7 @@
 namespace RWFramework\Framework\Http;
 
 use Psr\Container\ContainerInterface;
+use RWFramework\Framework\Authentication\SessionAuthentication;
 use RWFramework\Framework\Http\Middleware\RequestHandlerInterface;
 use RWFramework\Framework\Routing\RouterInterface;
 

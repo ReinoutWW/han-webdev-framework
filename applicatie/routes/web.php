@@ -16,4 +16,5 @@ return [
     ['POST', '/register', [\App\Controllers\RegistrationController::class, 'register']],
     ['GET', '/login', [\App\Controllers\LoginController::class, 'index']],
     ['POST', '/login', [\App\Controllers\LoginController::class, 'login']],
+    ['GET', '/dashboard', [\App\Controllers\DashboardController::class, 'index']],
 ];
