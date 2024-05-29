@@ -14,4 +14,6 @@ return [
     }],
     ['GET', '/register', [\App\Controllers\RegistrationController::class, 'index']],
     ['POST', '/register', [\App\Controllers\RegistrationController::class, 'register']],
+    ['GET', '/login', [\App\Controllers\LoginController::class, 'index']],
+    ['POST', '/login', [\App\Controllers\LoginController::class, 'login']],
 ];
