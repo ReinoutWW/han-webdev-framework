@@ -5,6 +5,11 @@ namespace App\Repository;
 use App\Entity\User;
 use Doctrine\DBAL\Connection;
 
+/**
+ * The UserMapper class is responsible for saving user records to the database.
+ * It will communicate with the database directly to map and save user records.
+ * No go: It should not contain any business logic or validation. (e.g. sending notifications, emails etc.)
+ */
 class UserMapper {
     public function __construct(
         private Connection $connection

@@ -7,6 +7,11 @@ use Doctrine\DBAL\Connection;
 use RWFramework\Framework\Authentication\AuthRepositoryInterface;
 use RWFramework\Framework\Authentication\AuthUserInterface;
 
+/**
+ * The UserRepository class is responsible for providing a collection-like interface for working with user records in the database.
+ * It provides methods and properties for working with user records.
+ * No go: The UserRepository class should not interact with the database directly. Instead, it should delegate this responsibility to a separate class. (e.g. DataMapper)
+ */
 class UserRepository implements AuthRepositoryInterface {
     public function __construct(private Connection $connection)
     {
