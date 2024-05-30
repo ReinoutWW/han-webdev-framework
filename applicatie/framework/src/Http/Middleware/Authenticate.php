@@ -18,7 +18,7 @@ class Authenticate implements MiddlewareInterface {
     public function process(Request $request, RequestHandlerInterface $handler): Response {
         $this->session->start();  
 
-        if(!$this->session->has(SessionAuthentication::AUTH_ID_KEY)) {
+        if(!$this->session->isAuthenticated()) {
             $this->session->setFlash(Session::NOTIFICATION_ERROR, 'Not authenticated, please sign in.');
             return new RedirectResponse('/login');
         }

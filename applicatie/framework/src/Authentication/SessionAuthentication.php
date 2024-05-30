@@ -2,10 +2,10 @@
 
 namespace RWFramework\Framework\Authentication;
 
+use RWFramework\Framework\Session\Session;
 use RWFramework\Framework\Session\SessionInterface;
 
 class SessionAuthentication implements SessionAuthInterface {
-    public const AUTH_ID_KEY = 'auth_id';
     private AuthUserInterface $user;
 
     public function __construct(
@@ -41,7 +41,7 @@ class SessionAuthentication implements SessionAuthInterface {
         $this->session->start();
 
         // Set the user in the session (login)
-        $this->session->set(self::AUTH_ID_KEY, $user->getAuthId());
+        $this->session->set(Session::AUTH_ID_KEY, $user->getAuthId());
         
         // Set the user here
         $this->user = $user;
@@ -49,7 +49,7 @@ class SessionAuthentication implements SessionAuthInterface {
 
     public function logout(): void
     {
-        // TODO: Implement logout() method.
+        $this->session->remove(Session::AUTH_ID_KEY);
     }
 
     public function user(): ?AuthUserInterface

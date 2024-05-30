@@ -49,5 +49,8 @@ class Kernal {
 
     public function terminate(Request $request, Response $response): void {
         $request->getSession()?->clearFlash(); // The question mark is a null check, just like in C#
+        
+        // Remove auth_key from session
+        //$request->getSession()?->remove(SessionAuthentication::AUTH_ID_KEY);
     }
 }

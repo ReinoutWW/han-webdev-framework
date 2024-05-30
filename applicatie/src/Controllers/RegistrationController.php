@@ -4,15 +4,16 @@ namespace App\Controllers;
 
 use App\Form\User\RegistrationForm;
 use App\Repository\UserMapper;
+use RWFramework\Framework\Authentication\SessionAuthentication;
 use RWFramework\Framework\Controller\AbstractController;
 use RWFramework\Framework\Http\RedirectResponse;
 use RWFramework\Framework\Http\Response;
-use RWFramework\Framework\Session\Session;
 
 class RegistrationController extends AbstractController
 {
     public function __construct(
-        private UserMapper $userMapper
+        private UserMapper $userMapper,
+        private SessionAuthentication $sessionAuthentication
     ){}
 
     public function index(): Response
@@ -38,11 +39,14 @@ class RegistrationController extends AbstractController
         }
 
         // Register user
-        $form->save();
+        $user = $form->save();
 
         // Log success 
         $this->request->getSession()->setFlash('success', 'You have been registered successfully!');
 
-        return new RedirectResponse('/');
+        // Log the user in
+        $this->sessionAuthentication->login($user);
+
+        return new RedirectResponse('/dashboard');
     }
 }

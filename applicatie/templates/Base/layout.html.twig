@@ -3,6 +3,11 @@
 {% block body %}
     <header>
         <h1>Here's the header</h1>
+        {% if session().isAuthenticated() %}
+            <a href='/logout'>Log out</a>
+        {% else %}
+            <a href='/login'>Log in</a>
+        {% endif %}
     </header>
     <nav>
         <a href="/">nav 1</a>
