@@ -2,8 +2,9 @@
 
 namespace App\Entity;
 use RWFramework\Framework\Authentication\AuthUserInterface;
+use RWFramework\Framework\Dbal\Entity;
 
-class User implements AuthUserInterface {
+class User extends Entity implements AuthUserInterface {
     public function __construct(
         private ?int $id,
         private string $username,

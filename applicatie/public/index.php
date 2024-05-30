@@ -6,6 +6,9 @@
 // It's also a perfect example of encapsulation because it hides the complexity of the application
 
 use App\EventListener\ContentLengthListener;
+use App\EventListener\InternalErrorListener;
+use App\EventListener\PostPersistListener;
+use RWFramework\Framework\Dbal\Event\PostPersist;
 use RWFramework\Framework\EventDispatcher\EventDispatcher;
 use RWFramework\Framework\Http\Event\ResponseEvent;
 use RWFramework\Framework\Http\Kernal;
@@ -19,9 +22,20 @@ require_once BASE_PATH . '/vendor/autoload.php';
 $container = require BASE_PATH . '/config/services.php';
 
 $eventDispatcher = $container->get(EventDispatcher::class);
+
+$eventDispatcher->addListener(
+    ResponseEvent::class, 
+    new InternalErrorListener()
+);
+
 $eventDispatcher->addListener(
     ResponseEvent::class, 
     new ContentLengthListener()
+);
+
+$eventDispatcher->addListener(
+    PostPersist::class,
+    new PostPersistListener()
 );
 
 // Request received

@@ -4,18 +4,19 @@ namespace App\Repository;
 
 use App\Entity\Post;
 use Doctrine\DBAL\Connection;
+use RWFramework\Framework\Dbal\DataMapper;
 
 /**
  * Data mapper pattern
  */
 class PostMapper {
     public function __construct(
-        private Connection $connection
+        private DataMapper $dataMapper
     ) {}
 
     public function save(Post $post): void
     {
-        $stmt = $this->connection->prepare("
+        $stmt = $this->dataMapper->getConnection()->prepare("
             INSERT INTO posts (title, body, created_at)
             VALUES (:title, :body, :created_at) 
         ");
@@ -26,7 +27,7 @@ class PostMapper {
 
         $stmt->executeStatement();
 
-        $id = $this->connection->lastInsertId();
+        $id = $this->dataMapper->save($post);
 
         $post->setId($id);
     }

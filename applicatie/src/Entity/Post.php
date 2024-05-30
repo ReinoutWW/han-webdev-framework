@@ -3,8 +3,9 @@
 namespace App\Entity;
 
 use DateTimeImmutable;
+use RWFramework\Framework\Dbal\Entity;
 
-class Post {
+class Post extends Entity {
     public function __construct(
         private ?int $id,
         private string $title,
