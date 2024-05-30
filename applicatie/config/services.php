@@ -12,8 +12,6 @@ use RWFramework\Framework\Console\Application;
 use RWFramework\Framework\Controller\AbstractController;
 use RWFramework\Framework\Dbal\ConnectionFactory;
 use RWFramework\Framework\EventDispatcher\EventDispatcher;
-use RWFramework\Framework\Http\Middleware\Dummay;
-use RWFramework\Framework\Http\Middleware\extractRouteInfo;
 use RWFramework\Framework\Http\Middleware\RequestHandlerInterface;
 use RWFramework\Framework\Http\Middleware\RouterDispatch;
 use RWFramework\Framework\Routing\Router;
@@ -24,7 +22,7 @@ use RWFramework\Framework\Template\TwigFactory;
 use Symfony\Component\Dotenv\Dotenv;
 
 $env = new Dotenv();
-$env->load(BASE_PATH . '/.env');
+$env->load(dirname(__DIR__) . '/.env');
 
 $container = new Container();
 
@@ -32,12 +30,15 @@ $container = new Container();
 $container->delegate(new ReflectionContainer(true));
 
 # Parameters for the applciation
-$routes = include BASE_PATH . '/routes/web.php';
+$basePath = dirname(__DIR__);
+$container->add('base-path', new StringArgument($basePath));
+
+$routes = include $basePath . '/routes/web.php';
 $appEnv = $_SERVER['APP_ENV'];
-$templatesPath = BASE_PATH . '/templates';
+$templatesPath = $basePath . '/templates';
 
 $container->add('APP_ENV', new StringArgument($appEnv));
-$databaseUrl = 'sqlite:///'. BASE_PATH . '/var/db.sqlite';
+$databaseUrl = 'sqlite:///'. $basePath . '/var/db.sqlite';
 
 $container->add('base-commands-namespace', new StringArgument('RWFramework\\Framework\\Console\\Command\\'));
 
@@ -111,7 +112,7 @@ $container->add(AbstractMigration::class);
 // Inflect the abstract controller to set the connection and the migrations path
 $container->inflector(AbstractMigration::class)
     ->invokeMethod('setConnection', [Connection::class])
-    ->invokeMethod('setMigrationsPath', [new StringArgument(BASE_PATH . '/migrations')]);
+    ->invokeMethod('setMigrationsPath', [new StringArgument($basePath . '/migrations')]);
 
 $container->add(Application::class)
     ->addArgument($container);
