@@ -2,18 +2,18 @@
 
 {% block body %}
     <header>
-        <h1>Here's the header</h1>
-        {% if session().isAuthenticated() %}
-            <a href='/logout'>Log out</a>
-        {% else %}
-            <a href='/login'>Log in</a>
-        {% endif %}
+        <h1>GelreAirport</h1>
+        <div>
+            {% if session().isAuthenticated() %}
+                <a href='/logout'>Log out</a>
+            {% else %}
+                <a href='/login'>Log in</a>
+            {% endif %}
+        </div>
     </header>
     <nav>
+        {# Based on roles, show the navigation items #}
         <a href="/">nav 1</a>
-        <a href="/">nav 2</a>
-        <a href="/">nav 3</a>
-        <a href="/">nav 4</a>
     </nav>
     <main>
         {# Flash messages #}

@@ -31,5 +31,8 @@ return [
             RWFramework\Framework\Http\Middleware\Authenticate::class,
             RWFramework\Framework\Http\Middleware\Dummy::class
         ]
-    )
+    ),
+    new Route('GET', '/vluchten', [\App\Controllers\FlightController::class, 'index'], [
+        RWFramework\Framework\Http\Middleware\Authenticate::class
+    ])
 ];

@@ -38,7 +38,8 @@ $appEnv = $_SERVER['APP_ENV'];
 $templatesPath = $basePath . '/templates';
 
 $container->add('APP_ENV', new StringArgument($appEnv));
-$databaseUrl = 'sqlite:///'. $basePath . '/var/db.sqlite';
+// Debug: $databaseUrl = 'sqlite:///'. $basePath . '/var/db.sqlite';
+$databaseUrl = 'pdo_sqlsrv://Server=database_server;Database=muziekschool;User Id=sa;Password=abc123!@#';
 
 $container->add('base-commands-namespace', new StringArgument('RWFramework\\Framework\\Console\\Command\\'));
 

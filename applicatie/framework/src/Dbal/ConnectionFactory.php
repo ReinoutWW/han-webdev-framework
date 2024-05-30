@@ -13,6 +13,20 @@ class ConnectionFactory {
     }
 
     public function create(): \Doctrine\DBAL\Connection {
-        return DriverManager::getConnection(['url' => $this->databaseUrl]);
+        $connectionParams = array(
+            'user' => 'sa',
+            'password' => 'abc123!@#',
+            'host' => 'database_server',
+            'post' => 1434,
+            'dbname' => 'GelreAirport',
+            'driver' => 'pdo_sqlsrv',
+            'driverOptions' => [
+                'Encrypt' => '0',
+            ]
+        );
+
+        return DriverManager::getConnection(
+            $connectionParams
+        );
     }
 }

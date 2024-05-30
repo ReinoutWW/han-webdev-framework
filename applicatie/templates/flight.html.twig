@@ -1,0 +1,37 @@
+{% extends 'Base/layout.html.twig' %}
+
+{% block main %}
+    <h2>Overzicht vluchten</h2>
+    <table class="rw-table">
+        <thead>
+            <tr>
+                <th>Vertrek</th>
+                <th>Aankomst</th>
+                <th>Vertrektijd</th>
+                <th>Aankomsttijd</th>
+                <th>Maatschappij</th>
+                <th>Vluchtnummer</th>
+                <th>Prijs</th>
+                <th>Acties</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for flight in flights %}
+                <tr>
+                    <td>{{ flight.departure }}</td>
+                    <td>{{ flight.arrival }}</td>
+                    <td>{{ flight.departureTime|date('d-m-Y H:i') }}</td>
+                    <td>{{ flight.arrivalTime|date('d-m-Y H:i') }}</td>
+                    <td>{{ flight.airline }}</td>
+                    <td>{{ flight.flightNumber }}</td>
+                    <td>{{ flight.price }}</td>
+                    <td>
+                        <a href="/flight/{{ flight.id }}">Bekijk</a>
+                        <a href="/flight/{{ flight.id }}/edit">Bewerk</a>
+                        <a href="/flight/{{ flight.id }}/delete">Verwijder</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

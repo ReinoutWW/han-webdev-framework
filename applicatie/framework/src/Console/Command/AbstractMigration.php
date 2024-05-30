@@ -2,6 +2,7 @@
 
 namespace Applicatie\Framework\Src\Console\Command;
 
+use DateTime;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\DBAL\Types\Types;
@@ -25,6 +26,7 @@ abstract class AbstractMigration {
     abstract function execute(array $params = []): int;
 
     protected function processMigrations(string $migrationDirection): int {
+
         try {
             // Create a migrations table SQL if table not already in existence
             $this->createMigrationsTable();
@@ -82,13 +84,14 @@ abstract class AbstractMigration {
 
     protected function insertMigration(string $migration): void {
         // Placeholdr sql query (? = entry '1' which will be bound later on)
-        $sql = 'INSERT INTO migrations (migration) VALUES (?)';
+        $sql = 'INSERT INTO migrations (migration, created_at) VALUES (?, ?)';
 
         // Prepare sql statement (Also against SQL injection)
         $stmt = $this->connection->prepare($sql);
 
         // Bind the value to the placeholder
         $stmt->bindValue(1, $migration);
+        $stmt->bindValue(2, date("Y/m/d H:i:s"));
 
         $stmt->executeStatement();
     }
