@@ -35,4 +35,19 @@ class Response {
     public function getHeader(string $name): mixed {
         return $this->headers[$name] ?? null;
     }
+
+    public function getHeaders(): array
+    {
+        return $this->headers;
+    }
+
+    public function setHeader($key, $value): void
+    {
+        $this->headers[$key] = $value;
+    }
+
+    public function getContent(): ?string
+    {
+        return $this->content;
+    }
 }

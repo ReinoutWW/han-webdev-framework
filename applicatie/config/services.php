@@ -11,6 +11,7 @@ use RWFramework\Framework\Authentication\SessionAuthentication;
 use RWFramework\Framework\Console\Application;
 use RWFramework\Framework\Controller\AbstractController;
 use RWFramework\Framework\Dbal\ConnectionFactory;
+use RWFramework\Framework\EventDispatcher\EventDispatcher;
 use RWFramework\Framework\Http\Middleware\Dummay;
 use RWFramework\Framework\Http\Middleware\extractRouteInfo;
 use RWFramework\Framework\Http\Middleware\RequestHandlerInterface;
@@ -48,11 +49,13 @@ $container->add(
     Router::class
 );
 
+$container->addShared(EventDispatcher::class);
+
 $container->add(\RWFramework\Framework\Http\Kernal::class)
     ->addArguments([
-        RouterInterface::class, 
         $container, 
-        RequestHandlerInterface::class
+        RequestHandlerInterface::class,
+        EventDispatcher::class
 ]);
 
 $container->add(

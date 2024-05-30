@@ -5,6 +5,8 @@ namespace RWFramework\Framework\Http;
 
 use Psr\Container\ContainerInterface;
 use RWFramework\Framework\Authentication\SessionAuthentication;
+use RWFramework\Framework\EventDispatcher\EventDispatcher;
+use RWFramework\Framework\Http\Event\ResponseEvent;
 use RWFramework\Framework\Http\Middleware\RequestHandlerInterface;
 use RWFramework\Framework\Routing\RouterInterface;
 
@@ -12,9 +14,9 @@ class Kernal {
     private string $appEnv;
 
     public function __construct(
-        private RouterInterface $router,
         private ContainerInterface $container,
-        private RequestHandlerInterface $requestHandler
+        private RequestHandlerInterface $requestHandler,
+        private EventDispatcher $eventDispatcher
     ) { // PHP 8 will automatically create the property and assign the value
         $this->appEnv = $container->get('APP_ENV');
     }
@@ -27,6 +29,8 @@ class Kernal {
         catch(\Exception $exception) {
             $response = $this->createExceptionResponse($exception);
         }
+
+        $this->eventDispatcher->dispatch(new ResponseEvent($request, $response));
 
         return $response;
     }

@@ -5,6 +5,9 @@
 // It is the only file that is accessible from the outside world
 // It's also a perfect example of encapsulation because it hides the complexity of the application
 
+use App\EventListener\ContentLengthListener;
+use RWFramework\Framework\EventDispatcher\EventDispatcher;
+use RWFramework\Framework\Http\Event\ResponseEvent;
 use RWFramework\Framework\Http\Kernal;
 use RWFramework\Framework\Http\Request;
 
@@ -14,6 +17,12 @@ define('BASE_PATH', dirname(__DIR__));
 require_once BASE_PATH . '/vendor/autoload.php';
 
 $container = require BASE_PATH . '/config/services.php';
+
+$eventDispatcher = $container->get(EventDispatcher::class);
+$eventDispatcher->addListener(
+    ResponseEvent::class, 
+    new ContentLengthListener()
+);
 
 // Request received
 $request = Request::createFromGlobals();

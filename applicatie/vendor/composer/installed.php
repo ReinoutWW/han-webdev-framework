@@ -107,6 +107,17 @@
                 0 => '^1.0',
             ),
         ),
+        'psr/event-dispatcher' => array(
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'reference' => 'bbd9eacc080d33861e5b5c75b3b8c4d7e6d01874',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../psr/event-dispatcher',
+            'aliases' => array(
+                0 => '1.0.x-dev',
+            ),
+            'dev_requirement' => false,
+        ),
         'psr/log' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
@@ -121,7 +132,7 @@
         'rg/rg-framework' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '59c99df6ad812ab723b7289b4f85a98a271f640c',
+            'reference' => '66bda99d65cb922c722e41920607ae4b942e06a4',
             'type' => 'library',
             'install_path' => __DIR__ . '/../rg/rg-framework',
             'aliases' => array(),
@@ -177,7 +188,7 @@
         'symfony/var-dumper' => array(
             'pretty_version' => '6.4.x-dev',
             'version' => '6.4.9999999.9999999-dev',
-            'reference' => '102f7508927a82036f80ddeb59d6c59b0e2ed2f1',
+            'reference' => 'be84ef67ca27b0e45d59e952d8825f9ed212529d',
             'type' => 'library',
             'install_path' => __DIR__ . '/../symfony/var-dumper',
             'aliases' => array(),
