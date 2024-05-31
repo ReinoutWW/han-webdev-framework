@@ -9,12 +9,18 @@
 }
 
 .btn-primary {
-    background-color: rgb(47, 137, 255);
+    background-color: var(--base-color-blue-50);
+    color: var(--base-color-blue-500);
     width: fit-content;
+    font-size: medium;
+}
+
+.btn-primary a {
+    color: var(--base-color-blue-500);
 }
 
 .btn-primary:hover {
-    background-color: rgb(16, 94, 197);
+    background-color: var(--base-color-blue-100);
 }
 
 .btn-secondary {
@@ -26,8 +32,4 @@
 .btn-secondary:hover {
     background-color: rgb(242, 242, 242);
     border: 1px dashed rgb(0, 0, 0);
-}
-
-.btn-primary a {
-    color: white;
 }

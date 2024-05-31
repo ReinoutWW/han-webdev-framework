@@ -1,0 +1,37 @@
+/* Tag */
+
+span[class^="tag-"] {
+    border-radius: 1rem;
+    padding: 0.1rem 0.5rem;
+    font-size: small;
+}
+
+.tag-green {
+    background-color: var(--base-color-green-100);
+    color: var(--base-color-green-500);
+    border: 1px solid var(--base-color-green-300);
+}
+
+.tag-blue {
+    background-color: var(--base-color-blue-100);
+    color: var(--base-color-blue-500);
+    border: 1px solid var(--base-color-blue-300);
+}
+
+.tag-red {
+    background-color: var(--base-color-red-100);
+    color: var(--base-color-red-500);
+    border: 1px solid var(--base-color-red-300);
+}
+
+.tag-yellow {
+    background-color: var(--base-color-yellow-100);
+    color: var(--base-color-yellow-900);
+    border: 1px solid var(--base-color-yellow-900);
+}
+
+.tag-gray {
+    background-color: var(--base-color-gray-100);
+    color: var(--base-color-gray-500);
+    border: 1px solid var(--base-color-gray-300);
+}

@@ -40,6 +40,34 @@ class FlightRepository {
         );
     }
 
+    public function findFlightsByFlightNumbers(array $flightNumbers) {
+        $queryBuilder = $this->connection->createQueryBuilder();
+
+        $queryBuilder->select('vluchtnummer', 'bestemming', 'gatecode', 'max_aantal', 'max_gewicht_pp', 'max_totaalgewicht', 'vertrektijd', 'maatschappijcode')
+            ->from('Vlucht')
+            ->where('vluchtnummer IN (:vluchtnummers)')
+            ->setParameter('vluchtnummers', $flightNumbers, Connection::PARAM_INT_ARRAY);
+
+        $result = $queryBuilder->executeQuery();
+
+        $flights = [];
+
+        while($row = $result->fetchAssociative()) {
+            $flights[] = Flight::create(
+                flightNumber: $row['vluchtnummer'],
+                destination: $row['bestemming'],
+                gate: $row['gatecode'],
+                maxPassengers: $row['max_aantal'],
+                maxWeightPerPassenger: $row['max_gewicht_pp'],
+                maxTotalWeight: $row['max_totaalgewicht'],
+                departureTime: new \DateTimeImmutable($row['vertrektijd']),
+                airlineCode: $row['maatschappijcode']
+            );
+        }
+
+        return $flights;
+    }
+
     public function getMaxSeatsByFlightNumber(int $flightNumber) {
         $queryBuilder = $this->connection->createQueryBuilder();
 

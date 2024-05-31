@@ -39,9 +39,16 @@ class FlightController extends AbstractController
         // Get the flight from the Repository
         $flight = $this->flightRepository->findByFlightNumber($flightNumber);
 
+        // If employee watches the flight, get the passenger details
+        //$passengers = $this->passengerRepository->getPassengersByFlightNumber($flightNumber);
+
+        // If passenger watches the flight, get the personal passenger details
+        $passengerDetails = $this->passengerRepository->getBookedFlightPassengerDetails($this->request->getSession()->getUser(), $flightNumber);
+
         // Return the view with the flight
         return $this->render("Flight/flight-detail.html.twig", [
-            'flight' => $flight
+            'flight' => $flight,
+            'passenger_details' => $passengerDetails,
         ]);
     }
 
@@ -102,5 +109,17 @@ class FlightController extends AbstractController
         $this->request->getSession()->setFlash(Session::NOTIFICATION_SUCCESS, 'Uw stoel is succesvol geboekt!');
 
         return new RedirectResponse('/vluchten/' . $flightNumber);
+    }
+
+    public function booked() {
+        // Get user from session
+        $user = $this->request->getSession()->getUser();
+
+        // Get all booked flights
+        $flights = $this->passengerRepository->getBookedFlights($user);
+
+        return $this->render("Flight/booked-flights.html.twig", [
+            'flights' => $flights
+        ]);
     }
 }

@@ -47,4 +47,7 @@ return [
     new Route('POST', '/boeken/{flightNumber:\d+}', [\App\Controllers\FlightController::class, 'book'], [
         RWFramework\Framework\Http\Middleware\Authenticate::class
     ]),
+    new Route('GET', '/boekingen/vluchten', [\App\Controllers\FlightController::class, 'booked'], [
+        RWFramework\Framework\Http\Middleware\Authenticate::class
+    ]),
 ];

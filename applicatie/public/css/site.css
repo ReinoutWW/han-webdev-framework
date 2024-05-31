@@ -4,6 +4,7 @@
 
 :root {
     --text-color-default: rgb(49, 49, 49);
+    --base-color-gray-50: rgb(250, 250, 250);
     --base-color-gray-100: rgb(242, 242, 242);
     --base-color-gray-200: rgb(217, 217, 217);
     --base-color-gray-300: rgb(191, 191, 191);
@@ -13,6 +14,54 @@
     --base-color-gray-700: rgb(89, 89, 89);
     --base-color-gray-800: rgb(64, 64, 64);
     --base-color-gray-900: rgb(38, 38, 38);
+
+    /* Green */
+    --base-color-green-50: rgb(241, 248, 233);
+    --base-color-green-100: rgb(232, 255, 233);
+    --base-color-green-200: rgb(200, 230, 201);
+    --base-color-green-300: rgb(165, 214, 167);
+    --base-color-green-400: rgb(129, 199, 132);
+    --base-color-green-500: rgb(76, 175, 80);
+    --base-color-green-600: rgb(67, 160, 71);
+    --base-color-green-700: rgb(56, 142, 60);
+    --base-color-green-800: rgb(46, 125, 50);
+    --base-color-green-900: rgb(27, 94, 32);
+
+    /* Blue */
+    --base-color-blue-50: rgb(227, 242, 253);
+    --base-color-blue-100: rgb(187, 222, 251);
+    --base-color-blue-200: rgb(144, 202, 249);
+    --base-color-blue-300: rgb(100, 181, 246);
+    --base-color-blue-400: rgb(66, 165, 245);
+    --base-color-blue-500: rgb(33, 150, 243);
+    --base-color-blue-600: rgb(30, 136, 229);
+    --base-color-blue-700: rgb(25, 118, 210);
+    --base-color-blue-800: rgb(21, 101, 192);
+    --base-color-blue-900: rgb(13, 71, 161);
+
+    /* Red */
+    --base-color-red-50: rgb(255, 205, 210);
+    --base-color-red-100: rgb(255, 205, 210);
+    --base-color-red-200: rgb(239, 154, 154);
+    --base-color-red-300: rgb(229, 115, 115);
+    --base-color-red-400: rgb(239, 83, 80);
+    --base-color-red-500: rgb(244, 67, 54);
+    --base-color-red-600: rgb(229, 57, 53);
+    --base-color-red-700: rgb(211, 47, 47);
+    --base-color-red-800: rgb(198, 40, 40);
+    --base-color-red-900: rgb(183, 28, 28);
+
+    /* Yellow */
+    --base-color-yellow-50: rgb(255, 249, 196);
+    --base-color-yellow-100: rgb(255, 253, 231);
+    --base-color-yellow-200: rgb(255, 249, 196);
+    --base-color-yellow-300: rgb(255, 245, 157);
+    --base-color-yellow-400: rgb(255, 241, 118);
+    --base-color-yellow-500: rgb(255, 238, 88);
+    --base-color-yellow-600: rgb(255, 235, 59);
+    --base-color-yellow-700: rgb(253, 216, 53);
+    --base-color-yellow-800: rgb(251, 192, 45);
+    --base-color-yellow-900: rgb(249, 168, 37);
 }
 
 /* 1. Layout */

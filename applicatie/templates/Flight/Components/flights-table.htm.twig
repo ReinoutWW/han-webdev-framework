@@ -1,0 +1,54 @@
+{% block flightsTable %}
+<table class="rw-table">
+    <thead>
+        <tr>
+            <th>Vluchtnummer</th>
+            <th>Bestemming</th>
+            <th>Gatecode</th>
+            <th>Max aantal passagiers</th>
+            <th>Max gewicht pp</th>
+            <th>Max gewicht totaal</th>
+            <th>Vertrektijd</th>
+            <th>Maatschappijcode</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if flights is not empty %}
+            {% for flight in flights %}
+                <tr>    
+                    <td><a class="rw-link" href="/vluchten/{{flight.flightNumber}}">{{ flight.flightNumber }}</a></td>
+                    <td>{{ flight.destination|capitalize }}</td>
+                    <td>{{ flight.gate|capitalize }}</td>
+                    <td>{{ flight.maxPassengers }}</td>
+                    <td>{{ flight.maxWeightPerPassenger }}</td>
+                    <td>{{ flight.maxTotalWeight }}</td>
+                    <td>{{ flight.departureTime|date('d-m-Y H:i') }}</td>
+                    <td>{{ flight.airlineCode|capitalize }}</td>
+                </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                <td colspan="8">Geen vluchten gevonden</td>
+            </tr>
+        {% endif %}
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="8">
+                Vluchten ingeladen: {{ flights|length }}
+                <span class="pagination">   
+                    {# Next / previous flight with < and > #}
+                    {% if page > 0 %}
+                        <button class="btn btn-secondary">
+                            <a href="/vluchten?page={{ (page - 1) }}">&lt; Vorige</a>
+                        </button>
+                    {% endif %}
+                    <button class="btn btn-secondary">
+                        <a href="/vluchten?page={{ (page + 1) }}" class="ml-1">Volgende &gt;</a>
+                    </button>
+                </div>
+            </td>
+        </tr>
+    </tfoot>
+</table>
+{% endblock %}

@@ -3,11 +3,12 @@
 {% block main %}
 <div class="container-invisible">
     <button class="btn btn-primary">
-        <a href="/vluchten/nieuw" >Nieuwe vlucht</a>
+        <a href="/vluchten">Terug naar overzicht</a>
     </button>
 </div>
 <div class="container">
     <h2>Overzicht vluchten</h2>
-    {% include 'Flight/Components/flights-table.htm.twig' %}
+        {% include 'Flight/Components/flights-table.htm.twig' %}
+    <h2>Details</h2>
 </div>
 {% endblock %}
