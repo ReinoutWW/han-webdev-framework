@@ -64,23 +64,6 @@
 <div class="container">
     <div>
         <h2>Passagiers</h2>
-        <div>
-            {% if passengers is not empty %}
-                {% for passenger in passengers %}
-                    <div class="passenger">
-                        <div class="passenger-info">
-                            <div class="passenger-name">{{ passenger.name }}</div>
-                            <div class="passenger-seat">{{ passenger.seatNumber }}</div>
-                        </div>
-                        <div class="passenger-status">
-                            <span class="tag-green">Geboekt</span>
-                        </div>
-                    </div>
-                {% endfor %}
-            {% else %}
-                <div>Geen passagiers geboekt</div>
-            {% endif %}
-        </div>
         <div class="plane">
             <div class="plane-front">
                 <div class="cockpit">
@@ -96,22 +79,57 @@
                 </div>
             </div>
             <div class="plane-body">
-                {% for i in 1..5 %}
+                {% set max_seats = 30 %}
+
+                {% set seat_counter = 1 %}
+                {% set sections_per_supersection = 3 %}
+                {% set seats_per_section = 4 %}
+                {% set total_sections = max_seats // seats_per_section %}
+                {% set total_supersections = (total_sections + sections_per_supersection - 1) // sections_per_supersection %}
+
+                {% for i in 1..total_supersections %}
                     <div class="plane-supersection">
-                    {% for i2 in 1..3 %}
-                        <div class="plane-section">
-                            <div class="plane-subsection">
-                                <div class="seat">A{{(i * i2)}}</div>
-                                <div class="seat">A{{(i * i2)}}</div>
-                            </div>
-                            <div class="plane-subsection">
-                                <div class="seat">A{{i}}</div>
-                                <div class="seat">A{{i}}</div>
-                            </div>
-                        </div>
-                    {% endfor %}
+                        {% for i2 in 1..sections_per_supersection %}
+                            {% if seat_counter < max_seats %}
+                                <div class="plane-section">
+                                    <div class="plane-subsection">
+                                        {% if seat_counter <= max_seats %}
+                                            {% set seat1 = 'A' ~ seat_counter %}
+                                            <div class="seat {{ isInList(seat1, passengers) ? 'taken' : '' }}">
+                                                {{ seat1 }} 
+                                            </div>
+                                            {% set seat_counter = seat_counter + 1 %}
+                                        {% endif %}
+                                        {% if seat_counter <= max_seats %}
+                                            {% set seat2 = 'A' ~ seat_counter %}
+                                            <div class="seat {{ isInList(seat2, passengers) ? 'taken' : '' }}">
+                                                {{ seat2 }}
+                                            </div>
+                                            {% set seat_counter = seat_counter + 1 %}
+                                        {% endif %}
+                                    </div>
+                                    <div class="plane-subsection">
+                                        {% if seat_counter <= max_seats %}
+                                            {% set seat3 = 'A' ~ seat_counter %}
+                                            <div class="seat {{ isInList(seat3, passengers) ? 'taken' : '' }}">
+                                                {{ seat3 }}
+                                            </div>
+                                            {% set seat_counter = seat_counter + 1 %}
+                                        {% endif %}
+                                        {% if seat_counter <= max_seats %}
+                                            {% set seat4 = 'A' ~ seat_counter %}
+                                            <div class="seat {{ isInList(seat4, passengers) ? 'taken' : '' }}">
+                                                {{ seat4 }}
+                                            </div>
+                                            {% set seat_counter = seat_counter + 1 %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
                     </div>
                 {% endfor %}
+
                 <div class="plane-tail">
                     <div class="backroom">
                         <div class="toilet-room">

@@ -2,6 +2,7 @@
 
 namespace RWFramework\Framework\Template;
 
+use ReflectionClass;
 use RWFramework\Framework\Session\SessionInterface;
 use Twig\Environment;
 use Twig\Extension\DebugExtension;
@@ -39,10 +40,56 @@ class TwigFactory {
             )
         );
 
+        $twigEnvoriment->addFunction(
+            new TwigFunction(
+                'isInList', 
+                [$this, 'isInList']
+            )
+        );
+
         return $twigEnvoriment;
     }
 
     public function getSession(): SessionInterface {
         return $this->session;
     }
+
+    public function isInList($value, $list): bool {
+        // Check if the list is an array
+        if (!is_array($list)) {
+            return false;
+        }
+    
+        // Iterate through each object in the array
+        foreach ($list as $item) {
+            // Check if the item is an object
+            if (is_object($item)) {
+                // Use reflection to access all properties
+                $reflect = new ReflectionClass($item);
+                $properties = $reflect->getProperties();
+                $props = 0;
+    
+                // Loop through each property
+                foreach ($properties as $property) {
+                    $property->setAccessible(true); // Make the property accessible
+                    $propertyValue = $property->getValue($item);
+                    if(is_string($propertyValue)) {
+                        $propertyValue = str_replace(' ', '', $propertyValue);
+                    }
+
+                    if ($propertyValue == $value) {
+                        return true;
+                    }
+
+                    $props++;
+                }
+            }
+        }
+    
+        // Return false if value is not found in any object
+        return false;
+    }
+    
+    
+    
 }
