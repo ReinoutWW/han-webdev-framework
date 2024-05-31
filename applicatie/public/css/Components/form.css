@@ -1,0 +1,25 @@
+/* 2. Submit form example */
+form {
+    display: inline;
+}
+
+form.rw-form {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 1rem;
+    min-width: 300px;
+    border-top: 1px solid var(--base-color-gray-300);
+    padding-top: 1rem;
+}
+
+form.rw-form label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 0.25rem;
+    color: var(--base-color-gray-800)
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.5rem;
+}

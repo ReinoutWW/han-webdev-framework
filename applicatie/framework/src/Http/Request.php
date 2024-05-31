@@ -65,4 +65,12 @@ class Request {
     {
         $this->routeHandlerArgs = $routeHandlerArgs;
     }
+
+    public function getParams(): array {
+        return $this->getParams;
+    }
+
+    public function getParam(string $key): mixed {
+        return $this->getParams[$key] ?? null;
+    }
 }

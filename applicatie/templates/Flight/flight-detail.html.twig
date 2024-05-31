@@ -1,0 +1,49 @@
+{% extends 'Base/layout.html.twig' %}
+
+{% block main %}
+<div class="container-invisible">
+    <button class="btn btn-primary">
+        <a href="/vluchten">Terug naar overzicht</a>
+    </button>
+    <form method="post" action="/boeken/{{flight.flightNumber}}">
+        <button class="btn btn-primary ml-2">
+            Vlucht boeken
+        </button>
+    </form>
+</div>
+<div class="container">
+    <h2>Overzicht vlucht</h2>
+    <table class="rw-table">
+        <thead>
+            <tr>
+                <th>Vluchtnummer</th>
+                <th>Bestemming</th>
+                <th>Gatecode</th>
+                <th>Max aantal passagiers</th>
+                <th>Max gewicht pp</th>
+                <th>Max gewicht totaal</th>
+                <th>Vertrektijd</th>
+                <th>Maatschappijcode</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>    
+                <td>{{ flight.flightNumber }}</td>
+                <td>{{ flight.destination|capitalize }}</td>
+                <td>{{ flight.gate|capitalize }}</td>
+                <td>{{ flight.maxPassengers }}</td>
+                <td>{{ flight.maxWeightPerPassenger }}</td>
+                <td>{{ flight.maxTotalWeight }}</td>
+                <td>{{ flight.departureTime|date('d-m-Y H:i') }}</td>
+                <td>{{ flight.airlineCode|capitalize }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <h2>Details</h2>
+</div>
+<div class="container">
+    <div>
+        <h2>Passagiers</h2>
+    </div>
+</div>
+{% endblock %}

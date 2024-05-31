@@ -34,5 +34,17 @@ return [
     ),
     new Route('GET', '/vluchten', [\App\Controllers\FlightController::class, 'index'], [
         RWFramework\Framework\Http\Middleware\Authenticate::class
-    ])
+    ]),
+    new Route('GET', '/vluchten/{flightNumber:\d+}', [\App\Controllers\FlightController::class, 'flight'], [
+        RWFramework\Framework\Http\Middleware\Authenticate::class
+    ]),
+    new Route('GET', '/vluchten/nieuw', [\App\Controllers\FlightController::class, 'create'], [
+        RWFramework\Framework\Http\Middleware\Authenticate::class
+    ]),
+    new Route('POST', '/vluchten/nieuw', [\App\Controllers\FlightController::class, 'store'], [
+        RWFramework\Framework\Http\Middleware\Authenticate::class
+    ]),
+    new Route('POST', '/boeken/{flightNumber:\d+}', [\App\Controllers\FlightController::class, 'book'], [
+        RWFramework\Framework\Http\Middleware\Authenticate::class
+    ]),
 ];

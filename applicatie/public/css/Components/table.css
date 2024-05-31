@@ -1,0 +1,39 @@
+/* 3.1 Table */
+.rw-table {
+    padding: 0;
+    margin: 0;
+}
+
+.rw-table thead {
+    color: var(--text-color-default);
+}
+
+.rw-table thead th,
+.rw-table tbody td {
+    padding: 0.5rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--base-color-gray-200);
+}
+
+.rw-table tfoot td {
+    padding: 0.5rem;
+}
+
+.rw-table tfoot td .pagination {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+@media (max-width: 768px) { 
+    .rw-table tfoot td .pagination  {
+        margin-top: 1rem;
+        justify-content: left;
+    }
+
+    .rw-table tbody td,
+    .rw-table thead th,
+    .rw-table thead td {
+        padding: 0.25rem 0.5rem;
+    }
+}

@@ -3,57 +3,45 @@
 namespace App\Form\User;
 
 use App\Entity\User;
+use App\Form\AbstractForm;
 use App\Repository\UserMapper;
 
-class RegistrationForm
+class RegistrationForm extends AbstractForm
 {
-    private array $errors = [];
-    private string $username;
+    private string $name;
+    private string $email;
     private string $password;
+    private string $gender;
 
     public function __construct(
         private UserMapper $userMapper
     ) {}
 
-    public function setFields(string $username, string $password): void {
-        $this->username = $username;
+    public function setFields(string $name, string $email, string $gender, string $password): void {
+        $this->name = $name;
+        $this->email = $email;
+        $this->gender = $gender;
         $this->password = $password;
     }
 
     public function save(): User {
-        $user = User::create($this->username, $this->password);
+        $user = User::create(name: $this->name, plainPassword: $this->password, email: $this->email, gender: $this->gender);
 
         $this->userMapper->save($user);
 
         return $user;
     }
 
-    public function hasValidationErrors(): bool {
-        return count($this->getValidationErrors()) > 0;
-    }
-
-    public function getValidationErrors(): array {
-        // For performance reasons, only run validation if there are no errors yet
-        if(!empty($this->errors)) {
-            return $this->errors;
-        }
-
-        // Username validation 
+    public function validate(): void {
+        // name validation 
         // Characters, lengt, char type
-        if (strlen($this->username) < 5 || strlen($this->username) > 20) {
-            $this->errors[] = 'Username must be between 5 and 20 characters';
-        }
-
-        // username char type
-        if (!preg_match('/^\w+$/', $this->username)) {
-            $this->errors[] = 'Username can only consist of word characters without spaces';
+        if (strlen($this->name) < 5 || strlen($this->name) > 20) {
+            $this->addError('name must be between 5 and 20 characters');
         }
 
         // password length
         if (strlen($this->password) < 8) {
-            $this->errors[] = 'Password must be at least 8 characters';
+            $this->addError('Password must be at least 8 characters');
         }
-
-        return $this->errors;
     }
 }

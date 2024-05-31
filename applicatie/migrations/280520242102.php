@@ -9,8 +9,10 @@ return new class {
     public function up(Schema $schema): void {
         $table = $schema->createTable('users');
         $table->addColumn('id', Types::INTEGER, ['autoincrement' => true, 'unsigned' => true]);
-        $table->addColumn('username', Types::STRING, ['length' => 255]);
+        $table->addColumn('name', Types::STRING, ['length' => 100]);
+        $table->addColumn('email', Types::STRING, ['length' => 60]);
         $table->addColumn('password', Types::STRING, ['length' => 60]);
+        $table->addColumn('gender', Types::STRING, ['length' => 3]);
         $table->addColumn('created_at', Types::DATETIME_IMMUTABLE, ['default' => 'CURRENT_TIMESTAMP']);
         $table->setPrimaryKey(['id']);
     }

@@ -7,16 +7,20 @@ use RWFramework\Framework\Dbal\Entity;
 class User extends Entity implements AuthUserInterface {
     public function __construct(
         private ?int $id,
-        private string $username,
+        private string $name,
+        private string $email,
         private string $password,
+        private string $gender,
         private \DateTimeImmutable $createdAt
     ) {
     }
 
-    public static function create(string $username, string $plainPassword): self {
+    public static function create(string $name, string $email, string $plainPassword, string $gender): self {
         return new self(
             id: null, 
-            username: $username, 
+            name: $name,
+            email: $email,
+            gender: $gender,
             password: password_hash($plainPassword, PASSWORD_DEFAULT),
             createdAt: new \DateTimeImmutable());
     }
@@ -34,8 +38,8 @@ class User extends Entity implements AuthUserInterface {
         return $this->id;
     }
 
-    public function getUsername(): string {
-        return $this->username;
+    public function getName(): string {
+        return $this->name;
     }
 
     public function getPassword(): string {
@@ -44,5 +48,13 @@ class User extends Entity implements AuthUserInterface {
 
     public function getCreatedAt(): \DateTimeImmutable {
         return $this->createdAt;
+    }
+
+    public function getEmail(): string {
+        return $this->email;
+    }
+
+    public function getGender(): string {
+        return $this->gender;
     }
 }

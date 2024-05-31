@@ -18,12 +18,14 @@ class UserMapper {
 
     public function save(User $user): void {
         $stmt = $this->dataMapper->getConnection()->prepare("
-            INSERT INTO users (username, password, created_at)
-            VALUES (:username, :password, :created_at)
+            INSERT INTO users (name, email, password, gender, created_at)
+            VALUES (:name, :email, :password, :gender, :created_at)
         ");
 
-        $stmt->bindValue(':username', $user->getUsername());
+        $stmt->bindValue(':name', $user->getName());
+        $stmt->bindValue(':email', $user->getEmail());
         $stmt->bindValue(':password', $user->getPassword());
+        $stmt->bindValue(':gender', $user->getGender());
         $stmt->bindValue(':created_at', $user->getCreatedAt()->format("Y-m-d H:i:s"));
 
         $stmt->executeStatement();

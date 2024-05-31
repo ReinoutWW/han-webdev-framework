@@ -1,0 +1,28 @@
+@import url('./normalize.css');
+@import url('./layout.css');
+@import url('./components.css');
+
+:root {
+    --text-color-default: rgb(49, 49, 49);
+    --base-color-gray-100: rgb(242, 242, 242);
+    --base-color-gray-200: rgb(217, 217, 217);
+    --base-color-gray-300: rgb(191, 191, 191);
+    --base-color-gray-400: rgb(166, 166, 166);
+    --base-color-gray-500: rgb(140, 140, 140);
+    --base-color-gray-600: rgb(115, 115, 115);
+    --base-color-gray-700: rgb(89, 89, 89);
+    --base-color-gray-800: rgb(64, 64, 64);
+    --base-color-gray-900: rgb(38, 38, 38);
+}
+
+/* 1. Layout */
+@font-face {
+    font-family: 'Poppins';
+    src: url('/fonts/Poppins/Poppins-Regular.ttf');
+}
+
+* {
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins';
+}

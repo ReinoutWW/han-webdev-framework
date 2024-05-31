@@ -13,7 +13,8 @@
     </header>
     <nav>
         {# Based on roles, show the navigation items #}
-        <a href="/">nav 1</a>
+        <a class="nav-item {{ (pathInfo == '/vluchten') ? 'active' : '' }}" href="/vluchten">Vluchten</a>
+        <a class="nav-item {{ (pathInfo == '/boekingen/vluchten') ? 'active' : '' }}" href="/boekingen/vluchten">Mijn vluchten</a>
     </nav>
     <main>
         {# Flash messages #}
@@ -32,11 +33,9 @@
             {% endfor %}
         </div>
         {% endif %}
-        <div class="container">
-         {% block main %}
-             {# Main content will be rendered here #}
-         {% endblock %}
-        </div>
+        {% block main %}
+            {# Main content will be rendered here #}
+        {% endblock %}
     </main>
     <footer>
         This is the footer

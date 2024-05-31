@@ -19,7 +19,6 @@ class PostsController extends AbstractController {
 
     public function show(int $id): Response {
         $post = $this->postRepository->findOrFail($id);
-        
         return $this->render("posts.html.twig", [
             'post' => $post
         ]);

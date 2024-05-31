@@ -1,0 +1,58 @@
+{% extends 'Base/layout.html.twig' %}
+
+{% block main %}
+<div class="container">
+    <h2>Nieuwe vlucht</h2>
+    <form class="rw-form" method="post" action="/vluchten/nieuw">
+        <div class="row">
+            <div class="col-6">
+                <h3>Algemene informatie</h3>
+                <div>
+                    <label for="flightnumber">Vluchtnummer</label>
+                    <input name="flightnumber" type="text" class="form-control" id="flightnumber" required pattern="[A-Za-z0-9]{1,10}">
+                    <small>Vul een geldig vluchtnummer in (max. 10 tekens).</small>
+                </div>
+                <div>
+                    <label for="destination">Bestemmingscode</label>
+                    <input name="destination" type="text" class="form-control" id="destination" required pattern="[A-Za-z]{3}" maxlength="3">
+                    <small>Vul een geldige bestemmingscode in (exact 3 letters).</small>
+                </div>
+                <div>
+                    <label for="gate">Gate</label>
+                    <input name="gate" type="text" class="form-control" id="gate" required pattern="[A-Za-z0-9]{1,3}" maxlength="3">
+                    <small>Vul een geldige gate code in (1-3 tekens).</small>
+                </div>
+                <div>
+                    <label for="departuretime">Vertrektijd</label>
+                    <input name="departuretime" type="datetime-local" class="form-control" id="departuretime" required>
+                    <small>Vul een geldige vertrektijd in.</small>
+                </div>
+                <div>
+                    <label for="airlinecode">vliegmaatschappij code</label>
+                    <input name="airlinecode" type="text" class="form-control" id="airlinecode" required pattern="[A-Za-z0-9]{1,2}" maxlength="2">
+                    <small>Vul een geldige vliegmaatschappij code in</small>
+                </div>
+            </div>
+            <div class="col-6">
+                <h3>Passagiers</h3>
+                <div>
+                    <label for="maxpassengers">Maximaal aantal passagiers</label>
+                    <input name="maxpassengers" type="number" class="form-control" id="maxpassengers" required min="1">
+                    <small>Vul een geldig aantal passagiers in (minimaal 1).</small>
+                </div>
+                <div>
+                    <label for="maxweightpp">Maximaal gewicht per passagier (kg)</label>
+                    <input name="maxweightpp" type="number" class="form-control" id="maxweightpp" required min="1">
+                    <small>Vul een geldig gewicht in (minimaal 1 kg).</small>
+                </div>
+                <div>
+                    <label for="maxtotalweight">Maximaal totaal gewicht (kg)</label>
+                    <input name="maxtotalweight" type="number" class="form-control" id="maxtotalweight" required min="1">
+                    <small>Vul een geldig totaalgewicht in (minimaal 1 kg).</small>
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Toevoegen</button>
+    </form>
+</div>
+{% endblock %}

@@ -26,7 +26,9 @@ class RegistrationController extends AbstractController
         $form = new RegistrationForm($this->userMapper);
 
         $form->setFields(
-            $this->request->input('username'),
+            $this->request->input('name'),
+            $this->request->input('email'),
+            $this->request->input('gender'),
             $this->request->input('password')
         );
 
