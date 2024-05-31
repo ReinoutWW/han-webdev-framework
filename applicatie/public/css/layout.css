@@ -91,6 +91,7 @@ nav a.nav-item.active {
 
 nav a.nav-item.active::before {
     content: 'o';
+    font-size: 1rem;
     margin-right: 0.5rem;
     color: rgb(44, 142, 228);
 }

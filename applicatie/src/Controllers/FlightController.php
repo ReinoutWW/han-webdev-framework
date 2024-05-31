@@ -40,7 +40,7 @@ class FlightController extends AbstractController
         $flight = $this->flightRepository->findByFlightNumber($flightNumber);
 
         // If employee watches the flight, get the passenger details
-        //$passengers = $this->passengerRepository->getPassengersByFlightNumber($flightNumber);
+        $passengers = $this->passengerRepository->getPassengersByFlightNumber($flightNumber);
 
         // If passenger watches the flight, get the personal passenger details
         $passengerDetails = $this->passengerRepository->getBookedFlightPassengerDetails($this->request->getSession()->getUser(), $flightNumber);
@@ -49,6 +49,7 @@ class FlightController extends AbstractController
         return $this->render("Flight/flight-detail.html.twig", [
             'flight' => $flight,
             'passenger_details' => $passengerDetails,
+            'passengers' => $passengers
         ]);
     }
 

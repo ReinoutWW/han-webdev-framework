@@ -29,6 +29,38 @@ class PassengerRepository
         $this->passengerMapper->save($passenger);
     }
 
+    public function getPassengersByFlightNumber(int $flightNumber): array
+    {
+        // Do the logic here
+        $queryBuilder = $this->connection->createQueryBuilder();
+
+        $queryBuilder
+            ->select('*')
+            ->from('Passagier')
+            ->where('vluchtnummer = :vluchtnummer')
+        ->setParameter('vluchtnummer', $flightNumber);
+
+        $result = $queryBuilder->executeQuery();
+
+        $rows = $result->fetchAllAssociative();
+
+        $passengers = [];
+
+        foreach ($rows as $row) {
+            $passenger = Passenger::create(
+                userId: $row['userId'],
+                name: $row['naam'],
+                gender: $row['geslacht'],
+                flightNumber: $row['vluchtnummer'],
+                seatNumber: $row['stoel']
+            );
+
+            $passengers[] = $passenger;
+        }
+
+        return $passengers;
+    }
+
     public function getBookedFlights(User $user): array
     {
         // Do the logic here

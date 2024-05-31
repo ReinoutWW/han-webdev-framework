@@ -1,0 +1,191 @@
+.plane {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    margin: 1rem;
+}
+
+.plane-front {
+    border-radius: 45% 0px 0px 45%;
+    border: 1px solid var(--base-color-gray-300);
+    padding: 0.1rem 0.5rem;
+    min-height: 5rem;
+    height: 7rem;
+    width: 13rem;
+    display: flex;
+    align-items: center;
+}
+
+.plane-body {
+    height: 7rem;
+    border: 1px solid var(--base-color-gray-300);
+    display: flex;
+}
+
+.plane-tail {
+    width: 100%;
+    height: 100%;
+}
+
+.cockpit {
+    width: 5rem;
+    height: 50%;
+    border-radius: 50% 0px 0px 50%;
+    display: flex;
+    justify-content: end;
+    flex-direction: column;
+    border-right: 1px solid var(--base-color-gray-300);
+}
+
+.backroom {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    align-items: end;
+    width: 5rem;
+}
+
+.toilet-room {
+    height: 30%;
+    width: 30%;
+    justify-self: end;
+    border: 1px solid var(--base-color-gray-300);
+    display: flex;
+    align-items: center;
+    justify-content: end;
+}
+
+.toilet {
+    width: 60%;
+    height: 50%;
+    border-radius: 100% 0px 0px 100%;
+    border: 1px solid var(--base-color-gray-300);
+}
+
+.plane-door {
+    height: 30%;
+    width: 30%;
+    justify-self: start;
+    border: 1px solid var(--base-color-gray-300);
+    border-radius: 100% 0px 0px 0px;
+}
+
+.seat {
+    margin-left: 0.5em;
+    width: 1.3rem;
+    height: 1.3rem;
+    background-color: var(--base-color-gray-50);
+    border: 1px solid var(--base-color-gray-300);
+    align-self: center;
+    border-radius: 4px;
+    font-size: 0.6rem;
+    color: var(--base-color-gray-500);
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.seat:hover {
+    background-color: var(--base-color-gray-200);
+    border: 1px solid var(--base-color-gray-500);
+    font-weight: bold;
+}
+
+.seat.taken {
+    background-color: var(--base-color-red-50);
+    border: 1px solid var(--base-color-red-200);
+    color: var(--base-color-red-500);
+}
+
+.seat.taken:hover {
+    background-color: var(--base-color-red-100);
+    border: 1px solid var(--base-color-red-500);
+}
+
+.seat.broken {
+    background-color: var(--base-color-gray-50);
+    border: 1px solid var(--base-color-gray-400);
+    color: var(--base-color-gray-500);
+}
+
+.seat.broken:hover {
+    background-color: var(--base-color-gray-100);
+    border: 1px solid var(--base-color-gray-500);
+}
+
+.seat.available {
+    background-color: var(--base-color-green-50);
+    border: 1px solid var(--base-color-green-200);
+    color: var(--base-color-green-500);
+}
+
+.seat.available:hover {
+    background-color: var(--base-color-green-100);
+    border: 1px solid var(--base-color-green-500);
+}
+
+.seat.booked {
+    background-color: var(--base-color-blue-50);
+    border: 1px solid var(--base-color-blue-400);
+    color: var(--base-color-blue-500);
+}
+
+.seat.booked:hover {
+    background-color: var(--base-color-blue-100);
+    border: 1px solid var(--base-color-blue-500);
+    font-weight: bold;
+}
+
+.cockpit .seat:first-child {
+    margin-bottom: 0.5rem;
+}
+
+.cockpit .seat:last-child{
+    margin-top: 0.5rem;
+}
+
+.seat.disabled {
+    background-color: var(--base-color-gray-100);
+    border: 1px solid var(--base-color-gray-200);
+
+    background: repeating-linear-gradient(
+        -45deg, 
+        var(--base-color-gray-300) 0px,
+        var(--base-color-gray-300) 1px, 
+        transparent 4px, 
+        transparent 5px
+    );
+}
+
+/* Body */
+
+.plane-supersection {
+    margin-right: 1.5rem;
+    display: flex;
+}
+
+.plane-section {
+    height: 100%;
+    margin-right: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.plane-subsection {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.plane-subsection:last-child {
+    justify-content: end;
+}
+
+.seat:last-child {
+    margin-top: 0.2rem;
+}
