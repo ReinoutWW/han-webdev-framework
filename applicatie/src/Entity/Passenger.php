@@ -8,6 +8,8 @@ class Passenger extends Entity {
     public function __construct(
         private ?int $passangerNumber,
         private string $userId,
+        private string $name,
+        private string $gender,
         private string $flightNumber,
         private ?string $counterNumber,
         private string $seatNumber,
@@ -17,12 +19,16 @@ class Passenger extends Entity {
 
     public static function create(
         string $userId,
+        string $name,
+        string $gender,
         string $flightNumber,
         string $seatNumber
     ): Passenger {
         return new self(
             passangerNumber: null,
             userId: $userId,
+            name: $name,
+            gender: $gender,
             flightNumber: $flightNumber,
             counterNumber: null,
             seatNumber: $seatNumber,
@@ -75,4 +81,11 @@ class Passenger extends Entity {
         $this->passangerNumber = $id;
     }
 
+    public function getName(): string {
+        return $this->name;
+    }
+
+    public function getGender(): string {
+        return $this->gender;
+    }
 }

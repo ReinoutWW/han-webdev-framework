@@ -3,5 +3,5 @@
 namespace RWFramework\Framework\Authentication;
 
 interface AuthRepositoryInterface {
-    public function findByUsername(string $username): ?AuthUserInterface;
+    public function findByEmail(string $username): ?AuthUserInterface;
 }

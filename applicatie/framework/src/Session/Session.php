@@ -9,6 +9,7 @@ class Session implements SessionInterface {
     public const NOTIFICATION_INFO = 'info';
     public const NOTIFICATION_WARNING = 'warning';
     public const AUTH_ID_KEY = 'auth_id';
+    public const USER_KEY = 'user';
 
     public function start(): void
     {
@@ -98,5 +99,9 @@ class Session implements SessionInterface {
 
     public function isAuthenticated(): bool {
         return $this->has(Session::AUTH_ID_KEY);
+    }
+
+    public function getUser(): object {
+        return $this->get(Session::USER_KEY);
     }
 }

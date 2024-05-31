@@ -17,16 +17,16 @@ class UserRepository implements AuthRepositoryInterface {
     {
     }
     
-    public function findByUsername(string $username): ?AuthUserInterface
+    public function findByEmail(string $email): ?AuthUserInterface
     {
         // Create a query builder
         $queryBuilder = $this->connection->createQueryBuilder();
 
         $queryBuilder
-            ->select('id', 'username', 'password', 'created_at')
+            ->select('id', 'name', 'email', 'password', 'gender', 'created_at')
             ->from('users')
-            ->where('username = :username')
-            ->setParameter('username', $username);
+            ->where('email = :email')
+            ->setParameter('email', $email);
 
         $result = $queryBuilder->executeQuery();
 
@@ -38,8 +38,10 @@ class UserRepository implements AuthRepositoryInterface {
 
         $user = new User(
             id: $row['id'],
-            username: $row['username'],
+            name: $row['name'],
+            email: $row['email'],
             password: $row['password'],
+            gender: $row['gender'],
             createdAt: new \DateTimeImmutable($row['created_at'])
         );
 

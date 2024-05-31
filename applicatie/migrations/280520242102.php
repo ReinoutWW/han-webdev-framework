@@ -14,6 +14,7 @@ return new class {
         $table->addColumn('password', Types::STRING, ['length' => 60]);
         $table->addColumn('gender', Types::STRING, ['length' => 3]);
         $table->addColumn('created_at', Types::DATETIME_IMMUTABLE, ['default' => 'CURRENT_TIMESTAMP']);
+        $table->addUniqueConstraint(['email'], 'unique_email');
         $table->setPrimaryKey(['id']);
     }
 

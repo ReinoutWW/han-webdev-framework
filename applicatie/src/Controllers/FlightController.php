@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Entity\Flight;
 use App\Repository\flightMapper;
 use App\Repository\FlightRepository;
+use App\Repository\PassengerRepository;
 use RWFramework\Framework\Controller\AbstractController;
 use RWFramework\Framework\Http\RedirectResponse;
 use RWFramework\Framework\Http\Response;
@@ -14,6 +15,7 @@ class FlightController extends AbstractController
 {
     public function __construct(
         private FlightRepository $flightRepository,
+        private PassengerRepository $passengerRepository,
         private flightMapper $flightMapper
     ) { }
 
@@ -80,6 +82,25 @@ class FlightController extends AbstractController
     }
 
     public function book(int $flightNumber) {
-        dd('Book flight' . $flightNumber);
+        // Get user from session
+        $user = $this->request->getSession()->getUser();
+
+        // Check if there's space available on the flight
+        $flightSeatsFull = $this->flightRepository->areSeatsFullByFlightNumber($flightNumber);
+        
+        if($flightSeatsFull) {
+            $this->request->getSession()->setFlash(Session::NOTIFICATION_ERROR, 'Er zijn geen stoelen meer beschikbaar op deze vlucht.');
+            return new RedirectResponse('/vluchten/' . $flightNumber);
+        }
+
+        // Get seat number
+        $seatNumber = $this->flightRepository->getNextAvailableSeatByFlightNumber($flightNumber);
+
+        $this->passengerRepository->addToFlight($user, $flightNumber, $seatNumber);
+
+        // Show success message
+        $this->request->getSession()->setFlash(Session::NOTIFICATION_SUCCESS, 'Uw stoel is succesvol geboekt!');
+
+        return new RedirectResponse('/vluchten/' . $flightNumber);
     }
 }

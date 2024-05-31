@@ -21,7 +21,7 @@ class LoginController extends AbstractController {
         // Attempt to authenticate the user using a secure component (bool)
         // Create a session for the user
         $userIsAuthenticated = $this->authComponent->authenticate(
-            $this->request->input('username'),
+            $this->request->input('email'),
             $this->request->input('password')
         );
 
@@ -34,7 +34,7 @@ class LoginController extends AbstractController {
         // If succesfull, retreive the user
         $user = $this->authComponent->user();
 
-        $this->request->getSession()->setFlash(Session::NOTIFICATION_SUCCESS, 'You are now logged in. Welcome back, ' . $user->getUsername());
+        $this->request->getSession()->setFlash(Session::NOTIFICATION_SUCCESS, 'You are now logged in. Welcome back, ' . $user->getEmail());
 
         // Redirect to the intended page
         return new RedirectResponse('/dashboard');

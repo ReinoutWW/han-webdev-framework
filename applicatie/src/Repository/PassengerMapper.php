@@ -13,17 +13,15 @@ class PassengerMapper {
 
     public function save(Passenger $passenger): void {
         $stmt = $this->dataMapper->getConnection()->prepare("
-            INSERT INTO passengers (passenger_number, user_id, flight_number, counter_number, seat_number, check_in_time, created_at)
-            VALUES (:passenger_number, :user_id, :flight_number, :counter_number, :seat_number, :check_in_time, :created_at)
+            INSERT INTO Passagier (naam, geslacht, userId, vluchtnummer, stoel)
+            VALUES (:naam, :geslacht, :userId, :vluchtnummer, :stoel)
         ");
 
-        $stmt->bindValue(':passenger_number', $passenger->getPassengerNumber());
-        $stmt->bindValue(':user_id', $passenger->getUserId());
-        $stmt->bindValue(':flight_number', $passenger->getFlightNumber());
-        $stmt->bindValue(':counter_number', $passenger->getCounterNumber());
-        $stmt->bindValue(':seat_number', $passenger->getSeatNumber());
-        $stmt->bindValue(':check_in_time', $passenger->getCheckInTime()->format('Y-m-d H:i:s'));
-        $stmt->bindValue(':created_at', $passenger->getCreatedAt()->format('Y-m-d H:i:s'));
+        $stmt->bindValue(':naam', $passenger->getName());
+        $stmt->bindValue(':geslacht', $passenger->getGender());
+        $stmt->bindValue(':userId', $passenger->getUserId());
+        $stmt->bindValue(':vluchtnummer', $passenger->getFlightNumber());
+        $stmt->bindValue(':stoel', $passenger->getSeatNumber());
         
         $stmt->executeStatement();
 

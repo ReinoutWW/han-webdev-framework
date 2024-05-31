@@ -40,6 +40,76 @@ class FlightRepository {
         );
     }
 
+    public function getMaxSeatsByFlightNumber(int $flightNumber) {
+        $queryBuilder = $this->connection->createQueryBuilder();
+
+        $queryBuilder->select('max_aantal')
+            ->from('Vlucht')
+            ->where('vluchtnummer = :vluchtnummer')
+            ->setParameter('vluchtnummer', $flightNumber);
+
+        $result = $queryBuilder->executeQuery();
+
+        $row = $result->fetchAssociative();
+
+        if(!$row) {
+            throw new NotFoundException("Vlucht met vluchtnummer $flightNumber is niet gevonden.");
+        }
+
+        return $row['max_aantal'];
+    }
+
+    public function getSeatsOcupiedByFlightNumber (int $flightNumber): int {
+        $queryBuilder = $this->connection->createQueryBuilder();
+
+        $queryBuilder->select('COUNT(*) as seats')
+            ->from('Passagier')
+            ->where('vluchtnummer = :vluchtnummer')
+            ->setParameter('vluchtnummer', $flightNumber);
+
+        $result = $queryBuilder->executeQuery();
+
+        $row = $result->fetchAssociative();
+
+        return $row['seats'];
+    }
+
+    public function getSeatsAvailableByFlightNumber(int $flightNumber) {
+        $seatsAvailable = $this->getMaxSeatsByFlightNumber($flightNumber);
+        $seatsOcupied = $this->getSeatsOcupiedByFlightNumber($flightNumber);
+
+        return $seatsAvailable - $seatsOcupied;
+    }
+
+    public function areSeatsFullByFlightNumber(int $flightNumber): bool {
+        return $this->getSeatsAvailableByFlightNumber($flightNumber) === 0;
+    }
+
+    public function getNextAvailableSeatByFlightNumber(int $flightNumber): ?string {
+        if($this->areSeatsFullByFlightNumber($flightNumber)) {
+            return null;
+        }
+
+        $queryBuilder = $this->connection->createQueryBuilder();
+
+        $queryBuilder->select('COUNT(*) as aantalBezet')
+            ->from('Passagier')
+            ->where('vluchtnummer = :vluchtnummer')
+            ->setParameter('vluchtnummer', $flightNumber);
+
+        $result = $queryBuilder->executeQuery();
+
+        $row = $result->fetchAssociative();
+
+        if(!$row) {
+            return null;
+        }
+
+        $seat = 'A'. ($row['aantalBezet'] + 1);
+
+        return $seat;
+    }
+
     public function getFlights(int $page = 1) {
         $queryBuilder = $this->connection->createQueryBuilder();
 

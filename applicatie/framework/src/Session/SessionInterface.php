@@ -22,4 +22,5 @@ interface SessionInterface {
     public function hasNotification(): bool;
     public function getNotificationTypes(): array;
     public function isAuthenticated(): bool;
+    public function getUser(): object;
 }

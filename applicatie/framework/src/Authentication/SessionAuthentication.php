@@ -14,10 +14,10 @@ class SessionAuthentication implements SessionAuthInterface {
     ){
     }
     
-    public function authenticate(string $username, string $password): bool
+    public function authenticate(string $email, string $password): bool
     {
         // query db for user using username
-        $user = $this->authRepository->findByUsername($username);
+        $user = $this->authRepository->findByEmail($email);
 
         if (!$user) {
             return false;
@@ -42,7 +42,10 @@ class SessionAuthentication implements SessionAuthInterface {
 
         // Set the user in the session (login)
         $this->session->set(Session::AUTH_ID_KEY, $user->getAuthId());
-        
+
+        // Set user information in the session
+        $this->session->set(Session::USER_KEY, $user);
+
         // Set the user here
         $this->user = $user;
     }
