@@ -95,14 +95,14 @@
                                     <div class="plane-subsection">
                                         {% if seat_counter <= max_seats %}
                                             {% set seat1 = 'A' ~ seat_counter %}
-                                            <div class="seat {{ isInList(seat1, passengers) ? 'taken' : '' }}">
+                                            <div class="seat {{ isInList(seat1, passengers) ? 'taken' : 'available' }}">
                                                 {{ seat1 }} 
                                             </div>
                                             {% set seat_counter = seat_counter + 1 %}
                                         {% endif %}
                                         {% if seat_counter <= max_seats %}
                                             {% set seat2 = 'A' ~ seat_counter %}
-                                            <div class="seat {{ isInList(seat2, passengers) ? 'taken' : '' }}">
+                                            <div class="seat {{ isInList(seat2, passengers) ? 'taken' : 'available' }}">
                                                 {{ seat2 }}
                                             </div>
                                             {% set seat_counter = seat_counter + 1 %}
@@ -111,14 +111,14 @@
                                     <div class="plane-subsection">
                                         {% if seat_counter <= max_seats %}
                                             {% set seat3 = 'A' ~ seat_counter %}
-                                            <div class="seat {{ isInList(seat3, passengers) ? 'taken' : '' }}">
+                                            <div class="seat {{ isInList(seat3, passengers) ? 'taken' : 'available' }}">
                                                 {{ seat3 }}
                                             </div>
                                             {% set seat_counter = seat_counter + 1 %}
                                         {% endif %}
                                         {% if seat_counter <= max_seats %}
                                             {% set seat4 = 'A' ~ seat_counter %}
-                                            <div class="seat {{ isInList(seat4, passengers) ? 'taken' : '' }}">
+                                            <div class="seat {{ isInList(seat4, passengers) ? 'taken' : 'available' }}">
                                                 {{ seat4 }}
                                             </div>
                                             {% set seat_counter = seat_counter + 1 %}
