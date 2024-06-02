@@ -101,7 +101,7 @@ class Session implements SessionInterface {
         return $this->has(Session::AUTH_ID_KEY);
     }
 
-    public function getUser(): object {
+    public function getUser(): ?object {
         return $this->get(Session::USER_KEY);
     }
 }

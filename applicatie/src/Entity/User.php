@@ -3,24 +3,28 @@
 namespace App\Entity;
 use RWFramework\Framework\Authentication\AuthUserInterface;
 use RWFramework\Framework\Dbal\Entity;
+use RWFramework\Framework\Http\Roles\RoleUserInterface;
 
-class User extends Entity implements AuthUserInterface {
+class User extends Entity implements AuthUserInterface, RoleUserInterface {
     public function __construct(
         private ?int $id,
         private string $name,
         private string $password,
         private string $gender,
-        private \DateTimeImmutable $createdAt
+        private \DateTimeImmutable $createdAt,
+        private array $roles = []
     ) {
     }
 
-    public static function create(string $name, string $plainPassword, string $gender): self {
+    public static function create(string $name, string $plainPassword, string $gender, array $roles = []): self {
         return new self(
             id: null, 
             name: $name,
             gender: $gender,
             password: password_hash($plainPassword, PASSWORD_DEFAULT),
-            createdAt: new \DateTimeImmutable());
+            createdAt: new \DateTimeImmutable(),
+            roles: $roles
+        );
     }
 
     public function getId(): ?int {
@@ -54,5 +58,10 @@ class User extends Entity implements AuthUserInterface {
 
     public function getGender(): string {
         return $this->gender;
+    }
+
+    public function getRoles(): array
+    {
+        return $this->roles ?? [];
     }
 }

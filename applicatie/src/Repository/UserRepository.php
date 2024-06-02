@@ -13,7 +13,10 @@ use RWFramework\Framework\Authentication\AuthUserInterface;
  * No go: The UserRepository class should not interact with the database directly. Instead, it should delegate this responsibility to a separate class. (e.g. DataMapper)
  */
 class UserRepository implements AuthRepositoryInterface {
-    public function __construct(private Connection $connection)
+    public function __construct(
+        private Connection $connection,
+        private RoleRepository $roleRepository
+    )
     {
     }
     
@@ -36,12 +39,15 @@ class UserRepository implements AuthRepositoryInterface {
             return null;
         }
 
+        $roles = $this->roleRepository->getRolesByUserId($row['id']) ?? [];
+
         $user = new User(
             id: $row['id'],
             name: $row['name'],
             password: $row['password'],
             gender: $row['gender'],
-            createdAt: new \DateTimeImmutable($row['created_at'])
+            createdAt: new \DateTimeImmutable($row['created_at']),
+            roles: $roles
         );
 
         return $user;

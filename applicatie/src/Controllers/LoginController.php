@@ -27,14 +27,14 @@ class LoginController extends AbstractController {
 
         // If not succesfull, redirect to the login page
         if(!$userIsAuthenticated) {
-            $this->request->getSession()->setFlash(Session::NOTIFICATION_ERROR, 'Invalid password or username');
+            $this->request->getSession()->setFlash(Session::NOTIFICATION_ERROR, 'Het wachtwoord of de gebruikersnaam is onjuist. Probeer het opnieuw.');
             return new RedirectResponse('/login');
         }
 
         // If succesfull, retreive the user
         $user = $this->authComponent->user();
 
-        $this->request->getSession()->setFlash(Session::NOTIFICATION_SUCCESS, 'You are now logged in. Welcome back, ' . $user->getUsername());
+        $this->request->getSession()->setFlash(Session::NOTIFICATION_SUCCESS, 'Je bent weer ingelogd, welkom terug, ' . $user->getUsername());
 
         // Redirect to the intended page
         return new RedirectResponse('/dashboard');
@@ -45,7 +45,7 @@ class LoginController extends AbstractController {
         $this->authComponent->logout();
 
         // Set a flash message
-        $this->request->getSession()->setFlash(Session::NOTIFICATION_SUCCESS, 'You have been logged out.');
+        $this->request->getSession()->setFlash(Session::NOTIFICATION_SUCCESS, 'Je bent succesvol uitgelogd.');
 
         // Redirect to the login page
         return new RedirectResponse('/login');

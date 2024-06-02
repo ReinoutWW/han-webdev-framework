@@ -2,12 +2,15 @@
 
 namespace RWFramework\Framework\Routing;
 
+use RWFramework\Framework\Http\Roles\RequiredRoles;
+
 class Route {
     public function __construct(
         private string $methodType,
         private string $path,
         private mixed $controller,
         private array $middleware = [],
+        private RequiredRoles $requiredRoles = new RequiredRoles()
     ) {}
  
     public function getMethodType(): string {
@@ -24,5 +27,9 @@ class Route {
 
     public function getMiddleware(): array {
         return $this->middleware;
+    }
+
+    public function getRoles(): array {
+        return $this->requiredRoles->getRequiredRoles();
     }
 }

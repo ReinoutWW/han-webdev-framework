@@ -8,12 +8,16 @@ use RWFramework\Framework\Http\HttpException;
 use RWFramework\Framework\Http\HttpRequestMethodException;
 use RWFramework\Framework\Http\Request;
 use RWFramework\Framework\Http\Response;
+use RWFramework\Framework\Http\Roles\RoleManagerInterface;
 
 use function FastRoute\simpleDispatcher;
 
 class ExtractRouteInfo implements MiddlewareInterface
 {
-    public function __construct(private array $routes)
+    public function __construct(
+        private array $routes,
+        private RoleManagerInterface $roleManager
+    )
     {
     }
 
@@ -27,8 +31,9 @@ class ExtractRouteInfo implements MiddlewareInterface
                     $route->getPath(), 
                     [
                         $route->getController(),
-                        $route->getMiddleware()
-                    ]
+                        $route->getMiddleware(),
+                        $route->getRoles()
+                    ],
                 );
             }
         });
@@ -51,6 +56,10 @@ class ExtractRouteInfo implements MiddlewareInterface
                 // Inject route middleware on handler
                 if(is_array($routeInfo[1]) && isset($routeInfo[1][1])) {
                     $requestHandler->injectMiddleware($routeInfo[1][1]);
+                }
+
+                if(is_array($routeInfo[1]) && isset($routeInfo[1][2])) {
+                    $this->roleManager->addRequiredRoles($routeInfo[1][2]);
                 }
                 
                 break;

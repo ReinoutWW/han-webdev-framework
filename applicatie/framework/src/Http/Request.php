@@ -7,7 +7,6 @@ class Request {
     private SessionInterface $session;
     private mixed $routeHandler;
     private array $routeHandlerArgs;
-
     public function __construct(
         // $_GET, $_POST, $_COOKIE, $_FILES, $_SERVER,
         public readonly array $getParams, 

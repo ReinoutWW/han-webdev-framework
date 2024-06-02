@@ -2,6 +2,8 @@
 
 use App\Controllers\HomeController;
 use App\Controllers\PostsController;
+use App\Roles\RoleConstants;
+use RWFramework\Framework\Http\Roles\RequiredRoles;
 use RWFramework\Framework\Routing\Route;
 
 return [
@@ -40,7 +42,9 @@ return [
     ]),
     new Route('GET', '/vluchten/{flightNumber:\d+}/passagier/{userId:\d+}', [\App\Controllers\FlightController::class, 'flight'], [
         RWFramework\Framework\Http\Middleware\Authenticate::class
-    ]),
+    ], new RequiredRoles([
+        new \RWFramework\Framework\Http\Roles\Role(RoleConstants::EMPLOYEE)
+    ])),
     new Route('GET', '/stoel_boeken/{flightNumber:\d+}', [\App\Controllers\FlightController::class, 'seatSelection'], [
         RWFramework\Framework\Http\Middleware\Authenticate::class
     ]),

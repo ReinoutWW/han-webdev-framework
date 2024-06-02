@@ -23,6 +23,7 @@ class RequestHandler implements RequestHandlerInterface {
     private array $middleware = [
         ExtractRouteInfo::class, // Extract the route info from the request
         StartSession::class, // Start the session
+        RoleValidation::class, // Check if the user has the required roles
         RouterDispatch::class // Should be the final item! (This will dispatch the route and call the handler)
     ];
     

@@ -3,6 +3,7 @@
 namespace RWFramework\Framework\Template;
 
 use ReflectionClass;
+use RWFramework\Framework\Http\Roles\RoleUserInterface;
 use RWFramework\Framework\Session\SessionInterface;
 use Twig\Environment;
 use Twig\Extension\DebugExtension;
@@ -44,6 +45,13 @@ class TwigFactory {
             new TwigFunction(
                 'isInList', 
                 [$this, 'isInList']
+            )
+        );
+
+        $twigEnvoriment->addFunction(
+            new TwigFunction(
+                'authorizeView',
+                [$this, 'authorizeView']
             )
         );
 
@@ -89,7 +97,14 @@ class TwigFactory {
         // Return false if value is not found in any object
         return false;
     }
-    
-    
-    
+
+    public function authorizeView(string $roleName): bool {
+        $user = $this->session->get('user');
+
+        if($user && $user instanceof RoleUserInterface) {
+            return in_array($roleName, $user->getRoles());
+        }
+
+        return false;
+    }
 }

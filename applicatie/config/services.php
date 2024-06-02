@@ -14,6 +14,8 @@ use RWFramework\Framework\Dbal\ConnectionFactory;
 use RWFramework\Framework\EventDispatcher\EventDispatcher;
 use RWFramework\Framework\Http\Middleware\RequestHandlerInterface;
 use RWFramework\Framework\Http\Middleware\RouterDispatch;
+use RWFramework\Framework\Http\Roles\RoleManager;
+use RWFramework\Framework\Http\Roles\RoleManagerInterface;
 use RWFramework\Framework\Routing\Router;
 use RWFramework\Framework\Routing\RouterInterface;
 use RWFramework\Framework\Session\Session;
@@ -125,6 +127,11 @@ $container->add(SessionAuthentication::class)
     ]);
 
 $container->add(\RWFramework\Framework\Http\Middleware\ExtractRouteInfo::class)
-    ->addArgument(new ArrayArgument($routes));
+    ->addArguments([
+        new ArrayArgument($routes), 
+        RoleManagerInterface::class
+    ]);
+
+$container->addShared(RoleManagerInterface::class, RoleManager::class);
 
 return $container;
