@@ -1,0 +1,50 @@
+details.rw-overflow {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    z-index: 4;
+    cursor: pointer;
+}
+
+.rw-overflow-content {
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);
+    border-radius: 0.3rem;
+}
+
+.rw-overflow summary {
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+}
+
+ul.rw-overflow-items {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    padding: 0;
+    font-size: medium;
+    line-height: normal;
+    color: var(--text-color-default);
+}
+
+ul.rw-overflow-items li {
+    padding: 0.5rem;
+    cursor: pointer;
+}
+
+ul.rw-overflow-items li:not(:last-child) {
+    border-bottom: 1px solid var(--base-color-gray-200);
+}
+
+ul.rw-overflow-items li:hover {
+    background-color: var(--base-color-gray-100);
+}
+
+ul.rw-overflow-items li:active {
+    background-color: var(--base-color-gray-200);
+}
+
+summary + div {
+    margin-top: 0.8rem;    
+}
