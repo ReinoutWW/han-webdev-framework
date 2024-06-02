@@ -3,10 +3,10 @@
 {% block main %}
 <div class="container-invisible">
     <button class="btn btn-primary">
-        <a href="/vluchten">Terug naar overzicht</a>
+        <a href="/vluchten">&lt; Terug naar vluchten overzicht</a>
     </button>
     {% if passenger_details is empty %}
-    <form method="post" action="/boeken/{{flight.flightNumber}}">
+    <form method="get" action="/stoel_boeken/{{flight.flightNumber}}">
         <button class="btn btn-primary ml-2">
             Vlucht boeken
         </button>
@@ -54,93 +54,73 @@
                         <th>Status</th>
                         <td><span class="tag-green">Geboekt</span></td>
                     </tr>
+                    <tr>
+                        <th>Bagage</th>
+                        <td>
+                            <form>
+                                <div class="baggage-container">
+                                    <div class="baggage">10kg</div>
+                                    <div class="baggage">20kg</div>
+                                    <button class="btn btn-primary btn-small ml-1">+</button>
+                                </div>
+                            </form>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>
         {% endif %}
     </div>
 </div>
+<div class="container">
+    <div>
+        <h2>Stoelen</h2>
+        {% include 'Flight/Components/plane.html.twig' %}
+    </div>
+</div>
 {# If role employee #}
 <div class="container">
     <div>
         <h2>Passagiers</h2>
-        <div class="plane">
-            <div class="plane-front">
-                <div class="cockpit">
-                    <div class="seat disabled"></div>
-                    <div class="seat disabled"></div>
-                </div>
-                <div class="backroom">
-                    <div class="toilet-room">
-                        <div class="toilet"></div>
-                    </div>
-                    <div class="plane-door">
-                    </div>
-                </div>
-            </div>
-            <div class="plane-body">
-                {% set max_seats = 30 %}
-
-                {% set seat_counter = 1 %}
-                {% set sections_per_supersection = 3 %}
-                {% set seats_per_section = 4 %}
-                {% set total_sections = max_seats // seats_per_section %}
-                {% set total_supersections = (total_sections + sections_per_supersection - 1) // sections_per_supersection %}
-
-                {% for i in 1..total_supersections %}
-                    <div class="plane-supersection">
-                        {% for i2 in 1..sections_per_supersection %}
-                            {% if seat_counter < max_seats %}
-                                <div class="plane-section">
-                                    <div class="plane-subsection">
-                                        {% if seat_counter <= max_seats %}
-                                            {% set seat1 = 'A' ~ seat_counter %}
-                                            <div class="seat {{ isInList(seat1, passengers) ? 'taken' : 'available' }}">
-                                                {{ seat1 }} 
-                                            </div>
-                                            {% set seat_counter = seat_counter + 1 %}
-                                        {% endif %}
-                                        {% if seat_counter <= max_seats %}
-                                            {% set seat2 = 'A' ~ seat_counter %}
-                                            <div class="seat {{ isInList(seat2, passengers) ? 'taken' : 'available' }}">
-                                                {{ seat2 }}
-                                            </div>
-                                            {% set seat_counter = seat_counter + 1 %}
-                                        {% endif %}
-                                    </div>
-                                    <div class="plane-subsection">
-                                        {% if seat_counter <= max_seats %}
-                                            {% set seat3 = 'A' ~ seat_counter %}
-                                            <div class="seat {{ isInList(seat3, passengers) ? 'taken' : 'available' }}">
-                                                {{ seat3 }}
-                                            </div>
-                                            {% set seat_counter = seat_counter + 1 %}
-                                        {% endif %}
-                                        {% if seat_counter <= max_seats %}
-                                            {% set seat4 = 'A' ~ seat_counter %}
-                                            <div class="seat {{ isInList(seat4, passengers) ? 'taken' : 'available' }}">
-                                                {{ seat4 }}
-                                            </div>
-                                            {% set seat_counter = seat_counter + 1 %}
-                                        {% endif %}
-                                    </div>
-                                </div>
-                            {% endif %}
-                        {% endfor %}
-                    </div>
+        <table class="rw-table">
+            <thead>
+                <tr>
+                    <th>Naam</th>
+                    <th>Stoel</th>
+                    <th>Status</th>
+                    <th>Acties</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% if passengers is not empty %}
+                {% for passenger in passengers %}
+                <tr>
+                    <td>{{ passenger.name }}</td>
+                    <td>{{ passenger.seatNumber }}</td>
+                    <td><span class="tag-green">Geboekt</span></td>
+                    <td>
+                        <form method="get" action="/vluchten/{{flight.flightNumber}}/passagier/{{passenger.userId}}">
+                            <button class="btn btn-primary">
+                                Bewerken
+                            </button>
+                        </form>
+                    </td>
+                </tr>
                 {% endfor %}
-
-                <div class="plane-tail">
-                    <div class="backroom">
-                        <div class="toilet-room">
-                            <div class="toilet"></div>
-                        </div>
-                        <div class="plane-door">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+            {% else %}
+                <tr class="rw-table-no-records">
+                    <td colspan="4">Geen passagiers gevonden</td>
+                </tr>
+            {% endif %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="4">
+                        Passagiers ingeladen: {{ passengers|length }}
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
     </div>
 </div>
 {% endblock %}

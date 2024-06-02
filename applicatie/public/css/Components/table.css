@@ -37,6 +37,11 @@
     gap: 0.5rem;
 }
 
+.rw-table-no-records {
+    text-align: center;
+    height: 5rem;
+}
+
 @media (max-width: 768px) { 
     .rw-table tfoot td .pagination  {
         margin-top: 1rem;

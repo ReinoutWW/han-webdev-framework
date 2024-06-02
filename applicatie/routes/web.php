@@ -38,6 +38,12 @@ return [
     new Route('GET', '/vluchten/{flightNumber:\d+}', [\App\Controllers\FlightController::class, 'flight'], [
         RWFramework\Framework\Http\Middleware\Authenticate::class
     ]),
+    new Route('GET', '/vluchten/{flightNumber:\d+}/passagier/{userId:\d+}', [\App\Controllers\FlightController::class, 'flight'], [
+        RWFramework\Framework\Http\Middleware\Authenticate::class
+    ]),
+    new Route('GET', '/stoel_boeken/{flightNumber:\d+}', [\App\Controllers\FlightController::class, 'seatSelection'], [
+        RWFramework\Framework\Http\Middleware\Authenticate::class
+    ]),
     new Route('GET', '/vluchten/nieuw', [\App\Controllers\FlightController::class, 'create'], [
         RWFramework\Framework\Http\Middleware\Authenticate::class
     ]),

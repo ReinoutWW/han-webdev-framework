@@ -1,0 +1,110 @@
+{% block plane_seats_overview %}
+{# Plane component #}
+{# Expects variables: #}
+{# - 'flight': The given flight it should render #}
+{# - 'passengers': A list of passengers including seats #}
+{# - 'bookSeatOption': a boolean option that will enable the book seat click event #}
+{# - 'enablePlaneFront': a boolean option that will enable the front of the plane section #}
+
+<form method="post" action="/boeken/{{ flight.flightNumber}}">
+    <div class="plane">
+        {% if enableFrontPlane %}
+        <div class="plane-front">
+            <div class="cockpit">
+                <div class="seat disabled"></div>
+                <div class="seat disabled"></div>
+            </div>
+            <div class="backroom">
+                <div class="toilet-room">
+                    <div class="toilet"></div>
+                </div>
+                <div class="plane-door">
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        <div class="plane-body">
+            {% set max_seats = flight.maxPassengers %}
+
+            {% set seat_counter = 1 %}
+            {% set sections_per_supersection = 3 %}
+            {% set seats_per_section = 4 %}
+            {% set total_sections = max_seats // seats_per_section %}
+            {% set total_supersections = (total_sections + sections_per_supersection - 1) // sections_per_supersection %}
+
+            {% for i in 1..total_supersections %}
+                <div class="plane-supersection">
+                    {% for i2 in 1..sections_per_supersection %}
+                        {% if seat_counter < max_seats %}
+                            <div class="plane-section">
+                                <div class="plane-subsection">
+                                    {% if seat_counter <= max_seats %}
+                                        {% set seat1 = 'A' ~ seat_counter %}
+                                        {% set seat1Taken = isInList(seat1, passengers) %}
+                                        <div class="seat {{ seat1Taken ? 'taken' : 'available' }}">
+                                            {% if not seat1Taken and bookSeatOption %}
+                                                <button name="seat" method="post" value="{{seat1}}"> {{ seat1}} </button>
+                                            {% else %}
+                                                {{ seat1 }}
+                                            {% endif %}
+                                        </div>
+                                        {% set seat_counter = seat_counter + 1 %}
+                                    {% endif %}
+                                    {% if seat_counter <= max_seats %}
+                                        {% set seat2 = 'A' ~ seat_counter %}
+                                        {% set seat2Taken = isInList(seat2, passengers) %}
+                                        <div class="seat {{ seat2Taken ? 'taken' : 'available' }}">
+                                            {% if not seat2Taken and bookSeatOption %}
+                                                <button name="seat" method="post" value="{{seat2}}"> {{ seat2}} </button>
+                                            {% else %}
+                                                {{ seat2 }}
+                                            {% endif %}
+                                        </div>
+                                        {% set seat_counter = seat_counter + 1 %}
+                                    {% endif %}
+                                </div>
+                                <div class="plane-subsection">
+                                    {% if seat_counter <= max_seats %}
+                                        {% set seat3 = 'A' ~ seat_counter %}
+                                        {% set seat3Taken = isInList(seat3, passengers) %}
+                                        <div class="seat {{ seat3Taken ? 'taken' : 'available' }}">
+                                            {% if not seat3Taken and bookSeatOption %}
+                                                <button name="seat" method="post" value="{{seat3}}"> {{ seat3}} </button>
+                                            {% else %}
+                                                {{ seat2 }}
+                                            {% endif %}
+                                        </div>
+                                        {% set seat_counter = seat_counter + 1 %}
+                                    {% endif %}
+                                    {% if seat_counter <= max_seats %}
+                                        {% set seat4 = 'A' ~ seat_counter %}
+                                        {% set seat4Taken = isInList(seat4, passengers) %}
+                                        <div class="seat {{ seat4Taken ? 'taken' : 'available' }}">
+                                            {% if not seat4Taken and bookSeatOption %}
+                                                <button name="seat" method="post" value="{{seat4}}"> {{ seat4}} </button>
+                                            {% else %}
+                                                {{ seat4 }}
+                                            {% endif %}
+                                        </div>
+                                        {% set seat_counter = seat_counter + 1 %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            {% endfor %}
+
+            <div class="plane-tail">
+                <div class="backroom">
+                    <div class="toilet-room">
+                        <div class="toilet"></div>
+                    </div>
+                    <div class="plane-door">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+{% endblock %}

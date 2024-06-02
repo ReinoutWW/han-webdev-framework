@@ -61,7 +61,7 @@ class PassengerRepository
         return $passengers;
     }
 
-    public function getBookedFlights(User $user): array
+    public function getBookedFlights(int $userId): array
     {
         // Do the logic here
         $queryBuilder = $this->connection->createQueryBuilder();
@@ -70,7 +70,7 @@ class PassengerRepository
             ->select('vluchtnummer')
             ->from('Passagier')
             ->where('userId = :userId')
-        ->setParameter('userId', $user->getId());
+        ->setParameter('userId', $userId);
 
         $result = $queryBuilder->executeQuery();
 
@@ -83,7 +83,7 @@ class PassengerRepository
         return $flights;
     }
 
-    public function getBookedFlightPassengerDetails(User $user, int $flightNumber): ?Passenger
+    public function getBookedFlightPassengerDetails(int $userId, int $flightNumber): ?Passenger
     {
         // Do the logic here
         $queryBuilder = $this->connection->createQueryBuilder();
@@ -93,7 +93,7 @@ class PassengerRepository
             ->from('Passagier')
             ->where('userId = :userId AND vluchtnummer = :vluchtnummer')
         ->setParameters([
-            'userId' => $user->getId(),
+            'userId' => $userId,
             'vluchtnummer' => $flightNumber
         ]);
 

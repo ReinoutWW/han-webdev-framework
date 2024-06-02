@@ -20,6 +20,7 @@ abstract class AbstractController {
 
     public function render(string $template, array $parameters = [], Response $response = null): Response {
         $parameters['pathInfo'] = $this->request->getPathInfo();
+        $parameters['currentPath'] = $this->request->getPathInfo();
 
         $content = $this->container->get('twig')->render($template, $parameters);
 

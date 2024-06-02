@@ -35,7 +35,12 @@ class FlightController extends AbstractController
         ]);
     }
 
-    public function flight(int $flightNumber) {
+    public function flight(int $flightNumber, int $userId = null) {
+        // If null, get user from session (If an employee loads the page, the userId is not null)
+        if($userId === null) {
+            $userId = $this->request->getSession()->getUser()->getId();
+        }        
+
         // Get the flight from the Repository
         $flight = $this->flightRepository->findByFlightNumber($flightNumber);
 
@@ -43,13 +48,14 @@ class FlightController extends AbstractController
         $passengers = $this->passengerRepository->getPassengersByFlightNumber($flightNumber);
 
         // If passenger watches the flight, get the personal passenger details
-        $passengerDetails = $this->passengerRepository->getBookedFlightPassengerDetails($this->request->getSession()->getUser(), $flightNumber);
+        $passengerDetails = $this->passengerRepository->getBookedFlightPassengerDetails($userId, $flightNumber);
 
         // Return the view with the flight
         return $this->render("Flight/flight-detail.html.twig", [
             'flight' => $flight,
             'passenger_details' => $passengerDetails,
-            'passengers' => $passengers
+            'passengers' => $passengers,
+            'enableFrontPlane' => true
         ]);
     }
 
@@ -89,6 +95,18 @@ class FlightController extends AbstractController
         return new RedirectResponse('/vluchten/nieuw');
     }
 
+    public function seatSelection(int $flightNumber) {
+        $passengers = $this->passengerRepository->getPassengersByFlightNumber($flightNumber);
+
+        $flight = $this->flightRepository->findByFlightNumber($flightNumber);
+
+        return $this->render("Flight/seat-selection.html.twig", [
+            'passengers' => $passengers,
+            'flight' => $flight,
+            'bookSeatOption' => true
+        ]);
+    } 
+
     public function book(int $flightNumber) {
         // Get user from session
         $user = $this->request->getSession()->getUser();
@@ -102,7 +120,17 @@ class FlightController extends AbstractController
         }
 
         // Get seat number
-        $seatNumber = $this->flightRepository->getNextAvailableSeatByFlightNumber($flightNumber);
+        $seat = $this->request->input('seat');
+
+        $isSeatAvailable = $this->flightRepository->isSeatAvailable($flightNumber, $seat);
+
+        if(!$isSeatAvailable) {
+            $this->request->getSession()->setFlash(Session::NOTIFICATION_ERROR, 'Deze stoel is reeds bezet. Kies een andere stoel. Excuses voor het ongemak.');
+            return new RedirectResponse('/stoel_boeken/' . $flightNumber);
+        }
+
+        // If the seat is not set, get the next available seat
+        $seatNumber = $seat ?? $this->flightRepository->getNextAvailableSeatByFlightNumber($flightNumber);
 
         $this->passengerRepository->addToFlight($user, $flightNumber, $seatNumber);
 
@@ -114,10 +142,10 @@ class FlightController extends AbstractController
 
     public function booked() {
         // Get user from session
-        $user = $this->request->getSession()->getUser();
+        $userId = $this->request->getSession()->getUser()->getId();
 
         // Get all booked flights
-        $flights = $this->passengerRepository->getBookedFlights($user);
+        $flights = $this->passengerRepository->getBookedFlights($userId);
 
         return $this->render("Flight/booked-flights.html.twig", [
             'flights' => $flights

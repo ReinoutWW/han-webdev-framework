@@ -1,0 +1,19 @@
+.baggage-container {
+    display: flex;
+    justify-content: start;
+    align-items: flex-end;
+}
+
+.baggage {
+    color: var(--base-color-gray-900);
+    font-size: 0.5rem;
+    line-height: 1rem;
+    font-weight: bold;
+    padding: 0.7rem 0.5rem 0.2rem 0.5rem;
+    background-image: url('/images/luggage.svg');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    width: fit-content;
+    display: flex;
+    margin-right: 0.2rem;
+}

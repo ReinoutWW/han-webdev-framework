@@ -168,6 +168,24 @@ class FlightRepository {
         return $flights;
     }
 
+    public function isSeatAvailable($flightNumber, $seatNumber) {
+        $queryBuilder = $this->connection->createQueryBuilder();
+
+        $queryBuilder->select('COUNT(*) as aantal')
+            ->from('Passagier')
+            ->where('vluchtnummer = :vluchtnummer AND stoel = :stoel')
+            ->setParameters([
+                'vluchtnummer' => $flightNumber,
+                'stoel' => $seatNumber
+            ]);
+
+        $result = $queryBuilder->executeQuery();
+
+        $row = $result->fetchAssociative();
+
+        return $row['aantal'] === "0";
+    }
+
     public function save(Flight $flight): void {
         $this->flightMapper->save($flight);
     }

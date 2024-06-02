@@ -1,0 +1,47 @@
+{% extends 'Base/layout.html.twig' %}
+{% block main %}
+<div class="container">
+    <div class="mb-5">
+        <h2>Kies uw stoel</h2>
+        <p>U heeft de volgende stoelen beschikbaar:</p>
+        {% include 'Flight/Components/plane.html.twig' %}
+    </div>
+    <h2>Vlucht overzicht</h2>
+    <table class="rw-table table-vertical">
+        <tbody>
+            <tr>
+                <th>Vluchtnummer</th>
+                <td>{{ flight.flightNumber }}</td>
+            </tr>
+            <tr>
+                <th>Bestemming</th>
+                <td>{{ flight.destination|capitalize }}</td>
+            </tr>
+            <tr>
+                <th>Gatecode</th>
+                <td>{{ flight.gate|capitalize }}</td>
+            </tr>
+            <tr>
+                <th>Max aantal passagiers</th>
+                <td>{{ flight.maxPassengers }}</td>
+            </tr>
+            <tr>
+                <th>Max gewicht pp</th>
+                <td>{{ flight.maxWeightPerPassenger }}</td>
+            </tr>
+            <tr>
+                <th>Max gewicht totaal</th>
+                <td>{{ flight.maxTotalWeight }}</td>
+            </tr>
+            <tr>
+                <th>Vertrektijd</th>
+                <td>{{ flight.departureTime|date('d-m-Y H:i') }}</td>
+            </tr>
+            <tr>
+                <th>Maatschappijcode</th>
+                <td>{{ flight.airlineCode|capitalize }}</td>
+            </tr>
+        </tbody>
+    </table>  
+</div>
+{% endblock %}
