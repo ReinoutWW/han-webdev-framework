@@ -19,6 +19,10 @@
     color: var(--base-color-blue-500);
 }
 
+a.btn-primary:visited {
+    color: var(--base-color-blue-500);
+}
+
 .btn-primary:hover {
     background-color: var(--base-color-blue-100);
 }

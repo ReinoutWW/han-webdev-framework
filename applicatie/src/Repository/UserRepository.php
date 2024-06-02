@@ -23,10 +23,10 @@ class UserRepository implements AuthRepositoryInterface {
         $queryBuilder = $this->connection->createQueryBuilder();
 
         $queryBuilder
-            ->select('id', 'name', 'password', 'gender', 'created_at')
+            ->select('*')
             ->from('users')
             ->where('name = :name')
-            ->setParameter(':name', $username);
+            ->setParameter('name', $username);
 
         $result = $queryBuilder->executeQuery();
 

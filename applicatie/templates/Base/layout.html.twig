@@ -9,7 +9,7 @@
         <div class="header-personal">
             {% if session().isAuthenticated() %}
             <details class="rw-overflow">
-                <summary>Reinout Wijnholds</summary>
+                <summary>{{session().getUser().getUsername()}}</summary>
                 <div class="rw-overflow-content">
                     <ul class="rw-overflow-items">
                         <li><a href="/logout">Uitloggen</a></li>

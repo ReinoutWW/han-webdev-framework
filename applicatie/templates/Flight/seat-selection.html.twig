@@ -1,12 +1,13 @@
 {% extends 'Base/layout.html.twig' %}
 {% block main %}
 <div class="container">
+    <h2>Vlucht boeken</h2>
     <div class="mb-5">
-        <h2>Kies uw stoel</h2>
+        <h3>Kies uw stoel</h3>
         <p>U heeft de volgende stoelen beschikbaar:</p>
         {% include 'Flight/Components/plane.html.twig' %}
     </div>
-    <h2>Vlucht overzicht</h2>
+    <h3>Vlucht overzicht</h3>
     <table class="rw-table table-vertical">
         <tbody>
             <tr>
