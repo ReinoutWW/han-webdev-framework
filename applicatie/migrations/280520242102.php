@@ -10,11 +10,10 @@ return new class {
         $table = $schema->createTable('users');
         $table->addColumn('id', Types::INTEGER, ['autoincrement' => true, 'unsigned' => true]);
         $table->addColumn('name', Types::STRING, ['length' => 100]);
-        $table->addColumn('email', Types::STRING, ['length' => 60]);
         $table->addColumn('password', Types::STRING, ['length' => 60]);
         $table->addColumn('gender', Types::STRING, ['length' => 3]);
         $table->addColumn('created_at', Types::DATETIME_IMMUTABLE, ['default' => 'CURRENT_TIMESTAMP']);
-        $table->addUniqueConstraint(['email'], 'unique_email');
+        $table->addUniqueConstraint(['name'], 'unique_username');
         $table->setPrimaryKey(['id']);
     }
 

@@ -14,10 +14,10 @@ class SessionAuthentication implements SessionAuthInterface {
     ){
     }
     
-    public function authenticate(string $email, string $password): bool
+    public function authenticate(string $username, string $password): bool
     {
         // query db for user using username
-        $user = $this->authRepository->findByEmail($email);
+        $user = $this->authRepository->findByUsername($username);
 
         if (!$user) {
             return false;

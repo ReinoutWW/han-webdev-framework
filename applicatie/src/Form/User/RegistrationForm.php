@@ -9,7 +9,6 @@ use App\Repository\UserMapper;
 class RegistrationForm extends AbstractForm
 {
     private string $name;
-    private string $email;
     private string $password;
     private string $gender;
 
@@ -17,15 +16,14 @@ class RegistrationForm extends AbstractForm
         private UserMapper $userMapper
     ) {}
 
-    public function setFields(string $name, string $email, string $gender, string $password): void {
+    public function setFields(string $name, string $gender, string $password): void {
         $this->name = $name;
-        $this->email = $email;
         $this->gender = $gender;
         $this->password = $password;
     }
 
     public function save(): User {
-        $user = User::create(name: $this->name, plainPassword: $this->password, email: $this->email, gender: $this->gender);
+        $user = User::create(name: $this->name, plainPassword: $this->password, gender: $this->gender);
 
         $this->userMapper->save($user);
 
