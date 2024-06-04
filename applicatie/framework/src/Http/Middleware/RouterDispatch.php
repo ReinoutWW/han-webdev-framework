@@ -22,7 +22,9 @@ class RouterDispatch implements MiddlewareInterface {
         [$routeHandler, $vars] = $this->router->dispatch($request, $this->container);
 
         // Save last visited route in session
-        $this->session->setLastVisitedRoute($request->getPathInfo());
+        if($request->getMethod() === 'GET') {
+            $this->session->setLastVisitedRoute($request->getPathInfo());
+        }
             
         // Call_user_func_array will call the function and pass the vars as arguments (No extra parse will be needed)
         $response = call_user_func_array($routeHandler, $vars); // Looks like an invoke in C#

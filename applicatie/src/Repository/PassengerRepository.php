@@ -116,4 +116,24 @@ class PassengerRepository
 
         return $passenger;
     }
+
+    public function hasSeat(int $flightNumber, int $userId) {
+        // Do the logic here
+        $queryBuilder = $this->connection->createQueryBuilder();
+
+        $queryBuilder
+            ->select('COUNT(*) as aantal')
+            ->from('Passagier')
+            ->where('vluchtnummer = :vluchtnummer AND userId = :userId')
+        ->setParameters([
+            'vluchtnummer' => $flightNumber,
+            'userId' => $userId
+        ]);
+
+        $result = $queryBuilder->executeQuery();
+
+        $row = $result->fetchAssociative();
+
+        return $row['aantal'] > 0;
+    }
 }

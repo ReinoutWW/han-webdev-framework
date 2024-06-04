@@ -62,6 +62,6 @@ class User extends Entity implements AuthUserInterface, RoleUserInterface {
 
     public function getRoles(): array
     {
-        return $this->roles ?? [];
+        return $this->roles[0] ?? [];
     }
 }

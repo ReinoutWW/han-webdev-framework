@@ -10,13 +10,15 @@ use RWFramework\Framework\Controller\AbstractController;
 use RWFramework\Framework\Http\RedirectResponse;
 use RWFramework\Framework\Http\Response;
 use RWFramework\Framework\Session\Session;
+use RWFramework\Framework\Session\SessionInterface;
 
 class FlightController extends AbstractController
 {
     public function __construct(
         private FlightRepository $flightRepository,
         private PassengerRepository $passengerRepository,
-        private flightMapper $flightMapper
+        private flightMapper $flightMapper,
+        private SessionInterface $session
     ) { }
 
     public function index()
@@ -111,6 +113,14 @@ class FlightController extends AbstractController
         // Get user from session
         $user = $this->request->getSession()->getUser();
 
+        // Check if the user already has a seat on the flight
+        $hasSeat = $this->passengerRepository->hasSeat($flightNumber, $user->getId());
+
+        if($hasSeat) {
+            $this->request->getSession()->setFlash(Session::NOTIFICATION_ERROR, 'U heeft reeds een stoel geboekt op deze vlucht.');
+            return new RedirectResponse('/vluchten/' . $flightNumber);
+        }
+
         // Check if there's space available on the flight
         $flightSeatsFull = $this->flightRepository->areSeatsFullByFlightNumber($flightNumber);
         
@@ -126,7 +136,7 @@ class FlightController extends AbstractController
 
         if(!$isSeatAvailable) {
             $this->request->getSession()->setFlash(Session::NOTIFICATION_ERROR, 'Deze stoel is reeds bezet. Kies een andere stoel. Excuses voor het ongemak.');
-            return new RedirectResponse('/stoel_boeken/' . $flightNumber);
+            return new RedirectResponse($this->session->getLastVisitedRoute());
         }
 
         // If the seat is not set, get the next available seat
