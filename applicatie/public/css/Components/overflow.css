@@ -48,3 +48,28 @@ ul.rw-overflow-items li:active {
 summary + div {
     margin-top: 0.8rem;    
 }
+
+summary {
+    list-style: none; /* Remove default marker */
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+/* Closed */
+summary::before {
+    content: url(/images/chevron-right-solid.svg);
+    display: inline-block;
+    width: 0.5rem;
+    height: 1rem;
+    margin-right: 0.5rem;
+    align-self: baseline;
+}
+
+/* Open */
+details[open] summary::before {
+    content: url(/images/chevron-down-solid.svg);
+    width: 0.9rem;
+    height: 1rem;
+    margin-right: 0.25rem;
+}
