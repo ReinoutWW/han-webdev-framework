@@ -63,7 +63,7 @@
                                     {% for luggageItem in passengerLuggage %}
                                         <div title="{{luggageItem.weight}}" class="baggage">kg</div>
                                     {% endfor %}
-                                    <button class="btn btn-primary btn-small ml-1">+</button>
+                                    <button class="btn btn-primary btn-small ml-1">Toevoegen</button>
                                 </div>
                             </form>
                         </td>
@@ -103,9 +103,12 @@
                     <td><span class="tag-green">Geboekt</span></td>
                     <td>
                         <form method="get" action="/vluchten/{{flight.flightNumber}}/passagier/{{passenger.userId}}">
-                            <button class="btn btn-primary">
+                            <button class="btn btn-primary btn-small">
                                 Bewerken
                             </button>
+                        </form>
+                        <form method='get' action='/vluchten/{{flight.flightNumber}}/passagier/{{passenger.passengerNumber}}/baggage' >
+                            <button class="btn btn-primary btn-small ml-1">Bagage beheren</button>
                         </form>
                     </td>
                 </tr>
