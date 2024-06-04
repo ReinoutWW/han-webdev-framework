@@ -29,9 +29,8 @@ class RoleValidation implements MiddlewareInterface {
             $hasRequiredRoles = $this->roleManager->hasRequiredRoles($user);
 
             if(!$hasRequiredRoles) {
-                dd('Je hebt niet de juiste rechten om deze pagina te bezoeken.');
                 $this->session->setFlash('error', 'Je hebt niet de juiste rechten om deze pagina te bezoeken.');
-                return new RedirectResponse('/');
+                return new RedirectResponse($this->session->getLastVisitedRoute());
             }
         }
 

@@ -2,6 +2,7 @@
 
 namespace RWFramework\Framework\Authentication;
 
+use RWFramework\Framework\Http\Roles\RoleUserInterface;
 use RWFramework\Framework\Session\Session;
 use RWFramework\Framework\Session\SessionInterface;
 

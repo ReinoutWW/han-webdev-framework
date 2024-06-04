@@ -78,7 +78,8 @@ $container->addShared(
 $container->add(RouterDispatch::class)
     ->addArguments([
         RouterInterface::class,
-        $container
+        $container,
+        SessionInterface::class
     ]);
 
 // addShared is like a addSingleton in C#?. It will use the same object for every request

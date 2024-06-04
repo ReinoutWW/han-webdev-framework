@@ -10,6 +10,7 @@ class Session implements SessionInterface {
     public const NOTIFICATION_WARNING = 'warning';
     public const AUTH_ID_KEY = 'auth_id';
     public const USER_KEY = 'user';
+    public const LAST_VISITED_ROUTE = 'last_visited_route';
 
     public function start(): void
     {
@@ -98,10 +99,26 @@ class Session implements SessionInterface {
     }
 
     public function isAuthenticated(): bool {
-        return $this->has(Session::AUTH_ID_KEY);
+        return $this->has(self::AUTH_ID_KEY);
     }
 
     public function getUser(): ?object {
-        return $this->get(Session::USER_KEY);
+        return $this->get(self::USER_KEY);
+    }
+
+    /**
+     * Set the last visited route
+     * This will be used to redirect the user to the last visited route
+     */
+    public function setLastVisitedRoute(string $route): void {
+        $this->set(self::LAST_VISITED_ROUTE, $route);
+    }
+
+    /**
+     * Get the last visited route
+     * Returns the last visited route or the default route
+     */
+    public function getLastVisitedRoute(): string {
+        return $this->get(self::LAST_VISITED_ROUTE) ?? '/';
     }
 }

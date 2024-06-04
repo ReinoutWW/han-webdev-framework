@@ -23,4 +23,6 @@ interface SessionInterface {
     public function getNotificationTypes(): array;
     public function isAuthenticated(): bool;
     public function getUser(): ?object;
+    public function setLastVisitedRoute(string $route): void;
+    public function getLastVisitedRoute(): string;
 }
