@@ -4,18 +4,17 @@ namespace App\Form\Flight;
 
 use App\Entity\Luggage;
 use App\Form\AbstractForm;
-use App\Repository\FlightRepository;
 use App\Repository\LuggageMapper;
-use App\Repository\LuggageRepository;
-use App\Repository\PassengerRepository;
 
 class LuggageForm extends AbstractForm
 {
+    private const MAX_BAGGAGE_COUNT = 3;
     private Luggage $luggage;
     private int $maxPersonalLuggageWeight;
     private int $maxFlightLuggageWeight;
     private int $currentFlightLuggageWeight;
     private int $currentPersonalLuggageWeight;
+    private int $currentAmountOfLuggageCount;
 
     public function __construct(
         private LuggageMapper $luggageMapper,
@@ -33,15 +32,21 @@ class LuggageForm extends AbstractForm
             int $maxPersonalLuggageWeight, 
             int $maxFlightLuggageWeight, 
             int $currentFlightLuggageWeight, 
-            int $currentPersonalLuggageWeight
+            int $currentPersonalLuggageWeight,
+            int $currentAmountOfLuggageCount
     ): void {
         $this->maxPersonalLuggageWeight = $maxPersonalLuggageWeight;
         $this->maxFlightLuggageWeight = $maxFlightLuggageWeight;
         $this->currentFlightLuggageWeight = $currentFlightLuggageWeight;
         $this->currentPersonalLuggageWeight = $currentPersonalLuggageWeight;
+        $this->currentAmountOfLuggageCount = $currentAmountOfLuggageCount;
     }
 
     public function validate(): void {
+        if($this->currentAmountOfLuggageCount > self::MAX_BAGGAGE_COUNT) {
+            $this->addError('Het maximale aantal bagage is ' . self::MAX_BAGGAGE_COUNT . ' stuks per persoon.');
+        }
+
         // Validate if the luggage weight is not empty
         if(empty($this->luggage->getWeight())) {
             $this->addError('Gewicht is verplicht');
@@ -59,7 +64,7 @@ class LuggageForm extends AbstractForm
 
         // Validate if the total flight luggage weight is not exceeded
         if($this->currentFlightLuggageWeight + $this->luggage->getWeight() > $this->maxFlightLuggageWeight) {
-            $this->addError('Het maximale gewicht van de vlucht is overschreden, het totale maximale gewicht per vlucht is ' . $this->maxFlightLuggageWeight . ' kg, het huidige gewicht is ' . $this->currentFlightLuggageWeight . ' kg. Het toegestane gewicht is ');
+            $this->addError('Het maximale gewicht van de vlucht is overschreden, het totale maximale gewicht per vlucht is ' . $this->maxFlightLuggageWeight . ' kg, het huidige gewicht is ' . $this->currentFlightLuggageWeight . ' kg. Ruimte over: ' . ($this->maxFlightLuggageWeight - $this->currentFlightLuggageWeight) . ' kg');
         }
     }    
 }

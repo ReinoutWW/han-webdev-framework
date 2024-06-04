@@ -98,4 +98,23 @@ class LuggageRepository {
 
         return $row['totaal_gewicht'] ?? 0;
     }
+
+    public function getLuggageCount(int $flightNumber, int $passengerNumber): int {
+        $queryBuilder = $this->connection->createQueryBuilder();
+
+        $queryBuilder
+            ->select('COUNT(*) as aantal')
+            ->from('BagageObject')
+            ->where('vluchtnummer = :vluchtnummer AND passagiernummer = :passagiernummer')
+        ->setParameters([
+            'vluchtnummer' => $flightNumber,
+            'passagiernummer' => $passengerNumber
+        ]);
+
+        $result = $queryBuilder->executeQuery();
+
+        $row = $result->fetchAssociative();
+
+        return $row['aantal'] ?? 0;
+    }
 }

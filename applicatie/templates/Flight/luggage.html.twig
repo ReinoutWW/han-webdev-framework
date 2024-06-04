@@ -49,14 +49,19 @@
         </div>
         <div class="col-6">
             <h3>Bagage toevoegen</h2>
-            <p class="mb-3">Voeg hier uw bagage toe:</p>
-            <form method="post" action="{{currentPath}}">
-                <div class="form-group">
-                    <label for="weight">Gewicht</label>
-                    <input type="number" class="form-control" id="weight" name="weight" required>
-                </div>
-                <button type="submit" class="btn btn-primary mt-3">Inchecken</button>
-            </form>
+            {% if luggageWeightLeft > 0 %}
+                <p class="mb-3">Voeg hier uw bagage toe:</p>
+                <form method="post" action="{{currentPath}}">
+                    <div class="form-group">
+                        <label for="weight">Gewicht</label>
+                        <input type="number" min=0 max={{luggageWeightLeft}} class="form-control" id="weight" name="weight" required>
+                        <small>Maximaal gewicht: {{luggageWeightLeft}}kg</small>
+                    </div>
+                    <button type="submit" class="btn btn-primary mt-3">Inchecken</button>
+                </form>
+            {% else %}
+                <p class="mb-3">U heeft het maximale persoonlijke bagage gewicht bereikt. Verwijder bagage om ruimte te maken en opnieuw in te checken.</p>
+            {% endif %}
         </div>
 </div>
 {% endblock %}

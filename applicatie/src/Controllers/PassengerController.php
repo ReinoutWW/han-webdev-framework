@@ -91,16 +91,17 @@ class PassengerController extends AbstractController {
         // Get the luggage registered by the user
         $luggageList = $this->luggageRepository->getLuggage($flightNumber, $passengerNumber);
 
-        $totalWeight = 0;
-        foreach($luggageList as $luggage) {
-            $totalWeight += $luggage->getWeight();
-        }
+        $currentPersonalLuggageWeight = $this->luggageRepository->getTotalPassengerLuggageWeight($flightNumber, $passengerNumber);
+        $maxPersonalLuggageWeight = $this->flightRepository->getMaxPersonalLuggageWeight($flightNumber);
+
+        $weightFree = ($maxPersonalLuggageWeight - $currentPersonalLuggageWeight) > 0 ? $maxPersonalLuggageWeight - $currentPersonalLuggageWeight : 0;
 
         return $this->render("Flight/luggage.html.twig", [
             'luggage' => $luggageList,
             'flightNumber' => $flightNumber,
             'passengerNumber' => $passengerNumber,
-            'totalWeight' => $totalWeight
+            'totalWeight' => $currentPersonalLuggageWeight,
+            'luggageWeightLeft' => $weightFree
         ]);
     }
 
@@ -123,12 +124,14 @@ class PassengerController extends AbstractController {
         $maxFlightLuggageWeight = $this->flightRepository->getMaxFlightLuggageWeight($flightNumber);
         $currentTotalFlightLuggageWeight = $this->flightRepository->getTotalPassengerLuggageWeight($flightNumber);
         $currentPersonalLuggageWeight = $this->luggageRepository->getTotalPassengerLuggageWeight($flightNumber, $passengerNumber);
+        $currentLuggageCount = $this->luggageRepository->getLuggageCount($flightNumber, $passengerNumber);
 
         $form->setLimits(
             $maxPersonalLuggageWeight,
             $maxFlightLuggageWeight,
             $currentTotalFlightLuggageWeight,
-            $currentPersonalLuggageWeight
+            $currentPersonalLuggageWeight,
+            $currentLuggageCount
         );
 
         $form->setLuggage($luggage);
