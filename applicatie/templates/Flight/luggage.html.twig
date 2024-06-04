@@ -1,0 +1,62 @@
+{% extends 'Base/layout.html.twig' %}
+
+{% block main %}
+<div class="container-invisible">
+    <button class="btn btn-primary">
+        <a href="/vluchten/{{flightNumber}}" >&lt; Terug naar vlucht</a>
+    </button>
+</div>
+<div class="container">
+    <h2>Bagage overzicht</h2>
+    <div class="row">
+        <div class="col-6">
+            <h3>Bagage</h2>
+            <p class="mb-3">U heeft de volgende bagage ingecheckt:</p>
+            <table class="rw-table">
+                <thead>
+                    <tr>
+                        <th>Volgnummer</th>
+                        <th>Gewicht (kg)</th>
+                        <th>Acties</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if luggage is not empty %}
+                        {% for luggageItem in luggage %}
+                        <tr>
+                            <td>{{ luggageItem.objectFollowNumber }}</td>
+                            <td>{{ luggageItem.weight }}</td>
+                            <td>
+                                {# Remove #}
+                                <form method="post" action="/vluchten/{{flightNumber}}/passagier/{{passengerNumber}}/baggage/{{luggageItem.objectFollowNumber}}">
+                                    <button class="btn btn-danger btn-small">Verwijderen</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr class="rw-table-no-records">
+                            <td colspan="3">Geen bagage gevonden.</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="3">Totaal gewicht: {{ totalWeight }}kg</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        <div class="col-6">
+            <h3>Bagage toevoegen</h2>
+            <p class="mb-3">Voeg hier uw bagage toe:</p>
+            <form method="post" action="{{currentPath}}">
+                <div class="form-group">
+                    <label for="weight">Gewicht</label>
+                    <input type="number" class="form-control" id="weight" name="weight" required>
+                </div>
+                <button type="submit" class="btn btn-primary mt-3">Inchecken</button>
+            </form>
+        </div>
+</div>
+{% endblock %}

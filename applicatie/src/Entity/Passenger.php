@@ -6,7 +6,7 @@ use RWFramework\Framework\Dbal\Entity;
 
 class Passenger extends Entity {
     public function __construct(
-        private ?int $passangerNumber,
+        private ?int $passengerNumber,
         private string $userId,
         private string $name,
         private string $gender,
@@ -18,6 +18,7 @@ class Passenger extends Entity {
     ) {}
 
     public static function create(
+        ?string $passengerNumber,
         string $userId,
         string $name,
         string $gender,
@@ -25,7 +26,7 @@ class Passenger extends Entity {
         string $seatNumber
     ): Passenger {
         return new self(
-            passangerNumber: null,
+            passengerNumber: $passengerNumber,
             userId: $userId,
             name: $name,
             gender: $gender,
@@ -38,7 +39,7 @@ class Passenger extends Entity {
     }
 
     public function getPassengerNumber(): ?int {
-        return $this->passangerNumber;
+        return $this->passengerNumber;
     }
 
     public function getUserId(): string {
@@ -78,7 +79,7 @@ class Passenger extends Entity {
     }
 
     public function setId(int $id): void {
-        $this->passangerNumber = $id;
+        $this->passengerNumber = $id;
     }
 
     public function getName(): string {

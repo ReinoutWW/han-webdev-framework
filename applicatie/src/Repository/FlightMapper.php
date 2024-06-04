@@ -8,7 +8,7 @@ use RWFramework\Framework\Dbal\DataMapper;
 /**
  * Data mapper pattern
  */
-class flightMapper {
+class FlightMapper {
     public function __construct(
         private DataMapper $dataMapper
     ) {}

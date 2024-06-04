@@ -4,14 +4,14 @@ namespace App\Form\Flight;
 
 use App\Entity\Flight;
 use App\Form\AbstractForm;
-use App\Repository\flightMapper;
+use App\Repository\FlightMapper;
 
 class CreateFlightForm extends AbstractForm
 {
     private Flight $flight;
 
     public function __construct(
-        private flightMapper $flightMapper
+        private FlightMapper $flightMapper
     ) {}
 
     public function save(): void {

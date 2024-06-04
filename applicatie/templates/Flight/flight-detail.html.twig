@@ -58,10 +58,11 @@
                     <tr>
                         <th>Bagage</th>
                         <td>
-                            <form>
+                            <form method='get' action='/vluchten/{{flight.flightNumber}}/passagier/{{passenger_details.passengerNumber}}/baggage' >
                                 <div class="baggage-container">
-                                    <div class="baggage">10kg</div>
-                                    <div class="baggage">20kg</div>
+                                    {% for luggageItem in passengerLuggage %}
+                                        <div title="{{luggageItem.weight}}" class="baggage">kg</div>
+                                    {% endfor %}
                                     <button class="btn btn-primary btn-small ml-1">+</button>
                                 </div>
                             </form>

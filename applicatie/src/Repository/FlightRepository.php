@@ -186,6 +186,51 @@ class FlightRepository {
         return $row['aantal'] === "0";
     }
 
+    public function getMaxPersonalLuggageWeight(int $flightNumber) {
+        $queryBuilder = $this->connection->createQueryBuilder();
+
+        $queryBuilder->select('max_gewicht_pp')
+            ->from('Vlucht')
+            ->where('vluchtnummer = :vluchtnummer')
+            ->setParameter('vluchtnummer', $flightNumber);
+
+        $result = $queryBuilder->executeQuery();
+
+        $row = $result->fetchAssociative();
+
+        return $row['max_gewicht_pp'] ?? 0;
+    }
+
+    public function getMaxFlightLuggageWeight(int $flightNumber) {
+        $queryBuilder = $this->connection->createQueryBuilder();
+
+        $queryBuilder->select('max_totaalgewicht')
+            ->from('Vlucht')
+            ->where('vluchtnummer = :vluchtnummer')
+            ->setParameter('vluchtnummer', $flightNumber);
+
+        $result = $queryBuilder->executeQuery();
+
+        $row = $result->fetchAssociative();
+
+        return $row['max_totaalgewicht'] ?? 0;
+    }
+
+    public function getTotalPassengerLuggageWeight($flightNumber) {
+        $queryBuilder = $this->connection->createQueryBuilder();
+
+        $queryBuilder->select('SUM(gewicht) as totaal_gewicht')
+            ->from('BagageObject')
+            ->where('vluchtnummer = :vluchtnummer')
+            ->setParameter('vluchtnummer', $flightNumber);
+
+        $result = $queryBuilder->executeQuery();
+
+        $row = $result->fetchAssociative();
+
+        return $row['totaal_gewicht'] ?? 0;
+    }
+
     public function save(Flight $flight): void {
         $this->flightMapper->save($flight);
     }

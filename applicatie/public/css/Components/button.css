@@ -15,6 +15,19 @@
     font-size: medium;
 }
 
+.btn.btn-danger {
+    background-color: var(--base-color-red-50);
+    color: var(--base-color-red-500);
+}
+
+.btn.btn-danger:hover {
+    background-color: var(--base-color-red-100);
+}
+
+.btn.btn-danger a {
+    color: var(--base-color-red-500);
+}
+
 .btn-primary a {
     color: var(--base-color-blue-500);
 }

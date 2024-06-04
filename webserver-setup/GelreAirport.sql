@@ -85,12 +85,14 @@ create table IncheckenMaatschappij
   constraint pk_incheckenmaatschappij primary key (maatschappijcode, balienummer)
 )
 
-create table BagageObject
+CREATE TABLE BagageObject
 (
-  passagiernummer  numeric(6)   not null,
-  objectvolgnummer numeric(1)   not null,
-  gewicht          numeric(6,2) not null,
-  constraint pk_bagageobject primary key (passagiernummer, objectvolgnummer)
+  passagiernummer  NUMERIC(6)   NOT NULL,
+  objectvolgnummer NUMERIC(1)   NOT NULL,
+  gewicht          NUMERIC(6,2) NOT NULL,
+  vluchtnummer     NUMERIC(5,0), -- Toevoeging van de vluchtnummer kolom
+  CONSTRAINT pk_bagageobject PRIMARY KEY (passagiernummer, objectvolgnummer),
+  CONSTRAINT fk_vluchtnummer FOREIGN KEY (vluchtnummer) REFERENCES Vlucht(vluchtnummer)
 )
 
 go 

@@ -2,11 +2,10 @@
 
 namespace App\Repository;
 
-use App\Entity\Flight;
+use App\Entity\Luggage;
 use App\Entity\Passenger;
 use App\Entity\User;
 use Doctrine\DBAL\Connection;
-use RWFramework\Framework\Http\NotFoundException;
 
 class PassengerRepository
 {
@@ -19,6 +18,7 @@ class PassengerRepository
     public function addToFlight(User $user, int $flightNumber, string $seatNumber): void
     {
         $passenger = Passenger::create(
+            passengerNumber: null,
             userId: $user->getId(),
             name: $user->getName(),
             gender: $user->getGender(),
@@ -48,6 +48,7 @@ class PassengerRepository
 
         foreach ($rows as $row) {
             $passenger = Passenger::create(
+                passengerNumber: $row['passagiernummer'],
                 userId: $row['userId'],
                 name: $row['naam'],
                 gender: $row['geslacht'],
@@ -107,6 +108,7 @@ class PassengerRepository
 
         // Create new Passenger
         $passenger = Passenger::create(
+            passengerNumber: $row['passagiernummer'],
             userId: $row['userId'],
             name: $row['naam'],
             gender: $row['geslacht'],
@@ -117,7 +119,7 @@ class PassengerRepository
         return $passenger;
     }
 
-    public function hasSeat(int $flightNumber, int $userId) {
+    public function hasSeat(int $flightNumber, int $userId): bool {
         // Do the logic here
         $queryBuilder = $this->connection->createQueryBuilder();
 
@@ -135,5 +137,25 @@ class PassengerRepository
         $row = $result->fetchAssociative();
 
         return $row['aantal'] > 0;
+    }
+
+    public function getPassengerNumber(int $flightNumber, int $userId): ?int {
+        // Do the logic here
+        $queryBuilder = $this->connection->createQueryBuilder();
+
+        $queryBuilder
+            ->select('passagiernummer')
+            ->from('Passagier')
+            ->where('vluchtnummer = :vluchtnummer AND userId = :userId')
+        ->setParameters([
+            'vluchtnummer' => $flightNumber,
+            'userId' => $userId
+        ]);
+
+        $result = $queryBuilder->executeQuery();
+
+        $row = $result->fetchAssociative();
+
+        return $row['passagiernummer'] ?? null;
     }
 }

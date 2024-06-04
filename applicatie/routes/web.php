@@ -45,7 +45,7 @@ return [
     ], new RequiredRoles([
         new \RWFramework\Framework\Http\Roles\Role(RoleConstants::EMPLOYEE)
     ])),
-    new Route('GET', '/stoel_boeken/{flightNumber:\d+}', [\App\Controllers\FlightController::class, 'seatSelection'], [
+    new Route('GET', '/stoel_boeken/{flightNumber:\d+}', [\App\Controllers\PassengerController::class, 'seatSelection'], [
         RWFramework\Framework\Http\Middleware\Authenticate::class
     ]),
     new Route('GET', '/vluchten/nieuw', [\App\Controllers\FlightController::class, 'create'], [
@@ -54,10 +54,19 @@ return [
     new Route('POST', '/vluchten/nieuw', [\App\Controllers\FlightController::class, 'store'], [
         RWFramework\Framework\Http\Middleware\Authenticate::class
     ]),
-    new Route('POST', '/boeken/{flightNumber:\d+}', [\App\Controllers\FlightController::class, 'book'], [
+    new Route('POST', '/boeken/{flightNumber:\d+}', [\App\Controllers\PassengerController::class, 'book'], [
         RWFramework\Framework\Http\Middleware\Authenticate::class
     ]),
-    new Route('GET', '/boekingen/vluchten', [\App\Controllers\FlightController::class, 'booked'], [
+    new Route('GET', '/boekingen/vluchten', [\App\Controllers\PassengerController::class, 'booked'], [
+        RWFramework\Framework\Http\Middleware\Authenticate::class
+    ]),
+    new Route('GET', '/vluchten/{flightNumber:\d+}/passagier/{passengerNumber:\d+}/baggage', [\App\Controllers\PassengerController::class, 'luggage'], [
+        RWFramework\Framework\Http\Middleware\Authenticate::class
+    ]),
+    new Route('POST', '/vluchten/{flightNumber:\d+}/passagier/{passengerNumber:\d+}/baggage', [\App\Controllers\PassengerController::class, 'storeLuggage'], [
+        RWFramework\Framework\Http\Middleware\Authenticate::class
+    ]),
+    new Route('POST', '/vluchten/{flightNumber:\d+}/passagier/{passengerNumber:\d+}/baggage/{objectFollowNumber:\d+}', [\App\Controllers\PassengerController::class, 'deleteLuggage'], [
         RWFramework\Framework\Http\Middleware\Authenticate::class
     ]),
 ];
