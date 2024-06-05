@@ -45,7 +45,7 @@ body {
 
 /* State when the checkbox is checked */
 body:has(nav input[type="checkbox"]:checked) {
-    grid-template-columns: 12em 1fr;
+    grid-template-columns: 13em 1fr;
 }
 
 body:has(nav input[type="checkbox"]:checked) span.nav-item-label {

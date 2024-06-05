@@ -42,6 +42,23 @@ class FlightRepository {
         );
     }
 
+    public function flightExists (int $flightNumber) {
+        $queryBuilder = $this->connection->createQueryBuilder();
+    
+        // Check if flightNumber is already in the database
+        $queryBuilder->select('COUNT(*) as aantal')
+            ->from('Vlucht')
+            ->where('vluchtnummer = :vluchtnummer')
+            ->setParameter('vluchtnummer', $flightNumber);
+            
+        $result = $queryBuilder->executeQuery();
+            
+        $row = $result->fetchAssociative();
+
+        // Return if has found a flight with the given flightNumber
+        return $row['aantal'] === "1";
+    }
+
     public function findFlightsByFlightNumbers(array $flightNumbers) {
         $queryBuilder = $this->connection->createQueryBuilder();
 
@@ -149,7 +166,7 @@ class FlightRepository {
             ->from('Vlucht')
             ->setFirstResult(($page - 1) * $maxResults)
             ->setMaxResults($maxResults);
-
+        
         // Add filters to the query
         if($filters !== null) {
             foreach($filters->getFilters() as $key => $value) {

@@ -31,4 +31,20 @@ class AirportRepository {
 
         return $airports;
     }
+
+    public function getGates() {
+        $queryBuilder = $this->connection->createQueryBuilder();
+
+        $queryBuilder->select('gatecode')
+        ->from('Gate');
+
+        $result = $queryBuilder->executeQuery();
+
+        $gates = [];
+        while ($row = $result->fetchAssociative()) {
+            $gates[] = $row['gatecode'];
+        }
+
+        return $gates;
+    }
 }

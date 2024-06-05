@@ -2,13 +2,6 @@
 
 {% block body %}
 <div class="centre-container"> {# How to centre a div? #}
-    <div class="container-empty">
-    {# This is the applications' main template. To prevent code duplication, always extend this html twig. #}
-        {% block main %}
-            {# Main content will be rendered here #}
-        {% endblock %}
-    </div>
-
     {# Flash messages #}
     {% if session().hasNotification() %}
     <div class="container-invisible contrainer-size-small">
@@ -25,6 +18,10 @@
         {% endfor %}
     </div>
     {% endif %}
+    {# This is the applications' main template. To prevent code duplication, always extend this html twig. #}
+    {% block main %}
+        {# Main content will be rendered here #}
+    {% endblock %}
 </div>
 
 {% endblock %}

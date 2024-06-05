@@ -1,53 +1,66 @@
 {% extends 'Base/layout.html.twig' %}
 
 {% block main %}
-<div class="container">
+<div class="container fit-content">
     <h2>Nieuwe vlucht</h2>
     <form class="rw-form" method="post" action="/vluchten/nieuw">
-        <div class="row">
-            <div class="col-6">
+        <div class="d-md-flex ">
+            <div>
                 <h3>Algemene informatie</h3>
-                <div>
+                <div class="mb-2">
                     <label for="flightnumber">Vluchtnummer</label>
-                    <input name="flightnumber" type="text" class="form-control" id="flightnumber" required pattern="[A-Za-z0-9]{1,10}">
+                    <input name="flightnumber" type="text" class="form-control" id="flightnumber" min=10000 max=99999 required pattern="^\d{5}$">
                     <small>Vul een geldig vluchtnummer in (max. 10 tekens).</small>
                 </div>
-                <div>
-                    <label for="destination">Bestemmingscode</label>
-                    <input name="destination" type="text" class="form-control" id="destination" required pattern="[A-Za-z]{3}" maxlength="3">
-                    <small>Vul een geldige bestemmingscode in (exact 3 letters).</small>
+                <div class="mb-2">
+                    <label for="filter_flightNumber">Aankomst luchthaven</label>
+                    <select class="form-control" name="destination">
+                        <option value="">Selecteer luchthaven</option>
+                        {% for airport in airports %}
+                            <option value="{{airport.airportCode}}">{{airport.name}} ({{airport.airportCode}})</option>
+                        {% endfor %}
+                    </select>
                 </div>
-                <div>
+                <div class="mb-2">
                     <label for="gate">Gate</label>
-                    <input name="gate" type="text" class="form-control" id="gate" required pattern="[A-Za-z0-9]{1,3}" maxlength="3">
-                    <small>Vul een geldige gate code in (1-3 tekens).</small>
+                    <select class="form-control" name="gate">
+                        <option value="">Selecteer luchthaven</option>
+                        {% for gate in gates %}
+                            <option value="{{gate}}">{{gate}}</option>
+                        {% endfor %}
+                    </select>
                 </div>
-                <div>
+                <div class="mb-2">
                     <label for="departuretime">Vertrektijd</label>
                     <input name="departuretime" type="datetime-local" class="form-control" id="departuretime" required>
                     <small>Vul een geldige vertrektijd in.</small>
                 </div>
-                <div>
-                    <label for="airlinecode">vliegmaatschappij code</label>
-                    <input name="airlinecode" type="text" class="form-control" id="airlinecode" required pattern="[A-Za-z0-9]{1,2}" maxlength="2">
-                    <small>Vul een geldige vliegmaatschappij code in</small>
+                <div class="mb-2">
+                    <label for="airlinecode">Vliegmaatschappij</label>
+                    <select class="form-control" name="airlinecode">
+                        <option value="">Selecteer vliegmaatschappij</option>
+                        {% for airline in airlines %}
+                            <option value="{{airline.airlineCode}}">{{airline.name (airline.airlineCode)}}</option>
+                        {% endfor %}
+                    </select>
                 </div>
             </div>
-            <div class="col-6">
+            <div class="ml-md-4 mt-3 mt-md-0">
                 <h3>Passagiers</h3>
-                <div>
+                <div class="mb-2">
                     <label for="maxpassengers">Maximaal aantal passagiers</label>
-                    <input name="maxpassengers" type="number" class="form-control" id="maxpassengers" required min="1">
+                    {# Fun fact: 509 passengers is the max. It's on the Airbus A380, which is the largers and heaviest passenger aircraft in the world. https://www.lufthansagroup.com/en/company/fleet/lufthansa-and-regional-partners/airbus-a380-800.html#:~:text=The%20Airbus%20A380%20%E2%80%93%20Lufthansa's,each%20generate%2070000lbs%20of%20thrust.  #}
+                    <input name="maxpassengers" type="number" class="form-control" id="maxpassengers" required min="1" max="509"> 
                     <small>Vul een geldig aantal passagiers in (minimaal 1).</small>
                 </div>
-                <div>
+                <div class="mb-2">
                     <label for="maxweightpp">Maximaal gewicht per passagier (kg)</label>
-                    <input name="maxweightpp" type="number" class="form-control" id="maxweightpp" required min="1">
+                    <input name="maxweightpp" type="number" class="form-control" id="maxweightpp" required min="1" max="200">
                     <small>Vul een geldig gewicht in (minimaal 1 kg).</small>
                 </div>
                 <div>
                     <label for="maxtotalweight">Maximaal totaal gewicht (kg)</label>
-                    <input name="maxtotalweight" type="number" class="form-control" id="maxtotalweight" required min="1">
+                    <input name="maxtotalweight" type="number" class="form-control" id="maxtotalweight" required min="1" max="10000">
                     <small>Vul een geldig totaalgewicht in (minimaal 1 kg).</small>
                 </div>
             </div>

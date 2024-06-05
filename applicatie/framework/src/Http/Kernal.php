@@ -48,7 +48,7 @@ class Kernal {
             return new Response($exception->getMessage(), $exception->getStatusCode());
         }
 
-        return new Response('Server error', Response::HTTP_INTERNAL_SERVER_ERROR);
+        return new Response('RWFramework 1.0.0 | We kunnen dit verzoek niet verwerken. Probeer het later opnieuw, of bel de helpdesk. (Teams :P)', Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
     public function terminate(Request $request, Response $response): void {

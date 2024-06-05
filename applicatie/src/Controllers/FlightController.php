@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Entity\Flight;
+use App\Repository\AirlineRepository;
 use App\Repository\AirportRepository;
 use App\Repository\Filters\SearchFilters;
 use App\Repository\FlightMapper;
@@ -23,7 +24,8 @@ class FlightController extends AbstractController
         private FlightMapper $flightMapper,
         private SessionInterface $session,
         private LuggageRepository $luggageRepository,
-        private AirportRepository $airportRepository
+        private AirportRepository $airportRepository,
+        private AirlineRepository $airlineRepository
     ) { }
 
     public function index()
@@ -83,7 +85,15 @@ class FlightController extends AbstractController
     }
 
     public function create(): Response {
-        return $this->render("Flight/create-flight.html.twig");
+        $airports = $this->airportRepository->getAirports();
+        $gates = $this->airportRepository->getGates();
+        $airlines = $this->airlineRepository->getAirlines();
+
+        return $this->render("Flight/create-flight.html.twig", [
+            "airports" => $airports,
+            "gates"=> $gates,
+            "airlines"=> $airlines
+        ]);
     }
 
     public function store(): Response {
@@ -98,7 +108,10 @@ class FlightController extends AbstractController
             $this->request->input('airlinecode'),
         );
 
-        $form = new \App\Form\Flight\CreateFlightForm($this->flightMapper);
+        $form = new \App\Form\Flight\CreateFlightForm(
+            $this->flightMapper,
+            $this->flightRepository,
+        );
 
         $form->setFlight($flight);
 
