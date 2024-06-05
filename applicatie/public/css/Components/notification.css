@@ -2,7 +2,6 @@
 div[class*=rw-notification-] {
     padding: 0.5rem;
     border-radius: 0.3rem;
-    margin: 1rem 0;
     color: var(--text-color-default);
 }
 

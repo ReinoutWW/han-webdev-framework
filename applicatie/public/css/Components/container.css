@@ -13,10 +13,18 @@
     overflow-x: auto;
 }
 
+.container {
+    min-height: clamp(20rem, 100%, 30rem);
+}
+
 .container-invisible {
     background-color: unset;
     box-shadow: unset;
     padding: 0;
+}
+
+.container.fit-content {
+    width: fit-content;
 }
 
 .centre-container {

@@ -3,6 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\Flight;
+use App\Repository\Filters\SearchFilters;
+use DateTimeImmutable;
 use Doctrine\DBAL\Connection;
 use RWFramework\Framework\Http\NotFoundException;
 
@@ -138,7 +140,7 @@ class FlightRepository {
         return $seat;
     }
 
-    public function getFlights(int $page = 1) {
+    public function getFlights(int $page = 1, SearchFilters $filters = null) {
         $queryBuilder = $this->connection->createQueryBuilder();
 
         $maxResults = 10;
@@ -147,6 +149,19 @@ class FlightRepository {
             ->from('Vlucht')
             ->setFirstResult(($page - 1) * $maxResults)
             ->setMaxResults($maxResults);
+
+        // Add filters to the query
+        if($filters !== null) {
+            foreach($filters->getFilters() as $key => $value) {
+                if($value instanceof DateTimeImmutable) {
+                    $queryBuilder->andWhere("$key = :$key")
+                        ->setParameter($key, $value->format('Y-m-d H:i:s'));
+                } else {
+                    $queryBuilder->andWhere("$key = :$key")
+                    ->setParameter($key, $value);
+                }
+            }
+        }
 
         $result = $queryBuilder->executeQuery();
 

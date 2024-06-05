@@ -6,8 +6,38 @@
         <a href="/vluchten/nieuw" >Nieuwe vlucht</a>
     </button>
 </div>
-<div class="container">
+<div class="container p-relative">
     <h2>Overzicht vluchten</h2>
+    <details class="rw-overflow">
+        <summary>
+            <img src="/images/search-30.png "/>
+            <span class="overflow-label">Geavanceerd zoeken</span> 
+        </summary>
+        <div class="rw-overflow-content">
+            <form method="get" action="{{currentPath}}">
+                    <div class="form-group">
+                        <div class="mb-1">
+                            <label for="filter_flightNumber">Vluchtnummer</label>
+                            <input type="number" min=10000 max=99999 class="form-control" name="filter_vluchtnummer">
+                        </div>
+                        <div class="mb-1">
+                            <label for="filter_flightNumber">Luchthaven</label>
+                            <select class="form-control" name="filter_bestemming">
+                                <option value="">Selecteer luchthaven</option>
+                                {% for airport in airports %}
+                                    <option value="{{airport.airportCode}}">{{airport.name}} ({{airport.airportCode}})</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="mb-1">
+                            <label for="filter_flightNumber">Vertrekdatum</label>
+                            <input type="datetime-local" class="form-control" name="filter_vertrektijd">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary mt-3 w-100">Zoeken</button>
+                </form>
+        </div>
+    </details>
     {% include 'Flight/Components/flights-table.htm.twig' %}
 </div>
 {% endblock %}

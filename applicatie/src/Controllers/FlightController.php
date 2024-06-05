@@ -3,6 +3,8 @@
 namespace App\Controllers;
 
 use App\Entity\Flight;
+use App\Repository\AirportRepository;
+use App\Repository\Filters\SearchFilters;
 use App\Repository\FlightMapper;
 use App\Repository\FlightRepository;
 use App\Repository\LuggageRepository;
@@ -20,7 +22,8 @@ class FlightController extends AbstractController
         private PassengerRepository $passengerRepository,
         private FlightMapper $flightMapper,
         private SessionInterface $session,
-        private LuggageRepository $luggageRepository
+        private LuggageRepository $luggageRepository,
+        private AirportRepository $airportRepository
     ) { }
 
     public function index()
@@ -28,14 +31,24 @@ class FlightController extends AbstractController
         // Get all flights from a specific page (default = 1)
         $page = $this->request->getParam('page') ?? 1;
         $flightsPage = ($page > 0) ? $page : 1;
+        $allowedFilters = [
+            'vluchtnummer',
+            'bestemming',
+            'vertrektijd'
+        ];
+
+        $filters = SearchFilters::parseArrayToFilters($this->request->getParams(), $allowedFilters);
 
         // Get flights from Repository
-        $flights = $this->flightRepository->getFlights($flightsPage);
+        $flights = $this->flightRepository->getFlights($flightsPage, $filters);
+
+        $airports = $this->airportRepository->getAirports();
 
         // Return the view with the flights
         return $this->render("Flight/flight.html.twig", [
             'flights' => $flights,
-            'page' => $page
+            'page' => $page,
+            'airports'=> $airports
         ]);
     }
 

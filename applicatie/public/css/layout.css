@@ -28,15 +28,28 @@ h1, h2, h3, h4, h5, h6 {
     display: flex;
 }
 
-img {
-    width: 250px;
+.p-relative {
+    position: relative;
+}
+
+.w-100 {
+    width: 100% !important;
 }
 
 body {
     display: grid;
     grid-template-rows: auto 1fr auto;
-    grid-template-columns: 12em 1fr; 
+    grid-template-columns: auto 1fr; 
     height: 100vh;
+}
+
+/* State when the checkbox is checked */
+body:has(nav input[type="checkbox"]:checked) {
+    grid-template-columns: 12em 1fr;
+}
+
+body:has(nav input[type="checkbox"]:checked) span.nav-item-label {
+    display: block;
 }
 
 header {
@@ -97,14 +110,26 @@ nav {
     z-index: 2;
 }
 
+nav a.nav-item .nav-item-label {
+    display: none;
+}
+
 nav a.nav-item {
-    display: block;
     width: 100%;
     margin-bottom: 0.3rem;
     padding: 0.5rem;
     border-radius: 5px;
     text-decoration: none;
     color: var(--text-color-default);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+}
+
+nav a.nav-item img {
+    height: 1.3rem;
+    margin-left: 0.5rem;
 }
 
 nav a.nav-item:visited {
@@ -165,6 +190,10 @@ div[class^="col-"] > div:not(:last-child) {
     nav {
         grid-column: span 2;
         z-index: 1;
+    }
+
+    nav:has(div>input[type="checkbox"]) > div {
+        display: none;
     }
 
     main {

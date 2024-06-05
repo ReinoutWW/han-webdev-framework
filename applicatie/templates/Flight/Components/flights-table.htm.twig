@@ -8,6 +8,7 @@
             <th>Max aantal passagiers</th>
             <th>Max gewicht pp</th>
             <th>Max gewicht totaal</th>
+            <th>Vertrekdatum</th>
             <th>Vertrektijd</th>
             <th>Maatschappijcode</th>
         </tr>
@@ -22,7 +23,8 @@
                     <td>{{ flight.maxPassengers }}</td>
                     <td>{{ flight.maxWeightPerPassenger }}</td>
                     <td>{{ flight.maxTotalWeight }}</td>
-                    <td>{{ flight.departureTime|date('d-m-Y H:i') }}</td>
+                    <td>{{ flight.departureTime|date('d-m-Y') }}</td>
+                    <td>{{ flight.departureTime|date('H:i') }}</td>
                     <td>{{ flight.airlineCode|capitalize }}</td>
                 </tr>
             {% endfor %}
@@ -40,11 +42,11 @@
                     {# Next / previous flight with < and > #}
                     {% if page > 0 %}
                         <button class="btn btn-secondary">
-                            <a href="{{currentPath}}?page={{ (page - 1) }}">&lt; Vorige</a>
+                            <a href="{{currentPath}}&page={{ (page - 1) }}">&lt; Vorige</a>
                         </button>
                     {% endif %}
                     <button class="btn btn-secondary">
-                        <a href="{{currentPath}}?page={{ (page + 1) }}" class="ml-1">Volgende &gt;</a>
+                        <a href="{{currentPath}}&page={{ (page + 1) }}" class="ml-1">Volgende &gt;</a>
                     </button>
                 </div>
             </td>

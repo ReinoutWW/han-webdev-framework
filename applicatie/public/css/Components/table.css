@@ -14,6 +14,7 @@
 
 .table-vertical th {
     padding-right: 1rem;
+    line-height: 2rem;
 }
 
 .rw-table thead {
@@ -57,4 +58,10 @@
     .rw-table thead td {
         padding: 0.25rem 0.5rem;
     }
+
+    /* .rw-table thead tr th:not(:nth-child(-n+4)),
+    .rw-table tbody tr td:not(:nth-child(-n+4)) {
+        display: none;
+    } */
+
 }

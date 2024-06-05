@@ -23,9 +23,24 @@
         </div>
     </header>
     <nav>
+        <div class="mb-2">
+            <input type="checkbox"
+                id="switch"
+                class="checkbox"
+                checked/>
+            <label for="switch"
+                class="toggle">
+            </label>
+        </div>
         {# Based on roles, show the navigation items #}
-        <a class="nav-item {{ (pathInfo == '/vluchten') ? 'active' : '' }}" href="/vluchten">Vluchten</a>
-        <a class="nav-item {{ (pathInfo == '/boekingen/vluchten') ? 'active' : '' }}" href="/boekingen/vluchten">Mijn vluchten</a>
+        <a class="nav-item {{ (pathInfo == '/vluchten') ? 'active' : '' }}" href="/vluchten" title="Vluchten">
+            <span class="nav-item-label">Vluchten</span>
+            <img src="/images/airplane-30.png" />
+        </a>
+        <a class="nav-item {{ (pathInfo == '/boekingen/vluchten') ? 'active' : '' }}" href="/boekingen/vluchten" title="Mijn vluchten">
+            <span class="nav-item-label">Mijn vluchten</span>
+            <img src="/images/booked-30.png" />
+        </a>
     </nav>
     <main>
         {# Flash messages #}

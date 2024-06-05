@@ -29,6 +29,25 @@ class Request {
     public function getPathInfo(): string {
         return strtok($this->server['REQUEST_URI'], '?');
     }
+
+    public function getFullPathInfo(): string {
+        return $this->server['REQUEST_URI'];
+    }
+
+    public function getFullPathInfoWithoutPage(): string {
+        return preg_replace([
+            '/[?&]page=\d+&/', 
+            '/[?&]page=\d+/', 
+            '/\?&/',          
+            '/\?$/'            
+        ], [
+            "?",
+            '',
+            '?',
+            ''
+        ], $this->getFullPathInfo());
+    }
+
     public function getMethod(): string {
         return $this->server['REQUEST_METHOD'];
     }

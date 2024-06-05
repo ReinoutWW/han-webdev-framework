@@ -20,8 +20,9 @@ abstract class AbstractController {
 
     public function render(string $template, array $parameters = [], Response $response = null): Response {
         $parameters['pathInfo'] = $this->request->getPathInfo();
-        $parameters['currentPath'] = $this->request->getPathInfo();
 
+        // Remove 'page' parameter from path, if it exists. This will prevent the page from being added multiple times
+        $parameters['currentPath'] = $this->request->getFullPathInfoWithoutPage();
         $content = $this->container->get('twig')->render($template, $parameters);
 
         $response ??= new Response();
