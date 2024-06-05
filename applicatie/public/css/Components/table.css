@@ -43,6 +43,10 @@
 }
 
 @media (max-width: 768px) { 
+    .rw-table.table-vertical tbody tr th {
+        font-weight: normal;
+    }
+
     .rw-table tfoot td .pagination  {
         margin-top: 1rem;
         justify-content: left;

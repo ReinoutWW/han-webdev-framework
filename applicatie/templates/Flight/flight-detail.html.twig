@@ -15,7 +15,7 @@
 </div>
 <div class="container">
     <h2>Passagier details</h2>
-    <div class="d-flex mt-3">
+    <div class="d-md-flex mt-3">
         <div>
             <h3>Overzicht vlucht</h3>
             <table class="rw-table table-vertical">
@@ -39,7 +39,7 @@
             </table>
         </div>
         {% if passenger_details is not empty %}
-        <div class="ml-4">
+        <div class="ml-md-4 mt-3 mt-md-0">
             <h3>Boeking details</h3>
             <table class="rw-table table-vertical">
                 <tbody>
@@ -61,9 +61,9 @@
                             <form method='get' action='/vluchten/{{flight.flightNumber}}/passagier/{{passenger_details.passengerNumber}}/baggage' >
                                 <div class="baggage-container">
                                     {% for luggageItem in passengerLuggage %}
-                                        <div title="{{luggageItem.weight}}" class="baggage">kg</div>
+                                        <div title="{{luggageItem.weight}}" class="baggage mr-1">kg</div>
                                     {% endfor %}
-                                    <button class="btn btn-primary btn-small ml-1">Toevoegen</button>
+                                    <button class="btn btn-primary btn-small">Toevoegen</button>
                                 </div>
                             </form>
                         </td>

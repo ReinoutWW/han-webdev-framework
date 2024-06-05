@@ -200,3 +200,58 @@
 .seat:last-child {
     margin-top: 0.2rem;
 }
+
+@media (max-width: 576px) {
+    .plane-front {
+        display: none;
+    }
+
+    .plane-body {
+        height: 8rem;
+    }
+
+    .plane-tail {
+        width: 100%;
+        height: 100%;
+    }
+
+    .cockpit {
+        width: 6rem;
+        height: 50%;
+    }
+
+    .backroom {
+        width: 100%;
+        height: 100%;
+        width: 6rem;
+    }
+
+    .toilet-room {
+        height: 30%;
+        width: 30%;
+    }
+
+    .toilet {
+        width: 60%;
+        height: 50%;
+    }
+
+    .plane-door {
+        height: 30%;
+        width: 30%;
+    }
+
+    .seat {
+        width: 1.5rem;
+        height: 1.5rem;
+        font-size: 0.7rem;
+    }
+
+    .plane-supersection {
+        margin-right: 2rem;
+    }
+
+    .plane-section {
+        margin-right: 1rem;
+    }
+}
