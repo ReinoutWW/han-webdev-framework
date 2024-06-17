@@ -14,22 +14,36 @@ class FlightRepository {
         private FlightMapper $flightMapper
     ) { }
 
-    public function findByFlightNumber(int $flightNumber) {
+    public function findByFlightNumber(int $flightNumber): Flight {
         $queryBuilder = $this->connection->createQueryBuilder();
-
-        $queryBuilder->select('vluchtnummer', 'bestemming', 'gatecode', 'max_aantal', 'max_gewicht_pp', 'max_totaalgewicht', 'vertrektijd', 'maatschappijcode')
-            ->from('Vlucht')
-            ->where('vluchtnummer = :vluchtnummer')
-            ->setParameter('vluchtnummer', $flightNumber);
-
+    
+        $queryBuilder->select(
+            'v.vluchtnummer',
+            'v.bestemming',
+            'v.gatecode',
+            'v.max_aantal',
+            'v.max_gewicht_pp',
+            'v.max_totaalgewicht',
+            'v.vertrektijd',
+            'v.maatschappijcode',
+            'm.naam AS airline',
+            'COUNT(p.passagiernummer) AS seatsTaken'
+        )
+        ->from('Vlucht', 'v')
+        ->leftJoin('v', 'Passagier', 'p', 'p.vluchtnummer = v.vluchtnummer')
+        ->leftJoin('v', 'Maatschappij', 'm', 'm.maatschappijcode = v.maatschappijcode')
+        ->where('v.vluchtnummer = :vluchtnummer')
+        ->setParameter('vluchtnummer', $flightNumber)
+        ->groupBy('v.vluchtnummer', 'v.bestemming', 'v.gatecode', 'v.max_aantal', 'v.max_gewicht_pp', 'v.max_totaalgewicht', 'v.vertrektijd', 'v.maatschappijcode', 'm.naam');
+    
         $result = $queryBuilder->executeQuery();
-
+    
         $row = $result->fetchAssociative();
-
-        if(!$row) {
+    
+        if (!$row) {
             throw new NotFoundException("Vlucht met vluchtnummer $flightNumber is niet gevonden.");
         }
-
+    
         return Flight::create(
             flightNumber: $row['vluchtnummer'],
             destination: $row['bestemming'],
@@ -38,10 +52,12 @@ class FlightRepository {
             maxWeightPerPassenger: $row['max_gewicht_pp'],
             maxTotalWeight: $row['max_totaalgewicht'],
             departureTime: new \DateTimeImmutable($row['vertrektijd']),
-            airlineCode: $row['maatschappijcode']
+            airlineCode: $row['maatschappijcode'],
+            airline: $row['airline'],
+            seatsTaken: $row['seatsTaken']
         );
     }
-
+    
     public function flightExists (int $flightNumber) {
         $queryBuilder = $this->connection->createQueryBuilder();
     
@@ -61,17 +77,31 @@ class FlightRepository {
 
     public function findFlightsByFlightNumbers(array $flightNumbers) {
         $queryBuilder = $this->connection->createQueryBuilder();
-
-        $queryBuilder->select('vluchtnummer', 'bestemming', 'gatecode', 'max_aantal', 'max_gewicht_pp', 'max_totaalgewicht', 'vertrektijd', 'maatschappijcode')
-            ->from('Vlucht')
-            ->where('vluchtnummer IN (:vluchtnummers)')
-            ->setParameter('vluchtnummers', $flightNumbers, Connection::PARAM_INT_ARRAY);
-
+    
+        $queryBuilder->select(
+            'v.vluchtnummer',
+            'v.bestemming',
+            'v.gatecode',
+            'v.max_aantal',
+            'v.max_gewicht_pp',
+            'v.max_totaalgewicht',
+            'v.vertrektijd',
+            'v.maatschappijcode',
+            'm.naam AS airline',
+            'COUNT(p.passagiernummer) AS seatsTaken'
+        )
+        ->from('Vlucht', 'v')
+        ->leftJoin('v', 'Passagier', 'p', 'p.vluchtnummer = v.vluchtnummer')
+        ->leftJoin('v', 'Maatschappij', 'm', 'm.maatschappijcode = v.maatschappijcode')
+        ->where('v.vluchtnummer IN (:vluchtnummers)')
+        ->setParameter('vluchtnummers', $flightNumbers, Connection::PARAM_INT_ARRAY)
+        ->groupBy('v.vluchtnummer', 'v.bestemming', 'v.gatecode', 'v.max_aantal', 'v.max_gewicht_pp', 'v.max_totaalgewicht', 'v.vertrektijd', 'v.maatschappijcode', 'm.naam');
+    
         $result = $queryBuilder->executeQuery();
-
+    
         $flights = [];
-
-        while($row = $result->fetchAssociative()) {
+    
+        while ($row = $result->fetchAssociative()) {
             $flights[] = Flight::create(
                 flightNumber: $row['vluchtnummer'],
                 destination: $row['bestemming'],
@@ -80,10 +110,12 @@ class FlightRepository {
                 maxWeightPerPassenger: $row['max_gewicht_pp'],
                 maxTotalWeight: $row['max_totaalgewicht'],
                 departureTime: new \DateTimeImmutable($row['vertrektijd']),
-                airlineCode: $row['maatschappijcode']
+                airlineCode: $row['maatschappijcode'],
+                airline: $row['airline'],
+                seatsTaken: $row['seatsTaken']
             );
         }
-
+    
         return $flights;
     }
 
@@ -157,34 +189,56 @@ class FlightRepository {
         return $seat;
     }
 
-    public function getFlights(int $page = 1, SearchFilters $filters = null) {
+    /**
+     * Will return a list of flights based on the given filters
+     * Note: If no filters are set, only future flights will be shown
+     */
+    public function getFlights(int $page = 1, SearchFilters $filters = null, bool $onlyFutureFlights = false, int $limit = 10): array {
         $queryBuilder = $this->connection->createQueryBuilder();
-
-        $maxResults = 10;
-
-        $queryBuilder->select('vluchtnummer', 'bestemming', 'gatecode', 'max_aantal', 'max_gewicht_pp', 'max_totaalgewicht', 'vertrektijd', 'maatschappijcode')
-            ->from('Vlucht')
-            ->setFirstResult(($page - 1) * $maxResults)
-            ->setMaxResults($maxResults);
-        
+    
+        $queryBuilder->select(
+            'v.vluchtnummer',
+            'v.bestemming',
+            'v.gatecode',
+            'v.max_aantal',
+            'v.max_gewicht_pp',
+            'v.max_totaalgewicht',
+            'v.vertrektijd',
+            'v.maatschappijcode',
+            'm.naam AS airline',
+            'COUNT(p.passagiernummer) AS seatsTaken'
+        )
+        ->from('Vlucht', 'v')
+        ->join('v', 'Luchthaven', 'l', 'l.luchthavencode = v.bestemming')
+        ->leftJoin('v', 'Passagier', 'p', 'p.vluchtnummer = v.vluchtnummer')
+        ->leftJoin('v', 'Maatschappij', 'm', 'm.maatschappijcode = v.maatschappijcode')
+        ->setFirstResult(($page - 1) * $limit)
+        ->setMaxResults($limit)
+        ->groupBy('v.vluchtnummer', 'v.bestemming', 'v.gatecode', 'v.max_aantal', 'v.max_gewicht_pp', 'v.max_totaalgewicht', 'v.vertrektijd', 'v.maatschappijcode', 'm.naam');
+    
+        // If no filters are set, only show future flights
+        if ($onlyFutureFlights) {
+            $queryBuilder->andWhere('v.vertrektijd > GETDATE()');
+        }
+    
         // Add filters to the query
-        if($filters !== null) {
-            foreach($filters->getFilters() as $key => $value) {
-                if($value instanceof DateTimeImmutable) {
-                    $queryBuilder->andWhere("$key = :$key")
+        if ($filters !== null) {
+            foreach ($filters->getFilters() as $key => $value) {
+                if ($value instanceof \DateTimeImmutable) {
+                    $queryBuilder->andWhere("v.$key = :$key")
                         ->setParameter($key, $value->format('Y-m-d H:i:s'));
                 } else {
-                    $queryBuilder->andWhere("$key = :$key")
-                    ->setParameter($key, $value);
+                    $queryBuilder->andWhere("v.$key = :$key")
+                        ->setParameter($key, $value);
                 }
             }
         }
-
+    
         $result = $queryBuilder->executeQuery();
-
+    
         $flights = [];
-
-        while($row = $result->fetchAssociative()) {
+    
+        while ($row = $result->fetchAssociative()) {
             $flights[] = Flight::create(
                 flightNumber: $row['vluchtnummer'],
                 destination: $row['bestemming'],
@@ -193,10 +247,12 @@ class FlightRepository {
                 maxWeightPerPassenger: $row['max_gewicht_pp'],
                 maxTotalWeight: $row['max_totaalgewicht'],
                 departureTime: new \DateTimeImmutable($row['vertrektijd']),
-                airlineCode: $row['maatschappijcode']
+                airlineCode: $row['maatschappijcode'],
+                airline: $row['airline'],
+                seatsTaken: $row['seatsTaken']
             );
         }
-
+    
         return $flights;
     }
 
@@ -261,6 +317,22 @@ class FlightRepository {
         $row = $result->fetchAssociative();
 
         return $row['totaal_gewicht'] ?? 0;
+    }
+
+    public function getMaxLuggagePerPassenger($flightNumber) {
+        $queryBuilder = $this->connection->createQueryBuilder();
+
+        $queryBuilder->select('m.max_objecten_pp')
+            ->from('Vlucht', 'v')
+            ->join('v', 'Maatschappij', 'm', 'm.maatschappijcode = v.maatschappijcode')
+            ->where('v.vluchtnummer = :vluchtnummer')
+            ->setParameter('vluchtnummer', $flightNumber);
+
+        $result = $queryBuilder->executeQuery();
+
+        $row = $result->fetchAssociative();
+
+        return $row['max_objecten_pp'] ?? 0;
     }
 
     public function save(Flight $flight): void {

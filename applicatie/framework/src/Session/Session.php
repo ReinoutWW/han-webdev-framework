@@ -106,6 +106,14 @@ class Session implements SessionInterface {
         return $this->get(self::USER_KEY);
     }
 
+    public function hasRole(string $role): bool {
+        $user = $this->getUser();
+        if($user) {
+            return in_array($role, $user->getRoles());
+        }
+        return false;
+    }
+
     /**
      * Set the last visited route
      * This will be used to redirect the user to the last visited route

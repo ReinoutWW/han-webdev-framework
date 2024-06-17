@@ -1,0 +1,29 @@
+{% block header %}
+    <header>
+        <a class="airport-brand" href="/dashboard">
+            <img src="/images/gelre-airport-image.png" />
+            <h1 class="brand-name"><span class="brand-name-main">Gelre<span class="brand-name-second">Airport</h1>
+        </a>
+        <div class="header-personal">
+            {% if session().isAuthenticated() %}
+            <details class="rw-overflow">
+                <summary class="d-flex align-items-center">
+                    <img class="rw-icon" src="/images/user-avatar.png" /> 
+                    {{session().getUser().getUsername()}}
+                </summary>
+                <div class="rw-overflow-content">
+                    <ul class="rw-overflow-items">
+                        <li><a href="/logout" class="d-flex align-items-center">Uitloggen <img class="rw-icon ml-1" src="/images/logout.png" /></a></li>
+                        <li><a href="/dashboard" class="d-flex align-items-center">Dashboard <img class="rw-icon ml-1" src="/images/dashboard.png" /></a></li>
+                        <li><a href="/boekingen/vluchten">Mijn vluchten</a></li>
+                    </ul>
+                </div>
+            </details>
+            {% else %}
+            <div>
+                <a class="btn btn-secondary btn-small" href='/login'>Inloggen</a> <a class="btn btn-primary btn-small" href='/register'>Registreren</a>
+            </div>
+            {% endif %}
+        </div>
+    </header>
+{% endblock %}

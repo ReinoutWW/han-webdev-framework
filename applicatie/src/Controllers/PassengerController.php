@@ -14,6 +14,8 @@ use RWFramework\Framework\Session\Session;
 use RWFramework\Framework\Session\SessionInterface;
 
 class PassengerController extends AbstractController {
+    private const FLIGHTS_PER_PAGE = 10;
+
     public function __construct(
         private FlightRepository $flightRepository,
         private PassengerRepository $passengerRepository,
@@ -83,16 +85,30 @@ class PassengerController extends AbstractController {
         $flights = $this->passengerRepository->getBookedFlights($userId);
 
         return $this->render("Flight/booked-flights.html.twig", [
-            'flights' => $flights
+            'flights' => $flights,
+            'max_results' => self::FLIGHTS_PER_PAGE
         ]);
     }
 
     public function luggage(int $flightNumber, int $passengerNumber) {
+        $userId = $this->request->getSession()->getUser()->getId();
+        $isAuthenticated = $this->isEmployeeOrPersonalDetails($passengerNumber, $userId);
+
+        if(!$isAuthenticated) {
+            $this->request->getSession()->setFlash(Session::NOTIFICATION_ERROR, 'U heeft geen toegang tot deze pagina.');
+            return new RedirectResponse('/vluchten/' . $flightNumber);
+        }
+
+        // If the passengerNumber is not the session users' own passenger number, it's an employee viewing the page
+        $employeeView = !$this->isPersonalPassengerNumber($passengerNumber, $userId);
+        $passengerUsername = $employeeView ? $this->passengerRepository->getPassengerUsername($passengerNumber) : $this->request->getSession()->getUser()->getUsername();
+
         // Get the luggage registered by the user
         $luggageList = $this->luggageRepository->getLuggage($flightNumber, $passengerNumber);
 
         $currentPersonalLuggageWeight = $this->luggageRepository->getTotalPassengerLuggageWeight($flightNumber, $passengerNumber);
         $maxPersonalLuggageWeight = $this->flightRepository->getMaxPersonalLuggageWeight($flightNumber);
+        $maxLuggagePerPassenger = $this->flightRepository->getMaxLuggagePerPassenger($flightNumber);
 
         $weightFree = ($maxPersonalLuggageWeight - $currentPersonalLuggageWeight) > 0 ? $maxPersonalLuggageWeight - $currentPersonalLuggageWeight : 0;
 
@@ -101,11 +117,23 @@ class PassengerController extends AbstractController {
             'flightNumber' => $flightNumber,
             'passengerNumber' => $passengerNumber,
             'totalWeight' => $currentPersonalLuggageWeight,
-            'luggageWeightLeft' => $weightFree
+            'maxLuggagePerPassenger' => $maxLuggagePerPassenger,
+            'luggageWeightLeft' => $weightFree,
+            'employeeView' => $employeeView,
+            'passengerUsername' => $passengerUsername
         ]);
     }
 
     public function storeLuggage(int $flightNumber, int $passengerNumber) {
+        // Check if the user has access to the flight
+        $userId = $this->request->getSession()->getUser()->getId();
+        $isAuthenticated = $this->isEmployeeOrPersonalDetails($passengerNumber, $userId);
+
+        if(!$isAuthenticated) {
+            $this->request->getSession()->setFlash(Session::NOTIFICATION_ERROR, 'U heeft geen toegang tot deze pagina.');
+            return new RedirectResponse('/vluchten/' . $flightNumber);
+        }
+
         $weight = $this->request->input('weight');
 
         $objectFollowNumber = $this->luggageRepository->getNextObjectFollowNumber($flightNumber, $passengerNumber);
@@ -125,13 +153,15 @@ class PassengerController extends AbstractController {
         $currentTotalFlightLuggageWeight = $this->flightRepository->getTotalPassengerLuggageWeight($flightNumber);
         $currentPersonalLuggageWeight = $this->luggageRepository->getTotalPassengerLuggageWeight($flightNumber, $passengerNumber);
         $currentLuggageCount = $this->luggageRepository->getLuggageCount($flightNumber, $passengerNumber);
+        $maxLuggagePerPassenger = $this->flightRepository->getMaxLuggagePerPassenger($flightNumber);
 
         $form->setLimits(
             $maxPersonalLuggageWeight,
             $maxFlightLuggageWeight,
             $currentTotalFlightLuggageWeight,
             $currentPersonalLuggageWeight,
-            $currentLuggageCount
+            $currentLuggageCount,
+            $maxLuggagePerPassenger
         );
 
         $form->setLuggage($luggage);
@@ -150,16 +180,37 @@ class PassengerController extends AbstractController {
 
         $this->request->getSession()->setFlash(Session::NOTIFICATION_SUCCESS, 'Uw bagage is succesvol geregistreerd!');
 
-        return new RedirectResponse('/vluchten/' . $flightNumber . '/passagier/' . $passengerNumber . '/baggage');
+        return new RedirectResponse('/vluchten/' . $flightNumber . '/passagier/' . $passengerNumber . '/bagage');
     }
 
     public function deleteLuggage(int $flightNumber, int $passengerNumber, int $objectFollowNumber) {
+        $userId = $this->request->getSession()->getUser()->getId();
+        $isAuthenticated = $this->isEmployeeOrPersonalDetails($passengerNumber, $userId);
+
+        if(!$isAuthenticated) {
+            $this->request->getSession()->setFlash(Session::NOTIFICATION_ERROR, 'U heeft geen toegang tot deze pagina.');
+            return new RedirectResponse('vluchten/' . $flightNumber);
+        }
+
         $this->luggageRepository->deleteLuggage($flightNumber, $passengerNumber, $objectFollowNumber);
 
         $this->request->getSession()->setFlash(Session::NOTIFICATION_SUCCESS, 'Bagage is succesvol verwijderd!');
 
         return new RedirectResponse($this->session->getLastVisitedRoute());
         
+    }
+
+    private function isEmployeeOrPersonalDetails($passengerNumber, $userId) {
+        $isAuthenticated = $this->isPersonalPassengerNumber($passengerNumber, $userId) || $this->request->getSession()->hasRole('employee');
+
+        return $isAuthenticated;
+    }
+
+    private function isPersonalPassengerNumber($passengerNumber, $userId) {
+        $passengerUserId = $this->passengerRepository->getPassengerUserId($passengerNumber);
+        $isOwnPassengerNumber = $userId === $passengerUserId;
+
+        return $isOwnPassengerNumber;
     }
 
 }

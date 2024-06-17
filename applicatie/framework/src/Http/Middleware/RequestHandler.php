@@ -31,7 +31,7 @@ class RequestHandler implements RequestHandlerInterface {
         // If there are no more middleware to process, return a default response.
         // A response should have been returned before the middleware stack is empty.
         if(empty($this->middleware)) {
-            return new Response("Something went wrong processing the request. ", 500);
+            return new Response("Er ging iets helemaal fout. ", 500);
         }
 
         // Get the next middleware from the stack.

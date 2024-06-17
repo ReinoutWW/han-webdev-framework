@@ -17,6 +17,10 @@
     min-height: clamp(20rem, 100%, 30rem);
 }
 
+.container.mw-fit-content {
+    max-width: fit-content;
+}
+
 .container-invisible {
     background-color: unset;
     box-shadow: unset;
@@ -37,7 +41,7 @@
 }
 
 .contrainer-size-small {
-    width: clamp(10vw, 100%, 30vw);
+    width: clamp(10vw, 100%, fit-content);
 }
 
 .container > div {

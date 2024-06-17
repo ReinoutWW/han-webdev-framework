@@ -19,7 +19,7 @@ class Authenticate implements MiddlewareInterface {
         $this->session->start();  
 
         if(!$this->session->isAuthenticated()) {
-            $this->session->setFlash(Session::NOTIFICATION_ERROR, 'Not authenticated, please sign in.');
+            $this->session->setFlash(Session::NOTIFICATION_ERROR, 'Je bent nog niet ingelogd. Log eerst in om de pagina te bezoeken.');
             return new RedirectResponse('/login');
         }
 

@@ -2,6 +2,10 @@
 
 namespace RWFramework\Framework\Http\Roles;
 
+/**
+ * Will be filled on a request. This will be used to check if the user has the required roles
+ * Note: Only specific roles are required for a specific route
+ */
 class RoleManager implements RoleManagerInterface {
     public function __construct(
         private array $roles = []

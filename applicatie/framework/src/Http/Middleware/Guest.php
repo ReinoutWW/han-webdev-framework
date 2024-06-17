@@ -21,7 +21,7 @@ class Guest implements MiddlewareInterface
 
         // If authenticated, redirect to the home page
         if($this->session->isAuthenticated()) {
-            $this->session->setFlash(Session::NOTIFICATION_INFO, 'You are aleady authenticated.');
+            $this->session->setFlash(Session::NOTIFICATION_INFO, 'Je bent al ingelogd.');
             return new RedirectResponse('/dashboard');
         }
 

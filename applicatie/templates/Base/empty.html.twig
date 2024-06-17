@@ -1,6 +1,7 @@
 {% extends 'Base/base.html.twig' %}
 
 {% block body %}
+{% include 'Base/Components/header.html.twig' %}
 <div class="centre-container"> {# How to centre a div? #}
     {# Flash messages #}
     {% if session().hasNotification() %}

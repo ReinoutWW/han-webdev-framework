@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Form\User\RegistrationForm;
 use App\Repository\UserMapper;
+use App\Repository\UserRepository;
 use RWFramework\Framework\Authentication\SessionAuthentication;
 use RWFramework\Framework\Controller\AbstractController;
 use RWFramework\Framework\Http\RedirectResponse;
@@ -13,6 +14,7 @@ class RegistrationController extends AbstractController
 {
     public function __construct(
         private UserMapper $userMapper,
+        private UserRepository $userRepository,
         private SessionAuthentication $sessionAuthentication
     ){}
 
@@ -23,12 +25,16 @@ class RegistrationController extends AbstractController
 
     public function register(): RedirectResponse
     {
-        $form = new RegistrationForm($this->userMapper);
+        $form = new RegistrationForm(
+            $this->userMapper,
+            $this->userRepository
+        );
 
         $form->setFields(
             $this->request->input('name'),
             $this->request->input('gender'),
-            $this->request->input('password')
+            $this->request->input('password'),
+            $this->request->input('repeatPassword')
         );
 
         if($form->hasValidationErrors()) {

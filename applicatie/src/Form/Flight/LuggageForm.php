@@ -8,13 +8,13 @@ use App\Repository\LuggageMapper;
 
 class LuggageForm extends AbstractForm
 {
-    private const MAX_BAGGAGE_COUNT = 3;
     private Luggage $luggage;
     private int $maxPersonalLuggageWeight;
     private int $maxFlightLuggageWeight;
     private int $currentFlightLuggageWeight;
     private int $currentPersonalLuggageWeight;
     private int $currentAmountOfLuggageCount;
+    private int $maxLuggagePerPassenger;
 
     public function __construct(
         private LuggageMapper $luggageMapper,
@@ -33,18 +33,20 @@ class LuggageForm extends AbstractForm
             int $maxFlightLuggageWeight, 
             int $currentFlightLuggageWeight, 
             int $currentPersonalLuggageWeight,
-            int $currentAmountOfLuggageCount
+            int $currentAmountOfLuggageCount,
+            int $maxLuggagePerPassenger
     ): void {
         $this->maxPersonalLuggageWeight = $maxPersonalLuggageWeight;
         $this->maxFlightLuggageWeight = $maxFlightLuggageWeight;
         $this->currentFlightLuggageWeight = $currentFlightLuggageWeight;
         $this->currentPersonalLuggageWeight = $currentPersonalLuggageWeight;
         $this->currentAmountOfLuggageCount = $currentAmountOfLuggageCount;
+        $this->maxLuggagePerPassenger = $maxLuggagePerPassenger;
     }
 
     public function validate(): void {
-        if($this->currentAmountOfLuggageCount > self::MAX_BAGGAGE_COUNT) {
-            $this->addError('Het maximale aantal bagage is ' . self::MAX_BAGGAGE_COUNT . ' stuks per persoon.');
+        if($this->currentAmountOfLuggageCount >= $this->maxLuggagePerPassenger) {
+            $this->addError('Het maximale aantal bagage is ' . $this->maxLuggagePerPassenger . ' stuks per persoon.');
         }
 
         // Validate if the luggage weight is not empty

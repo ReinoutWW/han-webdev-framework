@@ -19,6 +19,11 @@ class UserRepository implements AuthRepositoryInterface {
     )
     {
     }
+
+    public function usernameExists(string $username): bool
+    {
+        return $this->findByUsername($username) !== null;
+    }
     
     public function findByUsername(string $username): ?AuthUserInterface
     {

@@ -7,11 +7,38 @@
     </button>
 </div>
 <div class="container">
-    <h2>Bagage overzicht</h2>
+    {% if employeeView %}
+        <h2 class="d-flex align-items-center">
+            Bagage overzicht
+            <span class="tag-gray ml-1">Gebruiker: {{passengerUsername}}</span>
+            <span class="tag-blue ml-1">Medewerker overzicht</span>
+        </h2>
+    {% else %}
+        <h2 class="d-flex align-items-center">
+            Bagage overzicht
+            <span class="tag-gray ml-1">{{passengerUsername}}</span>
+        </h2>
+    {% endif %}
     <div class="d-md-flex">
-        <div>
+        <div class="rw-card">
+            <h3>Toevoegen</h2>
+            {% if luggageWeightLeft > 0 and luggage|length < maxLuggagePerPassenger %}
+                <p class="mb-3">Voeg hier uw bagage toe. (Maximaal {{maxLuggagePerPassenger}} objecten)</p>
+                <form class="rw-form" method="post" action="{{currentPath}}">
+                    <div class="form-group">
+                        <label for="weight">Gewicht (kg)</label>
+                        <input type="number" min=0 max={{luggageWeightLeft}} class="form-control" id="weight" name="weight" required>
+                        <small>Maximaal gewicht: {{luggageWeightLeft}}kg</small>
+                    </div>
+                    <button type="submit" class="btn btn-primary mt-3">Inchecken</button>
+                </form>
+            {% else %}
+                <p class="mb-3">U heeft het maximale persoonlijke bagage bereikt.</p>
+            {% endif %}
+        </div>
+        <div class="ml-md-5 mt-5 mt-md-0">
             <h3>Bagage</h2>
-            <p class="mb-3">U heeft de volgende bagage ingecheckt:</p>
+            <p class="mb-3">U heeft de volgende bagage ingecheckt</p>
             <table class="rw-table">
                 <thead>
                     <tr>
@@ -28,7 +55,7 @@
                             <td>{{ luggageItem.weight }}</td>
                             <td>
                                 {# Remove #}
-                                <form method="post" action="/vluchten/{{flightNumber}}/passagier/{{passengerNumber}}/baggage/{{luggageItem.objectFollowNumber}}">
+                                <form method="post" action="/vluchten/{{flightNumber}}/passagier/{{passengerNumber}}/bagage/{{luggageItem.objectFollowNumber}}">
                                     <button class="btn btn-danger btn-small">Verwijderen</button>
                                 </form>
                             </td>
@@ -46,22 +73,6 @@
                     </tr>
                 </tfoot>
             </table>
-        </div>
-        <div class="ml-md-5 mt-5 mt-md-0">
-            <h3>Bagage toevoegen</h2>
-            {% if luggageWeightLeft > 0 %}
-                <p class="mb-3">Voeg hier uw bagage toe:</p>
-                <form method="post" action="{{currentPath}}">
-                    <div class="form-group">
-                        <label for="weight">Gewicht</label>
-                        <input type="number" min=0 max={{luggageWeightLeft}} class="form-control" id="weight" name="weight" required>
-                        <small>Maximaal gewicht: {{luggageWeightLeft}}kg</small>
-                    </div>
-                    <button type="submit" class="btn btn-primary mt-3">Inchecken</button>
-                </form>
-            {% else %}
-                <p class="mb-3">U heeft het maximale persoonlijke bagage gewicht bereikt. Verwijder bagage om ruimte te maken en opnieuw in te checken.</p>
-            {% endif %}
         </div>
 </div>
 {% endblock %}

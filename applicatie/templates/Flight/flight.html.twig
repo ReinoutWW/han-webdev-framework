@@ -3,41 +3,135 @@
 {% block main %}
 <div class="container-invisible">
     <button class="btn btn-primary">
-        <a href="/vluchten/nieuw" >Nieuwe vlucht</a>
+        <a href="/vluchten">&lt; Terug naar vluchten overzicht</a>
     </button>
+    {% if passenger_details is empty %}
+    <form method="get" action="/stoel_boeken/{{flight.flightNumber}}">
+        <button class="btn btn-primary ml-2">
+            Vlucht boeken
+        </button>
+    </form>
+    {% endif %}
 </div>
-<div class="container p-relative with-filter-options">
-    <h2>Overzicht vluchten</h2>
-    <details class="rw-overflow">
-        <summary>
-            <img src="/images/search-30.png "/>
-            <span class="overflow-label">Geavanceerd zoeken</span> 
-        </summary>
-        <div class="rw-overflow-content">
-            <form method="get" action="{{currentPath}}">
-                    <div class="form-group">
-                        <div class="mb-1">
-                            <label for="filter_flightNumber">Vluchtnummer</label>
-                            <input type="number" min=10000 max=99999 class="form-control" name="filter_vluchtnummer">
-                        </div>
-                        <div class="mb-1">
-                            <label for="filter_flightNumber">Luchthaven</label>
-                            <select class="form-control" name="filter_bestemming">
-                                <option value="">Selecteer luchthaven</option>
-                                {% for airport in airports %}
-                                    <option value="{{airport.airportCode}}">{{airport.name}} ({{airport.airportCode}})</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                        <div class="mb-1">
-                            <label for="filter_flightNumber">Vertrekdatum</label>
-                            <input type="datetime-local" class="form-control" name="filter_vertrektijd">
-                        </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary mt-3 w-100">Zoeken</button>
-                </form>
+<div class="container">
+    {% if employeeView %}
+        <h2 class="d-flex align-items-center">Passagier details <span class="tag-blue ml-1">Medewerker overzicht</span></h2>
+    {% else %}
+        <h2>Vlucht details</h2>
+    {% endif %}
+    <div class="d-md-flex mt-5">
+        <div>
+            <h3>Overzicht vlucht</h3>
+            <table class="rw-table table-vertical">
+                <tbody>
+                    <tr>
+                        <th>Vluchtnummer</th>
+                        <td>{{ flight.flightNumber }}</td>
+                    </tr>
+                    <tr>
+                        <th>Bestemming</th>
+                        <td>{{ flight.destination|capitalize }}</td>
+                    </tr>
+                    <tr><th>Gatecode</th><td>{{ flight.gate|capitalize }}</td></tr>
+                    <tr><th>Max aantal passagiers</th><td>{{ flight.maxPassengers }}</td></tr>
+                    <tr><th>Max gewicht pp</th><td>{{ flight.maxWeightPerPassenger }}</td></tr>
+                    <tr><th>Max gewicht totaal</th><td>{{ flight.maxTotalWeight }}</td></tr>
+                    <tr><th>Vertrektijd</th><td>{{ flight.departureTime|date('d-m-Y H:i') }}</td></tr>
+                    <tr><th>Maatschappijcode</th><td>{{ flight.airlineCode|capitalize }}</td></tr>
+                    
+                </tbody>
+            </table>
         </div>
-    </details>
-    {% include 'Flight/Components/flights-table.htm.twig' %}
+        {% if passenger_details is not empty %}
+        <div class="ml-md-4 mt-5 mt-md-0">
+            <h3>Boeking details</h3>
+            <table class="rw-table table-vertical">
+                <tbody>
+                    <tr>
+                        <th>Naam</th>
+                        <td>{{ passenger_details.name }}</td>
+                    </tr>
+                    <tr>
+                        <th>Stoel</th>
+                        <td>{{ passenger_details.seatNumber }}</td>
+                    </tr>
+                    <tr>
+                        <th>Status</th>
+                        <td><span class="tag-green">Geboekt</span></td>
+                    </tr>
+                    <tr>
+                        <th>Bagage</th>
+                        <td>
+                            <form method='get' action='/vluchten/{{flight.flightNumber}}/passagier/{{passenger_details.passengerNumber}}/bagage' >
+                                <div class="baggage-container">
+                                    {% for luggageItem in passengerLuggage %}
+                                        <div title="{{luggageItem.weight}}" class="baggage mr-1">kg</div>
+                                    {% endfor %}
+                                    <button class="btn btn-primary btn-small">Beheren</button>
+                                </div>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
+    </div>
 </div>
+<div class="container">
+    <div>
+        <h2>Stoelen</h2>
+        {% include 'Flight/Components/plane.html.twig' %}
+    </div>
+</div>
+{# If role employee #}
+{% if authorizeView('employee') %}
+<div class="container">
+    <div>
+        <h2>Passagiers</h2>
+        <table class="rw-table">
+            <thead>
+                <tr>
+                    <th>Naam</th>
+                    <th>Stoel</th>
+                    <th>Status</th>
+                    <th>Acties</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% if passengers is not empty %}
+                {% for passenger in passengers %}
+                <tr>
+                    <td>{{ passenger.name }}</td>
+                    <td>{{ passenger.seatNumber }}</td>
+                    <td><span class="tag-green">Geboekt</span></td>
+                    <td class="d-flex">
+                        <form method="get" action="/vluchten/{{flight.flightNumber}}/passagier/{{passenger.userId}}">
+                            <button class="btn btn-primary btn-small">
+                                Bewerken
+                            </button>
+                        </form>
+                        <form method='get' action='/vluchten/{{flight.flightNumber}}/passagier/{{passenger.passengerNumber}}/bagage' >
+                            <button class="btn btn-primary btn-small ml-1">Bagage beheren</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            {% else %}
+                <tr class="rw-table-no-records">
+                    <td colspan="4">Geen passagiers gevonden</td>
+                </tr>
+            {% endif %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="4">
+                        Passagiers ingeladen: {{ passengers|length }}
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
+{% endif %}
 {% endblock %}

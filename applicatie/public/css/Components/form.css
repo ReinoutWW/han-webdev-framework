@@ -13,6 +13,7 @@ form.rw-form {
 }
 
 form.rw-form label {
+    font-size: 0.875rem;    
     display: block;
     font-weight: bold;
     margin-bottom: 0.3rem;
@@ -24,4 +25,9 @@ form.rw-form label {
     padding: 0.5rem;
     max-width: 270px;
     display: block;
+}
+
+.form-w-100 .form-control {
+    max-width: unset;
+    width: 100%;
 }

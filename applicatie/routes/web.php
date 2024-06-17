@@ -1,16 +1,13 @@
 <?php
 
 use App\Controllers\HomeController;
-use App\Controllers\PostsController;
 use App\Roles\RoleConstants;
 use RWFramework\Framework\Http\Roles\RequiredRoles;
+use RWFramework\Framework\Http\Roles\Role;
 use RWFramework\Framework\Routing\Route;
 
 return [
     new Route('GET', '/', [HomeController::class, 'index']),
-    new Route('GET', '/posts/{id:\d+}', [PostsController::class, 'show']),
-    new Route('GET', '/posts', [PostsController::class, 'create']),
-    new Route('POST', '/posts', [PostsController::class, 'store']),
     new Route('POST', '/register', [\App\Controllers\RegistrationController::class, 'register']),
     new Route('GET', '/register', [\App\Controllers\RegistrationController::class, 'index'],
         [
@@ -43,14 +40,16 @@ return [
     new Route('GET', '/vluchten/{flightNumber:\d+}/passagier/{userId:\d+}', [\App\Controllers\FlightController::class, 'flight'], [
         RWFramework\Framework\Http\Middleware\Authenticate::class
     ], new RequiredRoles([
-        new \RWFramework\Framework\Http\Roles\Role(RoleConstants::EMPLOYEE)
+        new Role(RoleConstants::EMPLOYEE)
     ])),
     new Route('GET', '/stoel_boeken/{flightNumber:\d+}', [\App\Controllers\PassengerController::class, 'seatSelection'], [
         RWFramework\Framework\Http\Middleware\Authenticate::class
     ]),
     new Route('GET', '/vluchten/nieuw', [\App\Controllers\FlightController::class, 'create'], [
         RWFramework\Framework\Http\Middleware\Authenticate::class
-    ]),
+    ], new RequiredRoles([
+        new Role(RoleConstants::EMPLOYEE)
+    ])),
     new Route('POST', '/vluchten/nieuw', [\App\Controllers\FlightController::class, 'store'], [
         RWFramework\Framework\Http\Middleware\Authenticate::class
     ]),
@@ -60,13 +59,13 @@ return [
     new Route('GET', '/boekingen/vluchten', [\App\Controllers\PassengerController::class, 'booked'], [
         RWFramework\Framework\Http\Middleware\Authenticate::class
     ]),
-    new Route('GET', '/vluchten/{flightNumber:\d+}/passagier/{passengerNumber:\d+}/baggage', [\App\Controllers\PassengerController::class, 'luggage'], [
+    new Route('GET', '/vluchten/{flightNumber:\d+}/passagier/{passengerNumber:\d+}/bagage', [\App\Controllers\PassengerController::class, 'luggage'], [
         RWFramework\Framework\Http\Middleware\Authenticate::class
     ]),
-    new Route('POST', '/vluchten/{flightNumber:\d+}/passagier/{passengerNumber:\d+}/baggage', [\App\Controllers\PassengerController::class, 'storeLuggage'], [
+    new Route('POST', '/vluchten/{flightNumber:\d+}/passagier/{passengerNumber:\d+}/bagage', [\App\Controllers\PassengerController::class, 'storeLuggage'], [
         RWFramework\Framework\Http\Middleware\Authenticate::class
     ]),
-    new Route('POST', '/vluchten/{flightNumber:\d+}/passagier/{passengerNumber:\d+}/baggage/{objectFollowNumber:\d+}', [\App\Controllers\PassengerController::class, 'deleteLuggage'], [
+    new Route('POST', '/vluchten/{flightNumber:\d+}/passagier/{passengerNumber:\d+}/bagage/{objectFollowNumber:\d+}', [\App\Controllers\PassengerController::class, 'deleteLuggage'], [
         RWFramework\Framework\Http\Middleware\Authenticate::class
     ]),
 ];

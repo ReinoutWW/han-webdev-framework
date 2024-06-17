@@ -43,6 +43,20 @@
     height: 5rem;
 }
 
+.flex-airline-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.flex-airline-logo img {
+    width: auto;
+    max-width: 3rem;
+    height: 2rem;
+    padding: 0.5rem 0;
+    margin-left: 0.5rem;
+}
+
 @media (max-width: 768px) { 
     .rw-table.table-vertical tbody tr th {
         font-weight: normal;

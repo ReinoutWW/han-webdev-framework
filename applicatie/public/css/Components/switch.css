@@ -4,7 +4,7 @@
     display : inline-block;
     width : 2rem;
     height : 1rem;
-    background-color: var(--base-color-blue-200);
+    background-color: var(--base-color-gray-500);
     border-radius: 30px;
     border: 1px solid var(--base-color-gray-200);
 }
@@ -29,7 +29,7 @@
        
 /* Checkbox checked toggle label bg color */
 .checkbox:checked + .toggle {
-    background-color: var(--base-color-gray-500);
+    background-color: var(--base-color-blue-500);
 }
        
 /* Checkbox vanished */

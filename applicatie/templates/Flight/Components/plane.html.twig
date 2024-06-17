@@ -29,13 +29,13 @@
             {% set seat_counter = 1 %}
             {% set sections_per_supersection = 3 %}
             {% set seats_per_section = 4 %}
-            {% set total_sections = max_seats // seats_per_section %}
+            {% set total_sections = (max_seats + seats_per_section - 1) // seats_per_section %}
             {% set total_supersections = (total_sections + sections_per_supersection - 1) // sections_per_supersection %}
 
             {% for i in 1..total_supersections %}
                 <div class="plane-supersection">
                     {% for i2 in 1..sections_per_supersection %}
-                        {% if seat_counter < max_seats %}
+                        {% if seat_counter <= max_seats %}
                             <div class="plane-section">
                                 <div class="plane-subsection">
                                     {% if seat_counter <= max_seats %}
@@ -71,7 +71,7 @@
                                             {% if not seat3Taken and bookSeatOption %}
                                                 <button name="seat" method="post" value="{{seat3}}"> {{ seat3}} </button>
                                             {% else %}
-                                                {{ seat2 }}
+                                                {{ seat3 }}
                                             {% endif %}
                                         </div>
                                         {% set seat_counter = seat_counter + 1 %}

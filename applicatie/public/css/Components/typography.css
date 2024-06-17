@@ -1,0 +1,60 @@
+/* 
+screen-size-sm: 576px;
+screen-size-md: 768px;
+screen-size-lg: 992px;
+screen-size-xl: 1200px; 
+*/
+
+h1:not(:first-child), 
+h2:not(:first-child), 
+h3:not(:first-child), 
+h4:not(:first-child), 
+h5:not(:first-child), 
+h6:not(:first-child) {
+    color: var(--text-color-default);
+    margin-top: 2rem;
+    display: block;
+}
+
+h1, h3, h4, h5, h6 {
+    margin-bottom: 1rem;
+}
+
+h2 {
+    margin-bottom: 2rem;
+}
+
+@media only screen and (max-width: 576px) {
+    h1:not(:first-child), 
+    h2:not(:first-child), 
+    h3:not(:first-child), 
+    h4:not(:first-child), 
+    h5:not(:first-child), 
+    h6:not(:first-child) {
+        margin-top: 1rem;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    h2 {
+        font-size: 1.25rem;
+    }
+
+    h3 {
+        font-size: 1rem;
+    }
+
+    h4 {
+        font-size: 0.8rem;
+    }
+
+    h5 {
+        font-size: 0.875rem;
+    }
+
+    h6 {
+        font-size: 0.75rem;
+    }
+}

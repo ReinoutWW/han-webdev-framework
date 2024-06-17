@@ -12,12 +12,14 @@
             <img src="/images/plane-icon.svg" />
         </a>
     </div>
+    {% if authorizeView('employee') %}
     <div class="tile">
         <a href="/vluchten/nieuw" class="btn btn-primary">
             Nieuwe vlucht 
             <img src="/images/plus-square-line-icon.svg" />
         </a>
     </div>
+    {% endif %}
     <div class="tile">
         <a href="/boekingen/vluchten" class="btn btn-primary">
             Boekingen

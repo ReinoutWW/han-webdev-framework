@@ -55,6 +55,13 @@ class TwigFactory {
             )
         );
 
+        $twigEnvoriment->addFunction(
+            new TwigFunction(
+                'getPageUrl',
+                [$this, 'getPageUrl']
+            )
+        );
+
         return $twigEnvoriment;
     }
 
@@ -96,6 +103,12 @@ class TwigFactory {
     
         // Return false if value is not found in any object
         return false;
+    }
+
+    public function getPageUrl(string $url, int $page): string {
+        $query = parse_url($url, PHP_URL_QUERY);
+        $url = ($query ? $url . '&' : $url . '?') . 'page=' . $page;
+        return $url;
     }
 
     public function authorizeView(string $roleName): bool {

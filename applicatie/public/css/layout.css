@@ -9,37 +9,31 @@ screen-size-lg: 992px;
 screen-size-xl: 1200px; 
 */
 
-h1:not(:first-child), 
-h2:not(:first-child), 
-h3:not(:first-child), 
-h4:not(:first-child), 
-h5:not(:first-child), 
-h6:not(:first-child) {
-    color: var(--text-color-default);
-    margin-top: 2rem;
-    display: block;
-}
-
-h1, h2, h3, h4, h5, h6 {
-    margin-bottom: 1rem;
-}
-
 .d-flex {
-    display: flex;
+    display: flex !important;
 }
 
 .p-relative {
-    position: relative;
+    position: relative !important;
 }
 
 .w-100 {
     width: 100% !important;
 }
 
+.align-items-center {
+    align-items: center !important;
+}
+
+.rw-icon {
+    width: auto;
+    height: 0.8rem;
+}
+
 body {
     display: grid;
     grid-template-rows: auto 1fr auto;
-    grid-template-columns: auto 1fr; 
+    grid-template-columns: 5rem 1fr; 
     height: 100vh;
 }
 
@@ -118,7 +112,7 @@ nav a.nav-item {
     width: 100%;
     margin-bottom: 0.3rem;
     padding: 0.5rem;
-    border-radius: 5px;
+    border-radius: 0px 5px 5px 0px;
     text-decoration: none;
     color: var(--text-color-default);
     position: relative;
@@ -129,7 +123,7 @@ nav a.nav-item {
 
 nav a.nav-item img {
     height: 1.3rem;
-    margin-left: 0.5rem;
+    margin-right: 0.5rem;
 }
 
 nav a.nav-item:visited {
@@ -138,14 +132,8 @@ nav a.nav-item:visited {
 
 nav a.nav-item.active {
     background-color: rgb(242, 242, 242);
-    color: rgb(0, 0, 0);
-}
-
-nav a.nav-item.active::before {
-    content: 'o';
-    font-size: 1rem;
-    margin-right: 0.5rem;
-    color: rgb(44, 142, 228);
+    color: var(--base-color-blue-500);
+    border-left: 2px solid var(--base-color-blue-500);
 }
 
 nav a:hover {
@@ -205,7 +193,7 @@ div[class^="col-"] > div:not(:last-child) {
         grid-row: 4;
     }
 
-    .airport-brand h1 {
+    .airport-brand h1:not(:first-child) {
         display: none;
     }
 

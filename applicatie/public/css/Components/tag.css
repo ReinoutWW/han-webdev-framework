@@ -6,6 +6,16 @@ span[class^="tag-"] {
     font-size: small;
 }
 
+span[class^="tag-"].tag-small {
+    padding: 0.1rem 0.3rem;
+    font-size: x-small;
+}
+
+span[class^="tag-"].tag-medium {
+    padding: 0.2rem 0.5rem;
+    font-size: smaller;
+}
+
 .tag-green {
     background-color: var(--base-color-green-100);
     color: var(--base-color-green-500);
@@ -13,7 +23,7 @@ span[class^="tag-"] {
 }
 
 .tag-blue {
-    background-color: var(--base-color-blue-100);
+    background-color: var(--base-color-blue-50);
     color: var(--base-color-blue-500);
     border: 1px solid var(--base-color-blue-300);
 }

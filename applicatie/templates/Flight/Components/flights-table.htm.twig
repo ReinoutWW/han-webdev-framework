@@ -5,12 +5,13 @@
             <th>Vluchtnummer</th>
             <th>Bestemming</th>
             <th>Gatecode</th>
+            <th>Stoelen beschikbaar</th>
             <th>Max aantal passagiers</th>
             <th>Max gewicht pp</th>
             <th>Max gewicht totaal</th>
             <th>Vertrekdatum</th>
             <th>Vertrektijd</th>
-            <th>Maatschappijcode</th>
+            <th>Maatschappij</th>
         </tr>
     </thead>
     <tbody>
@@ -20,12 +21,22 @@
                     <td><a class="rw-link" href="/vluchten/{{flight.flightNumber}}">{{ flight.flightNumber }}</a></td>
                     <td>{{ flight.destination|capitalize }}</td>
                     <td>{{ flight.gate|capitalize }}</td>
+                    <td>
+                        {% if flight.availableSeatsCount == 0 %}
+                            <span class="tag-red tag-medium">Vol</span>
+                        {% else %}
+                            <span class="tag-green tag-medium">{{ flight.availableSeatsCount }}</span>
+                        {% endif %}
+                    </td>
                     <td>{{ flight.maxPassengers }}</td>
                     <td>{{ flight.maxWeightPerPassenger }}</td>
                     <td>{{ flight.maxTotalWeight }}</td>
                     <td>{{ flight.departureTime|date('d-m-Y') }}</td>
                     <td>{{ flight.departureTime|date('H:i') }}</td>
-                    <td>{{ flight.airlineCode|capitalize }}</td>
+                    <td class="flex-airline-logo">
+                        {{ flight.airline|capitalize }}
+                        <img src="/images/{{flight.airline}}.svg" onerror="this.style.display='none'" />
+                    </td>
                 </tr>
             {% endfor %}
         {% else %}
@@ -40,14 +51,16 @@
                 Vluchten ingeladen: {{ flights|length }}
                 <span class="pagination">   
                     {# Next / previous flight with < and > #}
-                    {% if page > 0 %}
+                    {% if page != 0 %}
                         <button class="btn btn-secondary">
-                            <a href="{{currentPath}}&page={{ (page - 1) }}">&lt; Vorige</a>
+                            <a href="{{getPageUrl(currentPath, page-1)}}">&lt; Vorige</a>
                         </button>
                     {% endif %}
-                    <button class="btn btn-secondary">
-                        <a href="{{currentPath}}&page={{ (page + 1) }}" class="ml-1">Volgende &gt;</a>
-                    </button>
+                    {% if flights|length == max_results %}
+                        <button class="btn btn-secondary">
+                            <a href="{{getPageUrl(currentPath, page+1)}}" class="ml-1">Volgende &gt;</a>
+                        </button>
+                    {% endif %}
                 </div>
             </td>
         </tr>

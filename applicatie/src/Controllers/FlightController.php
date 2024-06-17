@@ -18,6 +18,8 @@ use RWFramework\Framework\Session\SessionInterface;
 
 class FlightController extends AbstractController
 {
+    private const FLIGHTS_PER_PAGE = 10;
+
     public function __construct(
         private FlightRepository $flightRepository,
         private PassengerRepository $passengerRepository,
@@ -40,23 +42,30 @@ class FlightController extends AbstractController
         ];
 
         $filters = SearchFilters::parseArrayToFilters($this->request->getParams(), $allowedFilters);
+   
+        $filtersActive = count($filters->getFilters()) > 0;
+        $onlyFutureFlights = !$filtersActive;
 
         // Get flights from Repository
-        $flights = $this->flightRepository->getFlights($flightsPage, $filters);
+        $flights = $this->flightRepository->getFlights($flightsPage, $filters, $onlyFutureFlights, self::FLIGHTS_PER_PAGE);
 
         $airports = $this->airportRepository->getAirports();
 
         // Return the view with the flights
-        return $this->render("Flight/flight.html.twig", [
+        return $this->render("Flight/flights.html.twig", [
             'flights' => $flights,
             'page' => $page,
-            'airports'=> $airports
+            'airports'=> $airports,
+            'filters_active' => $filtersActive,
+            'max_results' => self::FLIGHTS_PER_PAGE
         ]);
     }
 
     public function flight(int $flightNumber, int $userId = null) {
+        $employeeView = $userId !== null && $this->request->getSession()->getUser()->getId() !== $userId;
+
         // If null, get user from session (If an employee loads the page, the userId is not null)
-        if($userId === null) {
+        if(!$employeeView) {
             $userId = $this->request->getSession()->getUser()->getId();
         }        
 
@@ -75,12 +84,13 @@ class FlightController extends AbstractController
         }
 
         // Return the view with the flight
-        return $this->render("Flight/flight-detail.html.twig", [
+        return $this->render("Flight/flight.html.twig", [
             'flight' => $flight,
             'passenger_details' => $passengerDetails,
             'passengers' => $passengers,
             'enableFrontPlane' => true,
-            'passengerLuggage' => $passengerLuggage
+            'passengerLuggage' => $passengerLuggage,
+            'employeeView' => $employeeView
         ]);
     }
 
@@ -128,6 +138,6 @@ class FlightController extends AbstractController
 
         $this->request->getSession()->setFlash(Session::NOTIFICATION_SUCCESS, sprintf('Vlucht "%s" is succesvol aangemaakt!', $flight->getFlightNumber()));
 
-        return new RedirectResponse('/vluchten/nieuw');
+        return new RedirectResponse('/vluchten/'. $flight->getFlightNumber());
     }
 }

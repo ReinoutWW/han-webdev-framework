@@ -66,6 +66,10 @@
     --base-color-yellow-900: rgb(249, 168, 37);
 }
 
+.color-danger {
+    color: var(--base-color-red-500) !important;
+}
+
 /* 1. Layout */
 @font-face {
     font-family: 'Poppins';

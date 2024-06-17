@@ -13,7 +13,9 @@ class Flight extends Entity {
         private float $maxWeightPerPassenger,
         private float $maxTotalWeight,
         private \DateTimeImmutable $departureTime,
-        private string $airlineCode
+        private string $airlineCode,
+        private string $airline = '',  
+        private int $seatsTaken = 0
     ) {
         
     }
@@ -26,17 +28,22 @@ class Flight extends Entity {
         float $maxWeightPerPassenger, 
         float $maxTotalWeight, 
         \DateTimeImmutable $departureTime, 
-        string $airlineCode
+        string $airlineCode,
+        string $airline = '',
+        int $seatsTaken = 0
     ): Flight {
         return new self(
-            $flightNumber, 
-            $destination, 
-            $gate, 
-            $maxPassengers, 
-            $maxWeightPerPassenger, 
-            $maxTotalWeight, 
-            $departureTime, 
-            $airlineCode);
+            flightNumber: $flightNumber, 
+            destination: $destination, 
+            gate: $gate, 
+            maxPassengers: $maxPassengers, 
+            maxWeightPerPassenger: $maxWeightPerPassenger, 
+            maxTotalWeight: $maxTotalWeight, 
+            departureTime: $departureTime, 
+            airlineCode: $airlineCode,
+            airline: $airline,
+            seatsTaken: $seatsTaken
+        );
     }
 
     public function getFlightNumber(): int {
@@ -69,5 +76,17 @@ class Flight extends Entity {
 
     public function getAirlineCode(): string {
         return $this->airlineCode;
+    }
+
+    public function getAirline(): string {
+        return $this->airline;
+    }
+
+    public function getSeatsTaken(): int {
+        return $this->seatsTaken;
+    }
+
+    public function getAvailableSeatsCount(): int {
+        return $this->maxPassengers - $this->seatsTaken;
     }
 }

@@ -158,4 +158,43 @@ class PassengerRepository
 
         return $row['passagiernummer'] ?? null;
     }
+
+    public function getPassengerUserId(int $passengerNumber): ?int {
+        // Do the logic here
+        $queryBuilder = $this->connection->createQueryBuilder();
+
+        $queryBuilder
+            ->select('userId')
+            ->from('Passagier')
+            ->where('passagiernummer = :passagiernummer')
+        ->setParameters([
+            'passagiernummer' => $passengerNumber
+        ]);
+
+        $result = $queryBuilder->executeQuery();
+
+        $row = $result->fetchAssociative();
+
+        return $row['userId'] ?? null;
+    }
+
+    public function getPassengerUsername(string $passengerNumber): ?string {
+        // Do the logic here
+        $queryBuilder = $this->connection->createQueryBuilder();
+
+        $queryBuilder
+            ->select('u.name')
+            ->from('Passagier', 'p')
+            ->innerJoin('p', 'users', 'u', 'u.id = p.userId')
+            ->where('p.passagiernummer = :passagiernummer')
+        ->setParameters([
+            'passagiernummer' => $passengerNumber
+        ]);
+
+        $result = $queryBuilder->executeQuery();
+
+        $row = $result->fetchAssociative();
+
+        return $row['name'] ?? null;
+    }
 }

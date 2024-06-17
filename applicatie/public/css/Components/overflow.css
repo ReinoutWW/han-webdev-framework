@@ -2,7 +2,7 @@ details.rw-overflow {
     position: absolute;
     top: 1.5rem;
     right: 1.5rem;
-    z-index: 4;
+    z-index: 1;
     cursor: pointer;
 }
 
@@ -36,7 +36,8 @@ ul.rw-overflow-items {
     color: var(--text-color-default);
 }
 
-ul.rw-overflow-items li {
+ul.rw-overflow-items li a {
+    display: block;
     padding: 0.5rem;
     cursor: pointer;
 }
@@ -93,7 +94,7 @@ details[open] summary::before {
     margin-right: 0.25rem;
 }
 
-@media (max-width: 576px) {
+@media (max-width: 992px) {
     details.rw-overflow summary .overflow-label {
         display: none;
     }

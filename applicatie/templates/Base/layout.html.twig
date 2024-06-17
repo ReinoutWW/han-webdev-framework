@@ -1,27 +1,7 @@
 {% extends 'Base/base.html.twig' %}
 
 {% block body %}
-    <header>
-        <a class="airport-brand" href="/">
-            <img src="/images/gelre-airport-image.png" />
-            <h1 class="brand-name"><span class="brand-name-main">Gelre<span class="brand-name-second">Airport</h1>
-        </a>
-        <div class="header-personal">
-            {% if session().isAuthenticated() %}
-            <details class="rw-overflow">
-                <summary>{{session().getUser().getUsername()}}</summary>
-                <div class="rw-overflow-content">
-                    <ul class="rw-overflow-items">
-                        <li><a href="/logout">Uitloggen</a></li>
-                        <li><a href="/boekingen/vluchten">Mijn vluchten</a></li>
-                    </ul>
-                </div>
-            </details>
-            {% else %}
-                <a href='/login'>Inloggen</a> | <a href='/register'>Registreren</a>
-            {% endif %}
-        </div>
-    </header>
+    {% include 'Base/Components/header.html.twig' %}
     <nav>
         <div class="mb-2">
             <input type="checkbox"
@@ -34,12 +14,12 @@
         </div>
         {# Based on roles, show the navigation items #}
         <a class="nav-item {{ (pathInfo == '/vluchten') ? 'active' : '' }}" href="/vluchten" title="Vluchten">
-            <span class="nav-item-label">Vluchten</span>
             <img src="/images/airplane-30.png" />
+            <span class="nav-item-label">Vluchten</span>
         </a>
         <a class="nav-item {{ (pathInfo == '/boekingen/vluchten') ? 'active' : '' }}" href="/boekingen/vluchten" title="Mijn vluchten">
-            <span class="nav-item-label">Mijn vluchten</span>
             <img src="/images/booked-30.png" />
+            <span class="nav-item-label">Mijn vluchten</span>
         </a>
     </nav>
     <main>
