@@ -13,13 +13,13 @@
     </form>
     {% endif %}
 </div>
+{% if employeeView %}
+    <h2 class="d-flex align-items-center">Passagier details <span class="tag-blue ml-1">Medewerker overzicht</span></h2>
+{% else %}
+    <h2>Vlucht details</h2>
+{% endif %}
 <div class="container">
-    {% if employeeView %}
-        <h2 class="d-flex align-items-center">Passagier details <span class="tag-blue ml-1">Medewerker overzicht</span></h2>
-    {% else %}
-        <h2>Vlucht details</h2>
-    {% endif %}
-    <div class="d-md-flex mt-5">
+    <div class="d-md-flex">
         <div>
             <h3>Overzicht vlucht</h3>
             <table class="rw-table table-vertical">
@@ -78,60 +78,56 @@
         {% endif %}
     </div>
 </div>
+<h2>Stoelen</h2>
 <div class="container">
-    <div>
-        <h2>Stoelen</h2>
-        {% include 'Flight/Components/plane.html.twig' %}
-    </div>
+    {% include 'Flight/Components/plane.html.twig' %}
 </div>
 {# If role employee #}
 {% if authorizeView('employee') %}
+<h2>Passagiers</h2>
 <div class="container">
-    <div>
-        <h2>Passagiers</h2>
-        <table class="rw-table">
-            <thead>
-                <tr>
-                    <th>Naam</th>
-                    <th>Stoel</th>
-                    <th>Status</th>
-                    <th>Acties</th>
-                </tr>
-            </thead>
-            <tbody>
-            {% if passengers is not empty %}
-                {% for passenger in passengers %}
-                <tr>
-                    <td>{{ passenger.name }}</td>
-                    <td>{{ passenger.seatNumber }}</td>
-                    <td><span class="tag-green">Geboekt</span></td>
-                    <td class="d-flex">
-                        <form method="get" action="/vluchten/{{flight.flightNumber}}/passagier/{{passenger.userId}}">
-                            <button class="btn btn-primary btn-small">
-                                Bewerken
-                            </button>
-                        </form>
-                        <form method='get' action='/vluchten/{{flight.flightNumber}}/passagier/{{passenger.passengerNumber}}/bagage' >
-                            <button class="btn btn-primary btn-small ml-1">Bagage beheren</button>
-                        </form>
-                    </td>
-                </tr>
-                {% endfor %}
-            {% else %}
-                <tr class="rw-table-no-records">
-                    <td colspan="4">Geen passagiers gevonden</td>
-                </tr>
-            {% endif %}
-            </tbody>
-            <tfoot>
-                <tr>
-                    <td colspan="4">
-                        Passagiers ingeladen: {{ passengers|length }}
-                    </td>
-                </tr>
-            </tfoot>
-        </table>
-    </div>
+    <table class="rw-table">
+        <thead>
+            <tr>
+                <th>Naam</th>
+                <th>Stoel</th>
+                <th>Status</th>
+                <th>Acties</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% if passengers is not empty %}
+            {% for passenger in passengers %}
+            <tr>
+                <td>{{ passenger.name }}</td>
+                <td>{{ passenger.seatNumber }}</td>
+                <td><span class="tag-green">Geboekt</span></td>
+                <td class="d-flex">
+                    <form method="get" action="/vluchten/{{flight.flightNumber}}/passagier/{{passenger.userId}}">
+                        <button class="btn btn-primary btn-small">
+                            Bewerken
+                        </button>
+                    </form>
+                    <form method='get' action='/vluchten/{{flight.flightNumber}}/passagier/{{passenger.passengerNumber}}/bagage' >
+                        <button class="btn btn-primary btn-small ml-1">Bagage beheren</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        {% else %}
+            <tr class="rw-table-no-records">
+                <td colspan="4">Geen passagiers gevonden</td>
+            </tr>
+        {% endif %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="4">
+                    Passagiers ingeladen: {{ passengers|length }}
+                </td>
+            </tr>
+        </tfoot>
+    </table>
 </div>
 {% endif %}
 {% endblock %}

@@ -6,19 +6,19 @@
         <a href="/vluchten/{{flightNumber}}" >&lt; Terug naar vlucht</a>
     </button>
 </div>
+{% if employeeView %}
+    <h2 class="d-flex align-items-center">
+        Bagage overzicht
+        <span class="tag-gray ml-1">Gebruiker: {{passengerUsername}}</span>
+        <span class="tag-blue ml-1">Medewerker overzicht</span>
+    </h2>
+{% else %}
+    <h2 class="d-flex align-items-center">
+        Bagage overzicht
+        <span class="tag-gray ml-1">{{passengerUsername}}</span>
+    </h2>
+{% endif %}
 <div class="container">
-    {% if employeeView %}
-        <h2 class="d-flex align-items-center">
-            Bagage overzicht
-            <span class="tag-gray ml-1">Gebruiker: {{passengerUsername}}</span>
-            <span class="tag-blue ml-1">Medewerker overzicht</span>
-        </h2>
-    {% else %}
-        <h2 class="d-flex align-items-center">
-            Bagage overzicht
-            <span class="tag-gray ml-1">{{passengerUsername}}</span>
-        </h2>
-    {% endif %}
     <div class="d-md-flex">
         <div class="rw-card">
             <h3>Toevoegen</h2>

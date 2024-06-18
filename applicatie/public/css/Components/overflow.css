@@ -8,8 +8,38 @@ details.rw-overflow {
 
 .rw-overflow-content {
     background-color: rgb(255, 255, 255);
-    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
     border-radius: 0.3rem;
+    opacity: 0;
+    transform: scale(0.95);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    animation: closeAnimation 0.3s forwards;
+}
+
+@keyframes openAnimation {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes closeAnimation {
+    from {
+        opacity: 1;
+        transform: scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+}
+
+details[open] .rw-overflow-content {
+    animation: openAnimation 0.3s forwards;
 }
 
 .rw-overflow summary {
@@ -19,10 +49,37 @@ details.rw-overflow {
     border: 1px solid transparent;
     padding: 0.5rem;
     border-radius: 0.3rem;
+    list-style: none; /* Remove default marker */
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+/* Closed */
+summary::before {
+    content: url(/images/chevron-right-solid.svg);
+    display: inline-block;
+    width: 0.5rem;
+    height: 1rem;
+    margin-right: 0.5rem;
+    align-self: baseline;
+}
+
+summary + div {
+    margin-top: 0.8rem;    
+}
+
+/* Open */
+details[open] summary::before {
+    content: url(/images/chevron-down-solid.svg);
+    width: 0.9rem;
+    height: 1rem;
+    margin-right: 0.25rem;
 }
 
 details:not([open]).rw-overflow summary:hover {
-    background-color: var(--base-color-gray-50);
+    background-color: transparent;
     border: 1px dashed var(--base-color-gray-500);
 }
 
@@ -42,7 +99,7 @@ ul.rw-overflow-items li a {
     cursor: pointer;
 }
 
-.rw-overflow:not(:has(ul.rw-overflow-items)) .rw-overflow-content{
+.rw-overflow:not(:has(ul.rw-overflow-items)) .rw-overflow-content {
     padding: 1rem;
 }
 
@@ -62,36 +119,6 @@ ul.rw-overflow-items li:hover {
 
 ul.rw-overflow-items li:active {
     background-color: var(--base-color-gray-200);
-}
-
-summary + div {
-    margin-top: 0.8rem;    
-}
-
-summary {
-    list-style: none; /* Remove default marker */
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-}
-
-/* Closed */
-summary::before {
-    content: url(/images/chevron-right-solid.svg);
-    display: inline-block;
-    width: 0.5rem;
-    height: 1rem;
-    margin-right: 0.5rem;
-    align-self: baseline;
-}
-
-/* Open */
-details[open] summary::before {
-    content: url(/images/chevron-down-solid.svg);
-    width: 0.9rem;
-    height: 1rem;
-    margin-right: 0.25rem;
 }
 
 @media (max-width: 992px) {

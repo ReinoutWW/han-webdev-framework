@@ -8,7 +8,7 @@
         </button>
     </div>
     {% endif %}
-    <div class="container p-relative with-filter-options mw-fit-content">
+    <div class="search-container mw-fit-content mt-2">
         {% if not filters_active %}
             <h2>Overzicht komende vluchten</h2>
         {% else %}
@@ -46,6 +46,8 @@
                 </search>
             </div>
         </details>
-        {% include 'Flight/Components/flights-table.htm.twig' %}
+        <div class="container p-relative with-filter-options mw-fit-content">
+            {% include 'Flight/Components/flights-table.htm.twig' %}
+        </div>
     </div>
 {% endblock %}

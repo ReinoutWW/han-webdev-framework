@@ -1,8 +1,10 @@
 /* 3.2 Notifications */
 div[class*=rw-notification-] {
     padding: 0.5rem;
-    border-radius: 0.3rem;
     color: var(--text-color-default);
+    animation: fadeIn 0.7s ease-out;
+    opacity: 0;
+    animation-fill-mode: forwards;
 }
 
 div[class*=rw-notification-] ul {
@@ -15,21 +17,33 @@ div[class*=rw-notification-] li:not(:last-child) {
 }
 
 .rw-notification-success {
-    background-color: rgb(217 255 217);
-    border-left: 2px solid rgb(37 237 37);
+    background-color: var(--base-color-green-100);
+    border-left: 2px solid var(--base-color-green-600);
 }
 
 .rw-notification-error {
-    background-color: rgb(255, 217, 217);
-    border-left: 2px solid rgb(237, 37, 37);
+    background-color: var(--base-color-red-100);
+    border-left: 2px solid var(--base-color-red-600);
 }
 
 .rw-notification-warning {
-    background-color: rgb(255, 255, 217);
-    border-left: 2px solid rgb(237, 237, 37);
+    background-color: var(--base-color-yellow-100);
+    border-left: 2px solid var(--base-color-yellow-600);
 }
 
 .rw-notification-info {
-    background-color: rgb(217, 217, 255);
-    border-left: 2px solid rgb(37, 37, 237);
+    background-color: var(--base-color-blue-100);
+    border-left: 2px solid var(--base-color-blue-600);
+}
+
+/* Keyframes for fadeIn animation */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }

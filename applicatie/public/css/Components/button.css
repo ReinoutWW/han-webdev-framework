@@ -1,58 +1,72 @@
 .btn {
-    padding: 0.5rem;
-    background-color: rgb(0, 0, 0);
-    color: rgb(255, 255, 255);
+    padding: 0.5rem 0.875rem;
+    background-color: #000;
+    color: #fff;
     border: none;
-    border-radius: 5px;
+    border-radius: 1.5rem;
     cursor: pointer;
     text-decoration: none;
+    font-size: small;
+    transition: background-color 0.3s ease; /* Add transition */
 }
 
-.btn-primary {
-    background-color: var(--base-color-blue-50);
-    color: var(--base-color-blue-500);
-    width: fit-content;
-    font-size: medium;
+.btn a {
+    font-size: small;
+    color: white;
 }
 
-.btn.btn-danger {
-    background-color: var(--base-color-red-50);
-    color: var(--base-color-red-500);
+.btn-primary, 
+.btn-primary:visited {
+    background-color: var(--color-primary);
+    color: white;
+    transition: background-color 0.3s ease; /* Add transition */
 }
 
-.btn.btn-danger:hover {
-    background-color: var(--base-color-red-100);
+.btn-primary:hover, 
+.btn-primary a:hover {
+    background-color: var(--base-color-blue-900);
+    transition: none;
 }
 
-.btn.btn-danger a {
-    color: var(--base-color-red-500);
+.btn-danger, .btn-danger a {
+    background-color: var(--base-color-red-600);
+    color: white;
+    transition: background-color 0.3s ease; /* Add transition */
 }
 
-.btn-primary a {
-    color: var(--base-color-blue-500);
-}
-
-a.btn-primary:visited {
-    color: var(--base-color-blue-500);
-}
-
-.btn-primary:hover {
-    background-color: var(--base-color-blue-100);
+.btn-danger:hover {
+    background-color: var(--base-color-red-900);
 }
 
 .btn-secondary {
-    background-color: rgb(255, 255, 255);
-    color: rgb(0, 0, 0);
+    background-color: white;
+    color: black;
     width: fit-content;
     border: 1px solid transparent;
+    transition: background-color 0.3s ease, border 0.3s ease; /* Add transition */
+}
+
+.btn-secondary a {
+    color: black;
 }
 
 .btn-secondary:hover {
-    background-color: rgb(242, 242, 242);
-    border: 1px dashed rgb(0, 0, 0);
+    background-color: #f2f2f2;
+    border: 1px solid black;
 }
 
-.btn.btn-small {
+.btn-small {
     padding: 0.3rem 0.5rem;
     font-size: small;
+    transition: background-color 0.3s ease; /* Add transition */
+}
+
+@media only screen and (max-width: 576px) {
+    .btn {
+        padding: 0.5rem 1rem;
+    }
+
+    .btn-small {
+        padding: 0.2rem 0.4rem;
+    }
 }

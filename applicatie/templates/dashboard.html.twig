@@ -7,21 +7,21 @@
 </div>
 <div class="tiles-grid-layout">
     <div class="tile">
-        <a href="/vluchten" class="btn btn-primary">
+        <a href="/vluchten">
             Alle vluchten 
             <img src="/images/plane-icon.svg" />
         </a>
     </div>
     {% if authorizeView('employee') %}
     <div class="tile">
-        <a href="/vluchten/nieuw" class="btn btn-primary">
+        <a href="/vluchten/nieuw">
             Nieuwe vlucht 
             <img src="/images/plus-square-line-icon.svg" />
         </a>
     </div>
     {% endif %}
     <div class="tile">
-        <a href="/boekingen/vluchten" class="btn btn-primary">
+        <a href="/boekingen/vluchten">
             Boekingen
             <img src="/images/calendar-checkmark-icon.svg" />
         </a>

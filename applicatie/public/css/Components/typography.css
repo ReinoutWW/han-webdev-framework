@@ -24,6 +24,12 @@ h2 {
     margin-bottom: 2rem;
 }
 
+main > h2,
+.search-container > h2 {
+    margin-left: 2rem;
+    margin-bottom: 1rem;
+}
+
 @media only screen and (max-width: 576px) {
     h1:not(:first-child), 
     h2:not(:first-child), 
@@ -56,5 +62,11 @@ h2 {
 
     h6 {
         font-size: 0.75rem;
+    }
+
+    main > h2,
+    .search-container > h2 {
+        margin-left: 1rem;
+        margin-bottom: 0.5rem;
     }
 }
