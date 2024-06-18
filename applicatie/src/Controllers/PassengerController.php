@@ -8,6 +8,7 @@ use App\Repository\FlightRepository;
 use App\Repository\LuggageMapper;
 use App\Repository\LuggageRepository;
 use App\Repository\PassengerRepository;
+use App\Roles\RoleConstants;
 use RWFramework\Framework\Controller\AbstractController;
 use RWFramework\Framework\Http\RedirectResponse;
 use RWFramework\Framework\Session\Session;
@@ -201,7 +202,7 @@ class PassengerController extends AbstractController {
     }
 
     private function isEmployeeOrPersonalDetails($passengerNumber, $userId) {
-        $isAuthenticated = $this->isPersonalPassengerNumber($passengerNumber, $userId) || $this->request->getSession()->hasRole('employee');
+        $isAuthenticated = $this->isPersonalPassengerNumber($passengerNumber, $userId) || $this->request->getSession()->hasRole(RoleConstants::EMPLOYEE);
 
         return $isAuthenticated;
     }

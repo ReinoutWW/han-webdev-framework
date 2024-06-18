@@ -4,14 +4,9 @@ namespace RWFramework\Framework\Tests;
 
 require 'vendor/autoload.php';
 
-use App\Controllers\HomeController;
-use League\Container\Argument\Literal\StringArgument;
-use League\Container\ReflectionContainer;
 use PHPUnit\Framework\TestCase;
 use RWFramework\Framework\Container\Container;
 use RWFramework\Framework\Container\ContainerException;
-use Twig\Environment;
-use Twig\Loader\FilesystemLoader;
 
 // Test class
 // Also good for test-driven development
