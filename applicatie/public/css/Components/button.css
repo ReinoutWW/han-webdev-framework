@@ -24,7 +24,7 @@
 
 .btn-primary:hover, 
 .btn-primary a:hover {
-    background-color: var(--base-color-blue-900);
+    background-color: var(--color-primary-hover);
     transition: none;
 }
 

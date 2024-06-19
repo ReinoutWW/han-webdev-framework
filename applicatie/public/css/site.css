@@ -5,6 +5,7 @@
 :root {
     --background-color-default: var(--base-color-gray-100);
     --color-primary: var(--base-color-blue-700);
+    --color-primary-hover: var(--base-color-blue-900);
     --color-primary-light: var(--base-color-blue-500);
 
     --default-border-radius: 0.3rem;
