@@ -6,7 +6,7 @@
 }
 
 .tiles-grid-layout .tile {
-    border-radius: 0.3rem;
+    border-radius: var(--default-border-radius);
     background-color: rgb(255, 255, 255);
     height: 5rem;
     display: flex;
@@ -27,6 +27,7 @@
     justify-content: center;
     align-items: center;
     width: 100%;
+    border-radius: var(--default-border-radius);
 }
 
 .tile a {
@@ -35,7 +36,6 @@
     align-items: center;
     height: 100%;
     background-color: var(--base-color-blue-100);
-    border-radius: 10px;
     color: var(--base-color-blue-900);
 }
 

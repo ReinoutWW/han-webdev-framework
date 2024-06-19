@@ -1,6 +1,4 @@
 /* Cascading style sheet */
-/* 1. Layout */
-/* 2. Submit form example */
 
 /* 
 screen-size-sm: 576px;
@@ -112,7 +110,7 @@ nav a.nav-item {
     width: 100%;
     margin-bottom: 0.3rem;
     padding: 0.5rem;
-    border-radius: 0px 5px 5px 0px;
+    border-radius: 0px var(--default-border-radius) var(--default-border-radius) 0px;
     text-decoration: none;
     color: var(--text-color-default);
     position: relative;

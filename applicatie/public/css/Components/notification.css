@@ -1,7 +1,6 @@
 /* 3.2 Notifications */
 div[class*=rw-notification-] {
     padding: 0.5rem;
-    color: var(--text-color-default);
     animation: fadeIn 0.7s ease-out;
     opacity: 0;
     animation-fill-mode: forwards;
@@ -18,22 +17,26 @@ div[class*=rw-notification-] li:not(:last-child) {
 
 .rw-notification-success {
     background-color: var(--base-color-green-100);
-    border-left: 2px solid var(--base-color-green-600);
+    border: 1px solid var(--base-color-green-600);
+    color: #155724; /* Dark green for better contrast */
 }
 
 .rw-notification-error {
     background-color: var(--base-color-red-100);
-    border-left: 2px solid var(--base-color-red-600);
+    border: 1px solid var(--base-color-red-600);
+    color: #721c24; /* Dark red for better contrast */
 }
 
 .rw-notification-warning {
     background-color: var(--base-color-yellow-100);
-    border-left: 2px solid var(--base-color-yellow-600);
+    border: 1px solid var(--base-color-yellow-600);
+    color: #856404; /* Dark yellow/brown for better contrast */
 }
 
 .rw-notification-info {
     background-color: var(--base-color-blue-100);
-    border-left: 2px solid var(--base-color-blue-600);
+    border: 1px solid var(--base-color-blue-600);
+    color: #0c5460; /* Dark blue for better contrast */
 }
 
 /* Keyframes for fadeIn animation */

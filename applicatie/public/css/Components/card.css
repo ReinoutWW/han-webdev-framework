@@ -1,5 +1,5 @@
 .rw-card {
-    border-radius: 0.3rem;
+    border-radius: var(--default-border-radius);
     padding: 0.5rem 1rem;
     border: 1px solid var(--base-color-gray-200);
 }
