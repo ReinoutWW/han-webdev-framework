@@ -40,8 +40,6 @@ $appEnv = $_SERVER['APP_ENV'];
 $templatesPath = $basePath . '/templates';
 
 $container->add('APP_ENV', new StringArgument($appEnv));
-// Debug: $databaseUrl = 'sqlite:///'. $basePath . '/var/db.sqlite';
-$databaseUrl = 'pdo_sqlsrv://Server=database_server;Database=muziekschool;User Id=sa;Password=abc123!@#';
 
 $container->add('base-commands-namespace', new StringArgument('RWFramework\\Framework\\Console\\Command\\'));
 
@@ -103,8 +101,7 @@ $container->add(AbstractController::class);
 $container->inflector(AbstractController::class)
     ->invokeMethod('setContainer', [$container]);
 
-$container->add(ConnectionFactory::class)
-    ->addArgument(new StringArgument($databaseUrl));
+$container->add(ConnectionFactory::class);
 
 $container->addShared(Connection::class, function() use ($container): Connection {
     return $container->get(ConnectionFactory::class)->create();

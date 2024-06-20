@@ -9,9 +9,13 @@ use Doctrine\DBAL\DriverManager;
  * Easy datbase switch by just changing the URL
  */
 class ConnectionFactory {
-    public function __construct(private string $databaseUrl) {
+    public function __construct() {
     }
 
+    /**
+     * Best way would be to add this configuration to the .env file and inject it through services.php.
+     * For now, we'll just hardcode the connection parameters.
+     */
     public function create(): \Doctrine\DBAL\Connection {
         $connectionParams = array(
             'user' => 'sa',
