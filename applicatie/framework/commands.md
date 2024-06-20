@@ -14,13 +14,13 @@ Usefull commands:
 - docker-compose build
 
 ## Framework testing
-- docker exec -it c9d97b7a4375 sh -c "cd framework && vendor/bin/phpunit tests --colors"
-- docker exec -it c9d97b7a4375 sh -c "composer dump-autoload && cd framework && composer dump-autoload"
+- docker exec -it {container id} sh -c "cd framework && vendor/bin/phpunit tests --colors"
+- docker exec -it {container id} sh -c "composer dump-autoload && cd framework && composer dump-autoload"
 
 ### Full autoload for framework + repo
-- docker exec -it c9d97b7a4375 sh -c "composer dump-autoload --dev && composer dump-autoload && cd framework && composer dump-autoload --dev && composer dump-autoload"
+- docker exec -it {container id} sh -c "composer dump-autoload --dev && composer dump-autoload && cd framework && composer dump-autoload --dev && composer dump-autoload"
 
 
-docker exec -it c9d97b7a4375 sh -c "cd framework && composer dump-autoload --dev"
-docker exec -it c9d97b7a4375 sh -c "cd framework && vendor/bin/phpunit tests --colors"
-docker exec -it c9d97b7a4375 sh -c "cd framework && vendor/bin/phpunit tests --colors --filter services_can_be_recursively_autowired"
+docker exec -it {container id} sh -c "cd framework && composer dump-autoload --dev"
+docker exec -it {container id} sh -c "cd framework && vendor/bin/phpunit tests --colors"
+docker exec -it {container id} sh -c "cd framework && vendor/bin/phpunit tests --colors --filter services_can_be_recursively_autowired"
