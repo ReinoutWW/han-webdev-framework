@@ -6,6 +6,7 @@ The RWFramework will provide the fundamentals for a working API or Web applicati
 - Kernal class
 - Request handlers
 - Controllers support
+- Identity & Access controll
 
 ## Contribution
 
