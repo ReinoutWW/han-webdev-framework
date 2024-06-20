@@ -9,7 +9,6 @@ class Passenger extends Entity {
         private ?int $passengerNumber,
         private string $userId,
         private string $name,
-        private string $gender,
         private string $flightNumber,
         private ?string $counterNumber,
         private string $seatNumber,
@@ -21,7 +20,6 @@ class Passenger extends Entity {
         ?string $passengerNumber,
         string $userId,
         string $name,
-        string $gender,
         string $flightNumber,
         string $seatNumber
     ): Passenger {
@@ -29,7 +27,6 @@ class Passenger extends Entity {
             passengerNumber: $passengerNumber,
             userId: $userId,
             name: $name,
-            gender: $gender,
             flightNumber: $flightNumber,
             counterNumber: null,
             seatNumber: $seatNumber,
@@ -84,9 +81,5 @@ class Passenger extends Entity {
 
     public function getName(): string {
         return $this->name;
-    }
-
-    public function getGender(): string {
-        return $this->gender;
     }
 }

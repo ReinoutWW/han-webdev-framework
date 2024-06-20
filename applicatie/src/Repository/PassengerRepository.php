@@ -21,7 +21,6 @@ class PassengerRepository
             passengerNumber: null,
             userId: $user->getId(),
             name: $user->getName(),
-            gender: $user->getGender(),
             flightNumber: $flightNumber,
             seatNumber: $seatNumber
         );
@@ -51,7 +50,6 @@ class PassengerRepository
                 passengerNumber: $row['passagiernummer'],
                 userId: $row['userId'],
                 name: $row['naam'],
-                gender: $row['geslacht'],
                 flightNumber: $row['vluchtnummer'],
                 seatNumber: $row['stoel']
             );
@@ -111,7 +109,6 @@ class PassengerRepository
             passengerNumber: $row['passagiernummer'],
             userId: $row['userId'],
             name: $row['naam'],
-            gender: $row['geslacht'],
             flightNumber: $row['vluchtnummer'],
             seatNumber: $row['stoel']
         );
