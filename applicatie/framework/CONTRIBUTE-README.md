@@ -1,5 +1,9 @@
 # RWFramework 1.0.0  - PHP 8
 
+## To start the project, use the folling steps:
+1. docker compose up
+2. docker compose exec web_server composer update
+
 ## The only framework you will ever need
 The RWFramework will provide the fundamentals for a working API or Web application, and will include the following:
 - Route handling

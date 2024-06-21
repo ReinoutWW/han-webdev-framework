@@ -1,5 +1,13 @@
 # Handy commands while programming
 
+
+# To start the project
+1. docker compose up
+2. docker compose exec web_server composer update
+
+
+# Extra debugging commands
+
 ## Get into a container
 Usefull commands:
 - docker exec -it <ContainerName> sh -c "cd <Directory ? optional> && composer <Composer command>"
